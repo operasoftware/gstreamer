@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="gst-opera"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalOptions="/MP"
+		PreprocessorDefinitions="OPERA_MINIMAL_GST;G_DISABLE_DEPRECATED;_CRT_SECURE_NO_WARNINGS"
+		ForcedIncludeFiles="$(SolutionDir)\src\msvc_pragmas.h"
+	/>
+</VisualStudioPropertySheet>

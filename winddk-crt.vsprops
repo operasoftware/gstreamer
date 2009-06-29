@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="winddk-crt"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="C:\WinDDK\6001.18002\inc\crt"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalOptions="/NODEFAULTLIB C:\WinDDK\6001.18002\lib\crt\i386\msvcrt.lib C:\WinDDK\6001.18002\lib\w2k\i386\msvcrt_win2000.obj"
+	/>
+</VisualStudioPropertySheet>

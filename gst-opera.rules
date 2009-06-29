@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="gst-opera rules"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="glib-genmarshal"
+			DisplayName="glib-genmarshal"
+			CommandLine="echo #include &quot;glib-object.h&quot; &gt; &quot;$(InputDir)\$(InputName).c&quot;&#x0D;&#x0A;echo #include &quot;$(InputName).h&quot; &gt; &quot;$(InputDir)\$(InputName).c&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --body [MarshalPrefix] &quot;$(InputPath)&quot; &gt;&gt; &quot;$(InputDir)\$(InputName).c&quot;&#x0D;&#x0A;echo #include &quot;gst/gstconfig.h&quot; &gt; &quot;$(InputDir)\$(InputName).h&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --header [MarshalPrefix] &quot;$(InputPath)&quot; &gt;&gt; &quot;$(InputDir)\$(InputName).h&quot;"
+			Outputs="&quot;$(InputDir)\$(InputName).h&quot;;&quot;$(InputDir)\$(InputName).c&quot;"
+			FileExtensions="*.list"
+			ExecutionDescription="Running glib-genmarshal"
+			>
+			<Properties>
+				<StringProperty
+					Name="MarshalPrefix"
+					DisplayName="Marshal Prefix"
+					Description="Specify marshaller prefix"
+					Switch="--prefix=[value]"
+				/>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>
