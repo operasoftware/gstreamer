@@ -404,16 +404,16 @@ gst_directsound_sink_open (GstAudioSink * asink)
   /* create and initialize a DirecSound object */
   if (FAILED (hRes = DirectSoundCreate (NULL, &dsoundsink->pDS, NULL))) {
     GST_ELEMENT_ERROR (dsoundsink, RESOURCE, OPEN_READ,
-        ("gst_directsound_sink_open: DirectSoundCreate: %s",
-            DXGetErrorString9 (hRes)), (NULL));
+        ("gst_directsound_sink_open: DirectSoundCreate: 0x%08X", hRes),
+        (NULL));
     return FALSE;
   }
 
   if (FAILED (hRes = IDirectSound_SetCooperativeLevel (dsoundsink->pDS,
               GetDesktopWindow (), DSSCL_PRIORITY))) {
     GST_ELEMENT_ERROR (dsoundsink, RESOURCE, OPEN_READ,
-        ("gst_directsound_sink_open: IDirectSound_SetCooperativeLevel: %s",
-            DXGetErrorString9 (hRes)), (NULL));
+        ("gst_directsound_sink_open: IDirectSound_SetCooperativeLevel: 0x%08X", hRes),
+        (NULL));
     return FALSE;
   }
 
@@ -490,8 +490,8 @@ gst_directsound_sink_prepare (GstAudioSink * asink, GstRingBufferSpec * spec)
       &dsoundsink->pDSBSecondary, NULL);
   if (FAILED (hRes)) {
     GST_ELEMENT_ERROR (dsoundsink, RESOURCE, OPEN_READ,
-        ("gst_directsound_sink_prepare: IDirectSound_CreateSoundBuffer: %s",
-            DXGetErrorString9 (hRes)), (NULL));
+        ("gst_directsound_sink_prepare: IDirectSound_CreateSoundBuffer: 0x%08X", hRes),
+	(NULL));
     return FALSE;
   }
 
@@ -745,8 +745,7 @@ gst_directsound_probe_supported_formats (GstDirectSoundSink * dsoundsink,
       &dsoundsink->pDSBSecondary, NULL);
   if (FAILED (hRes)) {
     GST_INFO_OBJECT (dsoundsink, "AC3 passthrough not supported "
-        "(IDirectSound_CreateSoundBuffer returned: %s)\n",
-        DXGetErrorString9 (hRes));
+        "(IDirectSound_CreateSoundBuffer returned: 0x%08X)\n", hRes);
     caps =
         gst_caps_subtract (caps, gst_caps_new_simple ("audio/x-iec958", NULL));
   } else {
@@ -754,8 +753,7 @@ gst_directsound_probe_supported_formats (GstDirectSoundSink * dsoundsink,
     hRes = IDirectSoundBuffer_Release (dsoundsink->pDSBSecondary);
     if (FAILED (hRes)) {
       GST_DEBUG_OBJECT (dsoundsink,
-          "(IDirectSoundBuffer_Release returned: %s)\n",
-          DXGetErrorString9 (hRes));
+          "(IDirectSoundBuffer_Release returned: 0x%08X)\n", hRes);
     }
   }
 
