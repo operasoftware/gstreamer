@@ -162,9 +162,11 @@ gst_wavparse_reset (GstWavParse * wav)
     g_object_unref (wav->adapter);
     wav->adapter = NULL;
   }
+#ifndef OPERA_MINIMAL_GST
   if (wav->tags)
     gst_tag_list_free (wav->tags);
   wav->tags = NULL;
+#endif
   if (wav->caps)
     gst_caps_unref (wav->caps);
   wav->caps = NULL;
@@ -1302,10 +1304,12 @@ gst_wavparse_stream_headers (GstWavParse * wav)
     wav->got_fmt = TRUE;
 
     if (codec_name) {
+#ifndef OPERA_MINIMAL_GST
       wav->tags = gst_tag_list_new ();
 
       gst_tag_list_add (wav->tags, GST_TAG_MERGE_REPLACE,
           GST_TAG_AUDIO_CODEC, codec_name, NULL);
+#endif
 
       g_free (codec_name);
       codec_name = NULL;
@@ -1414,6 +1418,7 @@ gst_wavparse_stream_headers (GstWavParse * wav)
         }
         break;
       }
+#ifndef OPERA_MINIMAL_GST
       case GST_RIFF_TAG_acid:{
         const gst_riff_acid *acid = NULL;
         const guint data_size = sizeof (gst_riff_acid);
@@ -1531,6 +1536,7 @@ gst_wavparse_stream_headers (GstWavParse * wav)
         }
         break;
       }
+#endif /* !OPERA_MINIMAL_GST */
       default:
         if (!gst_waveparse_ignore_chunk (wav, buf, tag, size))
           /* need more data */
@@ -1742,8 +1748,10 @@ gst_wavparse_add_src_pad (GstWavParse * wav, GstBuffer * buf)
       gst_caps_unref (wav->caps);
       wav->caps = gst_caps_from_string ("audio/x-dts");
 
+#ifndef OPERA_MINIMAL_GST
       gst_tag_list_add (wav->tags, GST_TAG_MERGE_REPLACE,
           GST_TAG_AUDIO_CODEC, "dts", NULL);
+#endif
     }
   }
 
@@ -1766,11 +1774,13 @@ gst_wavparse_add_src_pad (GstWavParse * wav, GstBuffer * buf)
     wav->start_segment = NULL;
   }
 
+#ifndef OPERA_MINIMAL_GST
   if (wav->tags) {
     gst_element_found_tags_for_pad (GST_ELEMENT_CAST (wav), wav->srcpad,
         wav->tags);
     wav->tags = NULL;
   }
+#endif
 }
 
 #define MAX_BUFFER_SIZE 4096
