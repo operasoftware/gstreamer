@@ -162,10 +162,16 @@ g_thread_init_glib (void)
 
   /* we may run full-fledged initializers from here */
   _g_atomic_thread_init ();
+#ifndef OPERA_MINIMAL_GST
   _g_convert_thread_init ();
+#endif
+#if !defined(OPERA_MINIMAL_GST) ||  defined(_DEBUG)
   _g_rand_thread_init ();
+#endif
   _g_main_thread_init ();
+#ifndef OPERA_MINIMAL_GST
   _g_utils_thread_init ();
+#endif
 #ifdef G_OS_WIN32
   _g_win32_thread_init ();
 #endif

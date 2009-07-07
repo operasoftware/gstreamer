@@ -126,6 +126,8 @@ const guint glib_micro_version = GLIB_MICRO_VERSION;
 const guint glib_interface_age = GLIB_INTERFACE_AGE;
 const guint glib_binary_age = GLIB_BINARY_AGE;
 
+#ifndef OPERA_MINIMAL_GST
+
 #ifdef G_PLATFORM_WIN32
 
 static HMODULE glib_dll = NULL;
@@ -595,6 +597,8 @@ g_find_program_in_path (const gchar *program)
   return NULL;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 static gboolean
 debug_key_matches (const gchar *key,
 		   const gchar *token,
@@ -684,6 +688,8 @@ g_parse_debug_string  (const gchar     *string,
   return result;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /**
  * g_basename:
  * @file_name: the name of the file.
@@ -724,6 +730,8 @@ g_basename (const gchar	   *file_name)
   
   return (gchar*) file_name;
 }
+
+#endif /* !OPERA_MINIMAL_GST */
 
 /**
  * g_path_get_basename:
@@ -878,6 +886,8 @@ g_path_skip_root (const gchar *file_name)
 
   return NULL;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * g_path_get_dirname:
@@ -1057,6 +1067,8 @@ g_get_current_dir (void)
 #endif /* !Win32 */
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 /**
  * g_getenv:
  * @variable: the environment variable to get, in the GLib file name encoding.
@@ -1179,6 +1191,8 @@ _g_getenv_nomalloc (const gchar *variable,
     }
   return NULL;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * g_setenv:
@@ -1907,6 +1921,8 @@ g_get_host_name (void)
   return g_host_name;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 G_LOCK_DEFINE_STATIC (g_prgname);
 static gchar *g_prgname = NULL;
 
@@ -1957,6 +1973,8 @@ g_get_prgname (void)
   return retval;
 }
 
+#if !defined(OPERA_MINIMAL_GST) || defined(_DEBUG)
+
 /**
  * g_set_prgname:
  * @prgname: the name of the program.
@@ -2006,6 +2024,10 @@ g_get_application_name (void)
   
   return retval;
 }
+
+#endif /* !defined(OPERA_MINIMAL_GST) || defined(_DEBUG) */
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * g_set_application_name:
@@ -3126,6 +3148,8 @@ g_get_language_names (void)
   return (G_CONST_RETURN gchar * G_CONST_RETURN *) cache->language_names;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 /**
  * g_direct_hash:
  * @v: a #gpointer key
@@ -3208,6 +3232,8 @@ g_nullify_pointer (gpointer *nullify_location)
 
   *nullify_location = NULL;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * g_get_codeset:
@@ -3437,6 +3463,8 @@ g_get_tmp_dir (void)
 }
 
 #endif
+
+#endif /* !OPERA_MINIMAL_GST */
 
 #define __G_UTILS_C__
 #include "galiasdef.c"

@@ -54,6 +54,8 @@
 
 #include "galias.h"
 
+#ifndef OPERA_MINIMAL_GST
+
 static gint create_temp_file (gchar *tmpl, 
 			      int    permissions);
 
@@ -128,6 +130,8 @@ g_mkdir_with_parents (const gchar *pathname,
 
   return 0;
 }
+
+#endif /* !OPERA_MINIMAL_GST */
 
 /**
  * g_file_test:
@@ -227,6 +231,7 @@ g_file_test (const gchar *filename,
 	  _stricmp (lastdot, ".com") == 0)
 	return TRUE;
 
+#ifndef OPERA_MINIMAL_GST
       /* Check if it is one of the types listed in %PATHEXT% */
 
       pathext = g_getenv ("PATHEXT");
@@ -259,6 +264,7 @@ g_file_test (const gchar *filename,
 
       g_free ((gchar *) pathext);
       g_free ((gchar *) lastdot);
+#endif /* !OPERA_MINIMAL_GST */
       return FALSE;
     }
 
@@ -491,6 +497,8 @@ g_file_error_from_errno (gint err_no)
       break;
     }
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 static gboolean
 get_contents_stdio (const gchar  *display_filename,
@@ -1526,6 +1534,8 @@ g_build_path (const gchar *separator,
   return str;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 #ifdef G_OS_WIN32
 
 static gchar *
@@ -1642,6 +1652,8 @@ g_build_pathname_va (const gchar  *first_element,
 
 #endif
 
+#ifndef OPERA_MINIMAL_GST
+
 /**
  * g_build_filenamev:
  * @args: %NULL-terminated array of strings containing the path elements.
@@ -1667,6 +1679,8 @@ g_build_filenamev (gchar **args)
 
   return str;
 }
+
+#endif /* !OPERA_MINIMAL_GST */
 
 /**
  * g_build_filename:
@@ -1709,6 +1723,8 @@ g_build_filename (const gchar *first_element,
 
   return str;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 #define KILOBYTE_FACTOR 1024.0
 #define MEGABYTE_FACTOR (1024.0 * 1024.0)
@@ -1965,6 +1981,8 @@ g_file_open_tmp (const gchar  *tmpl,
 }
 
 #endif
+
+#endif /* !OPERA_MINIMAL_GST */
 
 #define __G_FILEUTILS_C__
 #include "galiasdef.c"

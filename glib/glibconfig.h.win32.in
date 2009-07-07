@@ -250,6 +250,10 @@ union _GSystemThread
  */
 typedef void * GPid;
 
+#ifndef _DEBUG
+#define G_DISABLE_ASSERT 1
+#endif
+
 G_END_DECLS
 
 #endif /* GLIBCONFIG_H */

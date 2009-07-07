@@ -174,6 +174,7 @@ g_value_array_get_type (void)
   return type_id;
 }
 
+#ifndef OPERA_MINIMAL_GST
 static gpointer
 gdate_copy (gpointer boxed)
 {
@@ -193,6 +194,7 @@ g_date_get_type (void)
 					    (GBoxedFreeFunc) g_date_free);
   return type_id;
 }
+#endif /* !OPERA_MINIMAL_GST */
 
 GType
 g_strv_get_type (void)

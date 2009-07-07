@@ -802,6 +802,7 @@ g_utf8_get_char_validated (const  gchar *p,
     return result;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /**
  * g_utf8_to_ucs4_fast:
  * @str: a UTF-8 encoded string
@@ -1060,6 +1061,7 @@ g_ucs4_to_utf8 (const gunichar *str,
 
   return result;
 }
+#endif /* !OPERA_MINIMAL_GST */
 
 #define SURROGATE_VALUE(h,l) (((h) - 0xd800) * 0x400 + (l) - 0xdc00 + 0x10000)
 
@@ -1212,6 +1214,7 @@ g_utf16_to_utf8 (const gunichar2  *str,
   return result;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /**
  * g_utf16_to_ucs4:
  * @str: a UTF-16 encoded string
@@ -1353,6 +1356,7 @@ g_utf16_to_ucs4 (const gunichar2  *str,
 
   return (gunichar *)result;
 }
+#endif /* !OPERA_MINIMAL_GST */
 
 /**
  * g_utf8_to_utf16:
@@ -1471,6 +1475,7 @@ g_utf8_to_utf16 (const gchar *str,
   return result;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /**
  * g_ucs4_to_utf16:
  * @str: a UCS-4 encoded string
@@ -1562,6 +1567,7 @@ g_ucs4_to_utf16 (const gunichar  *str,
   
   return result;
 }
+#endif /* !OPERA_MINIMAL_GST */
 
 #define CONTINUATION_CHAR                           \
  G_STMT_START {                                     \

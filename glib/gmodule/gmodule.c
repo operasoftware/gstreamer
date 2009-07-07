@@ -61,7 +61,7 @@
 struct _GModule
 {
   gchar	*file_name;
-#if defined (G_OS_WIN32) && !defined(_WIN64)
+#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
   gchar *cp_file_name;
 #endif
   gpointer handle;
@@ -202,6 +202,7 @@ g_module_supported (void)
   return TRUE;
 }
 
+#ifndef OPERA_MINIMAL_GST
 static gchar*
 parse_libtool_archive (const gchar* libtool_name)
 {
@@ -291,6 +292,7 @@ parse_libtool_archive (const gchar* libtool_name)
 
   return name;
 }
+#endif /* !OPERA_MINIMAL_GST */
 
 static inline gboolean
 str_check_suffix (const gchar* string,
@@ -355,7 +357,7 @@ g_module_open (const gchar    *file_name,
 	    {
 	      main_module = g_new (GModule, 1);
 	      main_module->file_name = NULL;
-#if defined (G_OS_WIN32) && !defined(_WIN64)
+#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
 	      main_module->cp_file_name = NULL;
 #endif
 	      main_module->handle = handle;
@@ -423,6 +425,7 @@ g_module_open (const gchar    *file_name,
   /* ok, try loading the module */
   if (name)
     {
+#ifndef OPERA_MINIMAL_GST
       /* if it's a libtool archive, figure library file to load */
       if (str_check_suffix (name, ".la")) /* libtool archive? */
 	{
@@ -435,6 +438,7 @@ g_module_open (const gchar    *file_name,
 	      name = real_name;
             }
 	}
+#endif /* !OPERA_MINIMAL_GST */
       if (name)
 	handle = _g_module_open (name, (flags & G_MODULE_BIND_LAZY) != 0,
 			(flags & G_MODULE_BIND_LOCAL) != 0);
@@ -470,7 +474,7 @@ g_module_open (const gchar    *file_name,
       
       module = g_new (GModule, 1);
       module->file_name = g_strdup (file_name);
-#if defined (G_OS_WIN32) && !defined(_WIN64)
+#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
       module->cp_file_name = g_locale_from_utf8 (file_name, -1,
 						 NULL, NULL, NULL);
 #endif
@@ -516,7 +520,7 @@ g_module_open (const gchar    *file_name,
   return module;
 }
 
-#if defined (G_OS_WIN32) && !defined(_WIN64)
+#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
 
 #undef g_module_open
 
@@ -580,7 +584,7 @@ g_module_close (GModule	       *module)
       
       _g_module_close (module->handle, FALSE);
       g_free (module->file_name);
-#if defined (G_OS_WIN32) && !defined(_WIN64)
+#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
       g_free (module->cp_file_name);
 #endif
       g_free (module);
@@ -659,7 +663,7 @@ g_module_name (GModule *module)
   return module->file_name;
 }
 
-#if defined (G_OS_WIN32) && !defined(_WIN64)
+#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
 
 #undef g_module_name
 

@@ -63,6 +63,8 @@ g_convert_error_quark (void)
   return g_quark_from_static_string ("g_convert_error");
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 static gboolean
 try_conversion (const char *to_codeset,
 		const char *from_codeset,
@@ -2119,6 +2121,17 @@ g_filename_display_name (const gchar *filename)
 
   return display_name;
 }
+
+#else
+
+gchar *
+g_filename_display_name (const gchar *filename)
+{
+	/* Don't care if the result is misencoded, we won't expose it in the UI. */
+	return g_strdup (filename);
+}
+
+#endif /* !OPERA_MINIMAL_GST */
 
 #define __G_CONVERT_C__
 #include "galiasdef.c"

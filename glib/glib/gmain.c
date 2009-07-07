@@ -43,7 +43,9 @@
 /* Always enable debugging printout on Windows, as it is more often
  * needed there...
  */
+#ifdef _DEBUG
 #define G_MAIN_POLL_DEBUG
+#endif
 #endif
 
 #define _GNU_SOURCE  /* for pipe2 */
@@ -431,8 +433,10 @@ g_main_context_init_pipe (GMainContext *context)
   context->wake_up_rec.fd = (gintptr) context->wake_up_semaphore;
   context->wake_up_rec.events = G_IO_IN;
 
+#  ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
     g_print ("wake-up semaphore: %p\n", context->wake_up_semaphore);
+#  endif
 # endif
   g_main_context_add_poll_unlocked (context, 0, &context->wake_up_rec);
 }

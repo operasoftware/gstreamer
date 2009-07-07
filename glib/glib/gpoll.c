@@ -44,7 +44,9 @@
 /* Always enable debugging printout on Windows, as it is more often
  * needed there...
  */
+#ifdef _DEBUG
 #define G_MAIN_POLL_DEBUG
+#endif
 #endif
 
 #include "glib.h"
@@ -148,8 +150,10 @@ poll_rest (gboolean  poll_msgs,
       /* Wait for either messages or handles
        * -> Use MsgWaitForMultipleObjectsEx
        */
+#ifdef G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
 	g_print ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+#endif
 
       ready = MsgWaitForMultipleObjectsEx (nhandles, handles, timeout,
 					   QS_ALLINPUT, MWMO_ALERTABLE);
@@ -177,8 +181,10 @@ poll_rest (gboolean  poll_msgs,
       /* Wait for just handles
        * -> Use WaitForMultipleObjectsEx
        */
+#ifdef G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
 	g_print ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+#endif
 
       ready = WaitForMultipleObjectsEx (nhandles, handles, FALSE, timeout, TRUE);
       if (ready == WAIT_FAILED)
@@ -189,12 +195,14 @@ poll_rest (gboolean  poll_msgs,
 	}
     }
 
+#ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
     g_print ("  wait returns %ld%s\n",
 	     ready,
 	     (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
 	      (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
 	       (poll_msgs && ready == WAIT_OBJECT_0 + nhandles ? " (msg)" : ""))));
+#endif
 
   if (ready == WAIT_FAILED)
     return -1;
@@ -226,8 +234,10 @@ poll_rest (gboolean  poll_msgs,
 	  if ((HANDLE) f->fd == handles[ready - WAIT_OBJECT_0])
 	    {
 	      f->revents = f->events;
+#ifdef G_MAIN_POLL_DEBUG
 	      if (_g_main_poll_debug)
 		g_print ("  got event %p\n", (HANDLE) f->fd);
+#endif
 	    }
 	}
 
@@ -262,14 +272,18 @@ g_poll (GPollFD *fds,
   gint nhandles = 0;
   int retval;
 
+#ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
     g_print ("g_poll: waiting for");
+#endif
 
   for (f = fds; f < &fds[nfds]; ++f)
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
+#ifdef G_MAIN_POLL_DEBUG
 	if (_g_main_poll_debug && !poll_msgs)
 	  g_print (" MSG");
+#endif
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
@@ -293,15 +307,19 @@ g_poll (GPollFD *fds,
 	      }
 	    else
 	      {
+#ifdef G_MAIN_POLL_DEBUG
 		if (_g_main_poll_debug)
 		  g_print (" %p", (HANDLE) f->fd);
+#endif
 		handles[nhandles++] = (HANDLE) f->fd;
 	      }
 	  }
       }
 
+#ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
     g_print ("\n");
+#endif
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;

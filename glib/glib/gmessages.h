@@ -134,6 +134,13 @@ void g_assert_warning         (const char *log_domain,
 #define G_LOG_DOMAIN    ((gchar*) 0)
 #endif  /* G_LOG_DOMAIN */
 #ifdef G_HAVE_ISO_VARARGS
+#if defined(OPERA_MINIMAL_GST) && !defined(_DEBUG)
+#define g_error(...)    G_STMT_START { __VA_ARGS__; } G_STMT_END
+#define g_message(...)  G_STMT_START { __VA_ARGS__; } G_STMT_END
+#define g_critical(...) G_STMT_START { __VA_ARGS__; } G_STMT_END
+#define g_warning(...)  G_STMT_START { __VA_ARGS__; } G_STMT_END
+#define g_debug(...)    G_STMT_START { __VA_ARGS__; } G_STMT_END
+#else
 /* for(;;); so that GCC knows that control doesn't go past g_error() */
 #define g_error(...)  G_STMT_START {                 \
                         g_log (G_LOG_DOMAIN,         \
@@ -154,6 +161,7 @@ void g_assert_warning         (const char *log_domain,
 #define g_debug(...)    g_log (G_LOG_DOMAIN,         \
                                G_LOG_LEVEL_DEBUG,    \
                                __VA_ARGS__)
+#endif
 #elif defined(G_HAVE_GNUC_VARARGS)
 #define g_error(format...)    G_STMT_START {                 \
                                 g_log (G_LOG_DOMAIN,         \
@@ -252,6 +260,30 @@ GPrintFunc      g_set_printerr_handler  (GPrintFunc      func);
 
 #else /* !G_DISABLE_CHECKS */
 
+#if defined(OPERA_MINIMAL_GST) && !defined(_DEBUG)
+
+/* keeps checks but disable logging */
+
+#define g_return_if_fail(expr)		G_STMT_START{			\
+     if G_LIKELY(expr) { } else       					\
+       {								\
+	 return;							\
+       };				}G_STMT_END
+
+#define g_return_val_if_fail(expr,val)	G_STMT_START{			\
+     if G_LIKELY(expr) { } else						\
+       {								\
+	 return (val);							\
+       };				}G_STMT_END
+
+#define g_return_if_reached()		G_STMT_START{			\
+     return;				}G_STMT_END
+
+#define g_return_val_if_reached(val)	G_STMT_START{			\
+     return (val);			}G_STMT_END
+
+#else
+
 #ifdef __GNUC__
 
 #define g_return_if_fail(expr)		G_STMT_START{			\
@@ -333,6 +365,8 @@ GPrintFunc      g_set_printerr_handler  (GPrintFunc      func);
      return (val);			}G_STMT_END
 
 #endif /* !__GNUC__ */
+
+#endif
 
 #endif /* !G_DISABLE_CHECKS */
 

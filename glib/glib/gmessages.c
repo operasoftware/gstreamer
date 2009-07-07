@@ -488,10 +488,11 @@ g_logv (const gchar   *log_domain,
 	  if (test_level & G_LOG_FLAG_FATAL)
 	    {
 #ifdef G_OS_WIN32
-	      gchar *locale_msg = g_locale_from_utf8 (fatal_msg_buf, -1, NULL, NULL, NULL);
+	      gunichar2 *msg_utf16 = g_utf8_to_utf16 (fatal_msg_buf, -1, NULL, NULL, NULL);
 	      
-	      MessageBox (NULL, locale_msg, NULL,
+	      MessageBoxW (NULL, msg_utf16, NULL,
 			  MB_ICONERROR|MB_SETFOREGROUND);
+	      g_free (msg_utf16);
 	      if (IsDebuggerPresent () && !(test_level & G_LOG_FLAG_RECURSION))
 		G_BREAKPOINT ();
 	      else
@@ -599,6 +600,7 @@ static gchar*
 strdup_convert (const gchar *string,
 		const gchar *charset)
 {
+#ifndef OPERA_MINIMAL_GST
   if (!g_utf8_validate (string, -1, NULL))
     {
       GString *gstring = g_string_new ("[Invalid UTF-8] ");
@@ -638,6 +640,9 @@ strdup_convert (const gchar *string,
 	  return g_strdup (string);
 	}
     }
+#else
+  return g_strdup (string);
+#endif /* !OPERA_MINIMAL_GST */
 }
 
 /* For a radix of 8 we need at most 3 output bytes for 1 input

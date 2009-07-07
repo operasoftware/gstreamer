@@ -320,6 +320,8 @@ get_package_directory_from_module (const gchar *module_name)
   return g_strdup (fn);
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /**
  * g_win32_get_package_installation_directory:
  * @package: You should pass %NULL for this.
@@ -493,6 +495,8 @@ g_win32_get_package_installation_subdirectory (const gchar *package,
 
 #endif
 
+#endif /* OPERA_MINIMAL_GST */
+
 static guint windows_version;
 
 static void 
@@ -540,6 +544,8 @@ g_win32_get_windows_version (void)
   
   return windows_version;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * g_win32_locale_filename_from_utf8:
@@ -595,6 +601,8 @@ g_win32_locale_filename_from_utf8 (const gchar *utf8filename)
     }
   return retval;
 }
+
+#endif /* OPERA_MINIMAL_GST */
 
 #define __G_WIN32_C__
 #include "galiasdef.c"
