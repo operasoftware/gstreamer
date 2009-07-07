@@ -93,12 +93,12 @@ gboolean g_thread_use_default_impl = TRUE;
 gboolean g_threads_got_initialized = FALSE;
 
 GThreadFunctions g_thread_functions_for_glib_use = {
-  (GMutex*(*)())g_thread_fail,                 /* mutex_new */
+  (GMutex*(*)(void))g_thread_fail,             /* mutex_new */
   NULL,                                        /* mutex_lock */
   NULL,                                        /* mutex_trylock */
   NULL,                                        /* mutex_unlock */
   NULL,                                        /* mutex_free */
-  (GCond*(*)())g_thread_fail,                  /* cond_new */
+  (GCond*(*)(void))g_thread_fail,              /* cond_new */
   NULL,                                        /* cond_signal */
   NULL,                                        /* cond_broadcast */
   NULL,                                        /* cond_wait */
