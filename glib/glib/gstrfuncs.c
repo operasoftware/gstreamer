@@ -928,22 +928,7 @@ g_strerror (gint errnum)
   int saved_errno = errno;
 
 #if defined(OPERA_MINIMAL_GST) && defined(G_OS_WIN32)
-  const wchar_t *wmsg;
-  gchar *msg_utf8;
-
-  wmsg = _wcserror (errnum);
-  msg_utf8 = g_utf16_to_utf8 (wmsg, -1, NULL, NULL, NULL);
-  if (msg_utf8)
-    {
-      /* Stick in the quark table so that we can return a static result
-       */
-      GQuark msg_quark = g_quark_from_string (msg_utf8);
-      g_free (msg_utf8);
-
-      msg_utf8 = (gchar *) g_quark_to_string (msg_quark);
-      errno = saved_errno;
-      return msg_utf8;
-    }
+  return strerror (errnum);
 #else
 #ifdef HAVE_STRERROR
   const char *msg_locale;
