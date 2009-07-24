@@ -94,6 +94,7 @@ static gpointer       default_log_data = NULL;
 #  undef STRICT
 static gboolean win32_keep_fatal_message = FALSE;
 
+#ifndef OPERA_MINIMAL_GST
 /* This default message will usually be overwritten. */
 /* Yes, a fixed size buffer is bad. So sue me. But g_error() is never
  * called with huge strings, is it?
@@ -120,6 +121,7 @@ dowrite (int          fd,
   return len;
 }
 #define write(fd, buf, len) dowrite(fd, buf, len)
+#endif /* !OPERA_MINIMAL_GST */
 
 #endif
 
@@ -127,7 +129,9 @@ static void
 write_string (int          fd,
 	      const gchar *string)
 {
+#ifndef OPERA_MINIMAL_GST
   write (fd, string, strlen (string));
+#endif
 }
 
 static void
@@ -488,11 +492,13 @@ g_logv (const gchar   *log_domain,
 	  if (test_level & G_LOG_FLAG_FATAL)
 	    {
 #ifdef G_OS_WIN32
+#ifndef OPERA_MINIMAL_GST
 	      gunichar2 *msg_utf16 = g_utf8_to_utf16 (fatal_msg_buf, -1, NULL, NULL, NULL);
 	      
 	      MessageBoxW (NULL, msg_utf16, NULL,
 			  MB_ICONERROR|MB_SETFOREGROUND);
 	      g_free (msg_utf16);
+#endif /* !OPERA_MINIMAL_GST */
 	      if (IsDebuggerPresent () && !(test_level & G_LOG_FLAG_RECURSION))
 		G_BREAKPOINT ();
 	      else
@@ -915,6 +921,7 @@ g_log_default_handler (const gchar   *log_domain,
   if (!log_domain)
     g_string_append (gstring, "** ");
 
+#ifndef OPERA_MINIMAL_GST
   if ((g_log_msg_prefix & log_level) == log_level)
     {
       const gchar *prg_name = g_get_prgname ();
@@ -924,6 +931,7 @@ g_log_default_handler (const gchar   *log_domain,
       else
 	g_string_append_printf (gstring, "(%s:%lu): ", prg_name, (gulong)getpid ());
     }
+#endif /* !OPERA_MINIMAL_GST */
 
   if (log_domain)
     {
