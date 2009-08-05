@@ -270,6 +270,7 @@ parse_debug_list (const gchar * list)
 }
 #endif
 
+#ifndef OPERA_MINIMAL_GST
 #ifdef G_OS_WIN32
 BOOL WINAPI DllMain (HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved);
 BOOL WINAPI
@@ -280,6 +281,7 @@ DllMain (HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
   return TRUE;
 }
 
+#endif
 #endif
 
 /**
