@@ -126,16 +126,12 @@ g_dir_open (const gchar  *path,
   /* error case */
   errsv = errno;
 
-  utf8_path = g_filename_to_utf8 (path, -1,
-				  NULL, NULL, NULL);
-
   g_set_error (error,
                G_FILE_ERROR,
                g_file_error_from_errno (errsv),
                _("Error opening directory '%s': %s"),
-	       utf8_path, g_strerror (errsv));
+	       path, g_strerror (errsv));
 
-  g_free (utf8_path);
   g_free (dir);
 
   return NULL;
