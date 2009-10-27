@@ -13,14 +13,17 @@ FILE=glib/glib.h
 DIE=0
 
 have_libtool=false
-if libtoolize --version < /dev/null > /dev/null 2>&1 ; then
-	libtool_version=`libtoolize --version | sed 's/^[^0-9]*\([0-9.][0-9.]*\).*/\1/'`
+for LIBTOOLIZE in libtoolize glibtoolize; do
+    if $LIBTOOLIZE --version < /dev/null > /dev/null 2>&1 ; then
+	libtool_version=`$LIBTOOLIZE --version | sed 's/^[^0-9]*\([0-9.][0-9.]*\).*/\1/'`
 	case $libtool_version in
 	    1.4*|1.5*|2.2*)
 		have_libtool=true
 		;;
 	esac
-fi
+    fi
+done
+
 if $have_libtool ; then : ; else
 	echo
 	echo "You must have libtool 1.4 installed to compile $PROJECT."
@@ -106,7 +109,7 @@ fi
 
 $ACLOCAL $ACLOCAL_FLAGS || exit $?
 
-libtoolize --force || exit $?
+$LIBTOOLIZE --force || exit $?
 gtkdocize || exit $?
 
 autoheader || exit $?
