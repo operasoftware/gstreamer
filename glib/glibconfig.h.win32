@@ -239,7 +239,7 @@ union _GSystemThread
 #define GLIB_SYSDEF_POLLERR =8
 #define GLIB_SYSDEF_POLLNVAL =32
 
-#define G_MODULE_SUFFIX "dll"
+#define G_MODULE_SUFFIX "dlx"
 
 /* A GPid is an abstraction for a process "handle". It is *not* an
  * abstraction for a process identifier in general. GPid is used in
