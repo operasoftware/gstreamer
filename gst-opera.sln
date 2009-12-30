@@ -67,6 +67,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstwavparse", "gstwavparse.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgstriff", "libgstriff.vcproj", "{DBEFB320-F8A8-4B22-81B7-84DBC5072E6D}"
 	ProjectSection(ProjectDependencies) = postProject
+		{03813C4E-6A2C-438F-913A-525BC0D6A804} = {03813C4E-6A2C-438F-913A-525BC0D6A804}
 		{BFAF1EE7-AB5A-4D5A-8D01-FE9B237BE930} = {BFAF1EE7-AB5A-4D5A-8D01-FE9B237BE930}
 	EndProjectSection
 EndProject
