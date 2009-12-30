@@ -1,3 +1,6 @@
 [submodule "libogg"]
 	path = libogg
 	url = ../libogg.git
+[submodule "libvorbis"]
+	path = libvorbis
+	url = ../libvorbis.git
