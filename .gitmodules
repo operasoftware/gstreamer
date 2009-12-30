@@ -13,3 +13,6 @@
 [submodule "gstreamer"]
 	path = gstreamer
 	url = ../gstreamer.git
+[submodule "gst-plugins-base"]
+	path = gst-plugins-base
+	url = ../gst-plugins-base.git
