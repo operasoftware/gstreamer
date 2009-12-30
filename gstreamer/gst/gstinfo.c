@@ -500,6 +500,8 @@ gst_debug_log_valist (GstDebugCategory * category, GstDebugLevel level,
 #endif
 }
 
+static gchar *gst_debug_print_object (gpointer ptr);
+
 /**
  * gst_debug_message_get:
  * @message: a debug message
@@ -513,7 +515,46 @@ const gchar *
 gst_debug_message_get (GstDebugMessage * message)
 {
   if (message->message == NULL) {
-    message->message = g_strdup_vprintf (message->format, message->arguments);
+#if !defined(HAVE_PRINTF_EXTENSION) && defined(_MSC_VER)
+   // MSVC-specific hack to expand GST_PTR_FORMAT in formats and arguments.
+   // Assumes lots of things about the implementation of va_list and will
+   // likely crash in many cases. Poorly tested. Do not use.
+   va_list arguments = message->arguments;
+   gchar *format = g_strdup(message->format);
+   GSList* strings = g_slist_prepend(NULL, format);
+   gchar *walk = format;
+   while (*walk != '\0') {
+     if (*walk++ == '%') {
+       if (*walk != '\0') {
+         switch (*walk) {
+         case '%':
+           break;
+         default:
+           if (*walk == GST_PTR_FORMAT[0]) {
+             void **ptr = &va_arg(arguments, void *);
+             gchar* pretty = gst_debug_print_object(*ptr);
+             strings = g_slist_prepend(strings, pretty);
+             *((char **)ptr) = pretty;
+             *walk = 's';
+           } else {
+             // everything else must be int-size (or we crash hard)
+             va_arg(arguments, int);
+           }
+           break;
+         }
+         walk++;
+       }
+     }
+   }
+   message->message = g_strdup_vprintf(format, message->arguments);
+   va_end(arguments);
+   while (strings) {
+     g_free(strings->data);
+     strings = g_slist_delete_link(strings, strings);
+   }
+#else
+   message->message = g_strdup_vprintf (message->format, message->arguments);
+#endif
   }
   return message->message;
 }
