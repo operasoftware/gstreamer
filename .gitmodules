@@ -7,3 +7,6 @@
 [submodule "libtheora"]
 	path = libtheora
 	url = ../libtheora.git
+[submodule "glib"]
+	path = glib
+	url = ../glib.git
