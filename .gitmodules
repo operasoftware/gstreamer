@@ -10,3 +10,6 @@
 [submodule "glib"]
 	path = glib
 	url = ../glib.git
+[submodule "gstreamer"]
+	path = gstreamer
+	url = ../gstreamer.git
