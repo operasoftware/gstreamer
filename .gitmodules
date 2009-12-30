@@ -16,3 +16,6 @@
 [submodule "gst-plugins-base"]
 	path = gst-plugins-base
 	url = ../gst-plugins-base.git
+[submodule "gst-plugins-good"]
+	path = gst-plugins-good
+	url = ../gst-plugins-good.git
