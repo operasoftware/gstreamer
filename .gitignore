@@ -2,3 +2,10 @@
 *.vcproj.*.user
 gst-opera.ncb
 gst-opera.suo
+gstreamer.def
+gstreamer-dbg.def
+Debug/
+Release/
+dist/
+include/
+dxsdk_oct2004/
