@@ -136,7 +136,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB C:\WinDDK\6001.18002\lib\crt\i386\msvcrt.lib"
-				OutputFile="$(OutDir)\$(ProjectName).dlx"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -162,7 +161,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dlx&quot; dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist\plugins&#x0D;&#x0A;"
+				CommandLine="mkdir dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dll&quot; dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist\plugins&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

@@ -137,7 +137,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dsound.lib"
-				OutputFile="$(OutDir)\$(ProjectName).dlx"
 				AdditionalLibraryDirectories="dxsdk_oct2004\lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
@@ -164,7 +163,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dlx&quot; dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist\plugins&#x0D;&#x0A;"
+				CommandLine="mkdir dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dll&quot; dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist\plugins&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
