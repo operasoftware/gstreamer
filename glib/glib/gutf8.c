@@ -393,6 +393,8 @@ g_utf8_strncpy (gchar       *dest,
   return dest;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 G_LOCK_DEFINE_STATIC (aliases);
 
 static GHashTable *
@@ -563,6 +565,16 @@ g_get_charset (G_CONST_RETURN char **charset)
   
   return cache->is_utf8;
 }
+
+#else
+
+gboolean
+g_get_charset (G_CONST_RETURN char **charset)
+{
+  return TRUE;
+}
+
+#endif /* !OPERA_MINIMAL_GST */
 
 /* unicode_strchr */
 
