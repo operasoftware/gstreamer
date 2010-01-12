@@ -13,16 +13,9 @@ libgstcoreelements_la_DEPENDENCIES = $(top_builddir)/gst/libgstreamer-@GST_MAJOR
 libgstcoreelements_la_SOURCES =	\
 	gstcapsfilter.c		\
 	gstelements.c		\
-	gstfakesrc.c		\
 	gstfakesink.c		\
-	$(GSTFDSRC)		\
-	$(GSTFDSINK)		\
-	gstfilesink.c		\
-	gstfilesrc.c		\
 	gstidentity.c		\
 	gstqueue.c		\
-	gstqueue2.c		\
-	gsttee.c		\
 	gsttypefindelement.c	\
 	gstmultiqueue.c
 
