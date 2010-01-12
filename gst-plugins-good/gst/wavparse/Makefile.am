@@ -9,7 +9,6 @@ libgstwavparse_la_LIBADD = \
 	$(GST_PLUGINS_BASE_LIBS) \
 	-lgstriff-@GST_MAJORMINOR@ \
 	-lgstaudio-@GST_MAJORMINOR@ \
-	-lgsttag-@GST_MAJORMINOR@ \
 	$(GST_BASE_LIBS) \
 	$(GST_LIBS) \
 	$(LIBM)
