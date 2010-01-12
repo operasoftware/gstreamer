@@ -13,7 +13,7 @@ libgstvorbis_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_CFLAGS) $(VORBIS_CFLAG
 libgstvorbis_la_LIBADD = \
 	$(top_builddir)/gst-libs/gst/audio/libgstaudio-@GST_MAJORMINOR@.la \
 	$(GST_LIBS) \
-	$(VORBIS_LIBS) $(VORBISENC_LIBS)
+	$(VORBIS_LIBS)
 libgstvorbis_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
 libgstvorbis_la_LIBTOOLFLAGS = --tag=disable-static
 endif

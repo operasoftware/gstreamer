@@ -730,7 +730,7 @@ dnl *** vorbis ***
 dnl AM_PATH_VORBIS only takes two options
 translit(dnm, m, l) AM_CONDITIONAL(USE_VORBIS, true)
 AG_GST_CHECK_FEATURE(VORBIS, [Xiph Vorbis audio codec], vorbis, [
-  AG_GST_PKG_CHECK_MODULES(VORBIS, vorbis >= 1.0 vorbisenc >= 1.0)
+  AG_GST_PKG_CHECK_MODULES(VORBIS, vorbis >= 1.0)
   if test $HAVE_VORBIS = no
   then
     XIPH_PATH_VORBIS(HAVE_VORBIS="yes", HAVE_VORBIS="no")
