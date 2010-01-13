@@ -13,7 +13,6 @@ libgstriff_@GST_MAJORMINOR@include_HEADERS = \
 
 libgstriff_@GST_MAJORMINOR@_la_LIBADD = \
   $(top_builddir)/gst-libs/gst/audio/libgstaudio-@GST_MAJORMINOR@.la \
-  $(top_builddir)/gst-libs/gst/tag/libgsttag-@GST_MAJORMINOR@.la \
   $(GST_BASE_LIBS) $(GST_LIBS)
 
 libgstriff_@GST_MAJORMINOR@_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_BASE_CFLAGS) $(GST_CFLAGS)

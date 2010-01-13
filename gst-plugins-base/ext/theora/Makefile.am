@@ -5,13 +5,10 @@ noinst_HEADERS = gsttheoraenc.h \
 		 gsttheoraparse.h
 
 libgsttheora_la_SOURCES = gsttheora.c \
-			  gsttheoraenc.c \
-			  gsttheoradec.c \
-			  gsttheoraparse.c
+			  gsttheoradec.c
 
 libgsttheora_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_CFLAGS) $(THEORA_CFLAGS)
 libgsttheora_la_LIBADD = \
-	$(top_builddir)/gst-libs/gst/tag/libgsttag-$(GST_MAJORMINOR).la \
 	$(top_builddir)/gst-libs/gst/video/libgstvideo-$(GST_MAJORMINOR).la \
 	$(GST_LIBS) \
 	$(THEORA_LIBS)

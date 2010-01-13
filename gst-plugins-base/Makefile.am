@@ -11,20 +11,14 @@ SUBDIRS = 			\
 	gst-libs 		\
 	gst sys $(SUBDIRS_EXT) 	\
 	tools 			\
-	tests 			\
-	docs			\
-	po 			\
 	common 			\
 	m4
 
 DIST_SUBDIRS = 			\
 	pkgconfig		\
-	docs			\
 	gst-libs		\
 	gst sys ext		\
 	tools 			\
-	tests 			\
-	po 			\
 	common 			\
 	m4
 

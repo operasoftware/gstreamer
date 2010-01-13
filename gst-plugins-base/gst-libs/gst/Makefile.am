@@ -4,19 +4,9 @@
 # Also, the tag directory has to be built before the cdda directory.
 SUBDIRS = \
 	interfaces \
-	tag \
 	audio \
-	cdda \
-	fft \
-	floatcast \
-	netbuffer \
-	pbutils \
 	riff \
-	rtp \
-	sdp \
-	rtsp \
-	video \
-	app
+	video
 
 noinst_HEADERS = gettext.h gst-i18n-plugin.h
 

@@ -8,7 +8,7 @@ built_headers = gstplay-marshal.h
 
 plugindir = $(libdir)/gstreamer-@GST_MAJORMINOR@
 
-plugin_LTLIBRARIES = libgstplaybin.la libgstdecodebin.la libgstdecodebin2.la
+plugin_LTLIBRARIES = libgstdecodebin2.la
 
 libgstplaybin_la_SOURCES = \
 	gstplayback.c \
@@ -48,7 +48,6 @@ nodist_libgstdecodebin2_la_SOURCES = $(built_sources)
 libgstdecodebin2_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_CFLAGS)
 libgstdecodebin2_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
 libgstdecodebin2_la_LIBADD = \
-	$(top_builddir)/gst-libs/gst/pbutils/libgstpbutils-@GST_MAJORMINOR@.la \
 	$(GST_LIBS)
 libgstdecodebin2_la_LIBTOOLFLAGS = --tag=disable-static
 
