@@ -8,9 +8,6 @@ endif
 
 ALWAYS_SUBDIRS =		\
 	gst sys ext 		\
-	tests			\
-	docs			\
-	po			\
 	common			\
 	m4			\
 	pkgconfig
