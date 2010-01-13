@@ -119,9 +119,7 @@ gobject_c_sources = \
 	gparam.c		\
 	gparamspecs.c		\
 	gsignal.c		\
-	gsourceclosure.c	\
 	gtype.c			\
-	gtypemodule.c		\
 	gtypeplugin.c		\
 	gvalue.c		\
 	gvaluearray.c		\

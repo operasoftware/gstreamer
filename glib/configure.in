@@ -365,127 +365,7 @@ AC_SUBST(PERL_PATH)
 # Need suitable python path for greport
 AM_PATH_PYTHON(2.4,,PYTHON="/usr/bin/env python2.4")
 
-
-dnl ***********************
-dnl *** Tests for iconv ***
-dnl ***********************
-dnl
-dnl We do this before the gettext checks, to avoid distortion
-
-dnl On Windows we use a native implementation
-
-if test x"$glib_native_win32" = xyes; then
-  with_libiconv=native
-else
-  AC_ARG_WITH(libiconv,
-	      [AC_HELP_STRING([--with-libiconv=@<:@no/gnu/native@:>@],
-			      [use the libiconv library])],,
-	      [with_libiconv=maybe])
-
-  found_iconv=no
-  case $with_libiconv in
-    maybe)
-      # Check in the C library first
-      AC_CHECK_FUNC(iconv_open, [with_libiconv=no; found_iconv=yes])
-      # Check if we have GNU libiconv
-      if test $found_iconv = "no"; then
-	AC_CHECK_LIB(iconv, libiconv_open, [with_libiconv=gnu; found_iconv=yes])
-      fi
-      # Check if we have a iconv in -liconv, possibly from vendor
-      if test $found_iconv = "no"; then
-	AC_CHECK_LIB(iconv, iconv_open, [with_libiconv=native; found_iconv=yes])
-      fi
-      ;;
-    no)
-      AC_CHECK_FUNC(iconv_open, [with_libiconv=no; found_iconv=yes])
-      ;;
-    gnu|yes)
-      AC_CHECK_LIB(iconv, libiconv_open, [with_libiconv=gnu; found_iconv=yes])
-      ;;
-    native)
-      AC_CHECK_LIB(iconv, iconv_open, [with_libiconv=native; found_iconv=yes])
-      ;;
-  esac
-
-  if test "x$found_iconv" = "xno" ; then
-     AC_MSG_ERROR([*** No iconv() implementation found in C library or libiconv])
-  fi
-fi
-
-gl_GLIBC21
-AC_ARG_ENABLE(iconv-cache, 
-              [AC_HELP_STRING([--enable-iconv-cache=@<:@yes/no/auto@:>@],
-                              [cache iconv descriptors [default=auto]])],,
-              [enable_iconv_cache=auto])
-
-AC_MSG_CHECKING([Whether to cache iconv descriptors])
-case $enable_iconv_cache in
-  auto)
-    if test $ac_cv_gnu_library_2_1 = yes; then
-      enable_iconv_cache=no
-    else 
-      enable_iconv_cache=yes
-    fi
-  ;;
-  yes|no) 
-  ;;
-  *) AC_MSG_ERROR([Value given to --enable-iconv-cache must be one of yes, no or auto])
-  ;;
-esac
-
-if test $enable_iconv_cache = yes; then
-   AC_DEFINE(NEED_ICONV_CACHE,1,[Do we cache iconv descriptors])
-fi
-
-AC_MSG_RESULT($enable_iconv_cache)
-
-
-dnl
-dnl gettext support
-dnl
-
-ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
-AC_SUBST([CONFIG_STATUS_DEPENDENCIES],['$(top_srcdir)/po/LINGUAS'])
-GLIB_GNU_GETTEXT
-
-if test "$gt_cv_have_gettext" != "yes" ; then
-  AC_MSG_ERROR([
-*** You must have either have gettext support in your C library, or use the 
-*** GNU gettext library. (http://www.gnu.org/software/gettext/gettext.html
-])
-fi
-
-LIBS="$INTLLIBS $LIBS"
-
-GETTEXT_PACKAGE=glib20
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], 
-  [Define the gettext package to be used])
-
-GLIB_DEFINE_LOCALEDIR(GLIB_LOCALE_DIR)
-
-dnl
-dnl Now we are done with gettext checks, figure out ICONV_LIBS
-dnl
-
-if test x"$glib_native_win32" != xyes; then
-  if test x$with_libiconv != xno ; then
-    case " $INTLLIBS " in
-    *[[\ \	]]-liconv[[\ \	]]*) ;;
-    *) ICONV_LIBS="-liconv" ;;
-    esac
-  fi
-fi
 AC_SUBST(ICONV_LIBS)
-
-case $with_libiconv in
-  gnu)
-    AC_DEFINE(USE_LIBICONV_GNU, 1, [Using GNU libiconv])
-    ;;
-  native)
-    AC_DEFINE(USE_LIBICONV_NATIVE, 1, [Using a native implementation of iconv in a separate library])
-    ;;
-esac
 
 dnl Initialize libtool
 AM_DISABLE_STATIC
@@ -1458,36 +1338,8 @@ AC_SUBST(G_MODULE_BROKEN_RTLD_GLOBAL)
 AC_SUBST(G_MODULE_NEED_USCORE)
 AC_SUBST(GLIB_DEBUG_FLAGS)
 
-dnl **********************
-dnl *** g_spawn checks ***
-dnl **********************
-
-AC_MSG_CHECKING(for gspawn implementation)
-case "$host" in
-  *-*-mingw*)
-    GSPAWN=gspawn-win32.lo
-    ;;
-  *)
-    GSPAWN=gspawn.lo
-    ;;    
-esac
-AC_MSG_RESULT($GSPAWN)
 AC_SUBST(GSPAWN)
 
-dnl *************************
-dnl *** GIOChannel checks ***
-dnl *************************
-
-AC_MSG_CHECKING(for GIOChannel implementation)
-case "$host" in
-  *-*-mingw*)
-    GIO=giowin32.lo
-    ;;
-  *)
-    GIO=giounix.lo
-    ;;    
-esac
-AC_MSG_RESULT($GIO)
 AC_SUBST(GIO)
 
 dnl *********************************
