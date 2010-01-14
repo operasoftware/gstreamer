@@ -939,6 +939,7 @@ g_strerror (gint errnum)
       errno = saved_errno;
       return msg_locale;
     }
+#ifndef OPERA_MINIMAL_GST
   else
     {
       gchar *msg_utf8 = g_locale_to_utf8 (msg_locale, -1, NULL, NULL, NULL);
@@ -954,6 +955,7 @@ g_strerror (gint errnum)
 	  return msg_utf8;
 	}
     }
+#endif /* !OPERA_MINIMAL_GST */
 #elif NO_SYS_ERRLIST
   switch (errnum)
     {
@@ -1424,6 +1426,7 @@ extern const char *strsignal(int);
   msg_locale = strsignal (signum);
   if (g_get_charset (NULL))
     return msg_locale;
+#ifndef OPERA_MINIMAL_GST
   else
     {
       gchar *msg_utf8 = g_locale_to_utf8 (msg_locale, -1, NULL, NULL, NULL);
@@ -1437,6 +1440,7 @@ extern const char *strsignal(int);
 	  return g_quark_to_string (msg_quark);
 	}
     }
+#endif /* !OPERA_MINIMAL_GST */
 #elif NO_SYS_SIGLIST
   switch (signum)
     {

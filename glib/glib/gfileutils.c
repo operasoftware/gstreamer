@@ -1353,6 +1353,10 @@ g_file_open_tmp (const gchar  *tmpl,
   return retval;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
+#ifndef G_OS_WIN32
+
 static gchar *
 g_build_path_va (const gchar  *separator,
 		 const gchar  *first_element,
@@ -1456,6 +1460,10 @@ g_build_path_va (const gchar  *separator,
       return g_string_free (result, FALSE);
     }
 }
+
+#endif /* !G_OS_WIN32 */
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * g_build_pathv:

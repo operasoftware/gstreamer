@@ -4,7 +4,7 @@
 ## Process this file with automake to produce Makefile.in
 include $(top_srcdir)/Makefile.decl
 
-SUBDIRS = . tests
+SUBDIRS = .
 
 AM_CPPFLAGS = 					\
 	-DG_LOG_DOMAIN=\"GLib-GObject\"		\
@@ -119,9 +119,7 @@ gobject_c_sources = \
 	gparam.c		\
 	gparamspecs.c		\
 	gsignal.c		\
-	gsourceclosure.c	\
 	gtype.c			\
-	gtypemodule.c		\
 	gtypeplugin.c		\
 	gvalue.c		\
 	gvaluearray.c		\

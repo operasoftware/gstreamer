@@ -201,36 +201,6 @@ g_completion_set_compare
 #endif
 #endif
 
-#if IN_HEADER(__G_CONVERT_H__)
-#if IN_FILE(__G_CONVERT_C__)
-g_get_filename_charsets
-g_convert G_GNUC_MALLOC
-g_convert_error_quark
-g_convert_with_fallback G_GNUC_MALLOC
-g_convert_with_iconv G_GNUC_MALLOC
-g_iconv
-g_iconv_close
-g_iconv_open
-g_locale_from_utf8 G_GNUC_MALLOC
-g_locale_to_utf8 G_GNUC_MALLOC
-g_filename_display_name G_GNUC_MALLOC
-g_filename_display_basename G_GNUC_MALLOC
-#ifndef _WIN64
-g_filename_from_uri PRIVATE G_GNUC_MALLOC
-g_filename_from_utf8 PRIVATE G_GNUC_MALLOC
-g_filename_to_uri PRIVATE G_GNUC_MALLOC
-g_filename_to_utf8 PRIVATE G_GNUC_MALLOC 
-#endif
-#ifdef G_OS_WIN32
-g_filename_from_uri_utf8 G_GNUC_MALLOC
-g_filename_from_utf8_utf8
-g_filename_to_uri_utf8 G_GNUC_MALLOC
-g_filename_to_utf8_utf8
-#endif
-g_uri_list_extract_uris G_GNUC_MALLOC
-#endif
-#endif
-
 #if IN_HEADER(__G_DATASET_H__)
 #if IN_FILE(__G_DATASET_C__)
 g_datalist_clear
@@ -258,61 +228,6 @@ g_quark_to_string G_GNUC_CONST
 g_quark_try_string
 g_intern_string
 g_intern_static_string
-#endif
-#endif
-
-#if IN_HEADER(__G_DATE_H__)
-#if IN_FILE(__G_DATE_C__)
-g_date_add_days
-g_date_add_months
-g_date_add_years
-g_date_clamp
-g_date_clear
-g_date_compare
-g_date_days_between
-g_date_free
-g_date_get_day
-g_date_get_day_of_year
-g_date_get_days_in_month
-g_date_get_iso8601_week_of_year
-g_date_get_julian
-g_date_get_monday_week_of_year
-g_date_get_monday_weeks_in_year G_GNUC_CONST
-g_date_get_month
-g_date_get_sunday_week_of_year
-g_date_get_sunday_weeks_in_year G_GNUC_CONST
-g_date_get_weekday
-g_date_get_year
-g_date_is_first_of_month
-g_date_is_last_of_month
-g_date_is_leap_year G_GNUC_CONST
-g_date_new
-g_date_new_dmy
-g_date_new_julian
-g_date_order
-g_date_set_day
-g_date_set_dmy
-g_date_set_julian
-g_date_set_month
-g_date_set_parse
-#ifndef G_DISABLE_DEPRECATED
-g_date_set_time
-#endif
-g_date_set_time_t
-g_date_set_time_val
-g_date_set_year
-g_date_strftime
-g_date_subtract_days
-g_date_subtract_months
-g_date_subtract_years
-g_date_to_struct_tm
-g_date_valid
-g_date_valid_day G_GNUC_CONST
-g_date_valid_dmy
-g_date_valid_julian G_GNUC_CONST
-g_date_valid_month G_GNUC_CONST
-g_date_valid_weekday G_GNUC_CONST
-g_date_valid_year G_GNUC_CONST
 #endif
 #endif
 
@@ -350,25 +265,11 @@ g_propagate_prefixed_error G_GNUC_PRINTF(3,4)
 #if IN_HEADER(__G_FILEUTILS_H__)
 #if IN_FILE(__G_FILEUTILS_C__)
 g_build_filename G_GNUC_MALLOC G_GNUC_NULL_TERMINATED
-g_build_filenamev G_GNUC_MALLOC
-g_build_path G_GNUC_MALLOC G_GNUC_NULL_TERMINATED
-g_build_pathv G_GNUC_MALLOC 
 g_file_error_from_errno
 g_file_error_quark
 #ifndef _WIN64
-g_file_get_contents PRIVATE
-#endif
-g_file_set_contents
-#ifndef _WIN64
-g_file_open_tmp PRIVATE
 g_file_test PRIVATE
 #endif
-g_file_read_link
-g_format_size_for_display
-#ifndef _WIN64
-g_mkstemp PRIVATE
-#endif
-g_mkdir_with_parents
 #ifdef G_OS_WIN32
 g_file_get_contents_utf8
 g_file_open_tmp_utf8
@@ -433,81 +334,6 @@ g_hook_next_valid
 g_hook_prepend
 g_hook_ref
 g_hook_unref
-#endif
-#endif
-
-#if IN_HEADER(__G_IOCHANNEL_H__)
-#if IN_FILE(__G_IOCHANNEL_C__)
-g_io_add_watch
-g_io_add_watch_full
-g_io_create_watch
-g_io_channel_error_from_errno
-g_io_channel_error_quark
-g_io_channel_flush
-g_io_channel_get_buffer_condition
-g_io_channel_get_buffered
-g_io_channel_get_buffer_size
-g_io_channel_get_close_on_unref
-g_io_channel_get_encoding
-g_io_channel_get_flags
-g_io_channel_get_line_term
-g_io_channel_init
-g_io_channel_read_chars
-g_io_channel_read_line
-g_io_channel_read_line_string
-g_io_channel_read_to_end
-g_io_channel_read_unichar
-g_io_channel_ref
-g_io_channel_seek_position
-g_io_channel_set_buffered
-g_io_channel_set_buffer_size
-g_io_channel_set_close_on_unref
-g_io_channel_set_encoding
-g_io_channel_set_flags
-g_io_channel_set_line_term
-g_io_channel_shutdown
-g_io_channel_unref
-#ifndef G_DISABLE_DEPRECATED
-g_io_channel_close
-g_io_channel_read
-g_io_channel_seek
-g_io_channel_write
-#endif
-g_io_channel_write_chars
-g_io_channel_write_unichar
-#endif
-#endif
-
-#if IN_HEADER(__G_IOCHANNEL_H__)
-#if IN_FILE(__G_IO_UNIX_C__)
-#ifdef G_OS_UNIX
-g_io_channel_unix_get_fd
-g_io_channel_unix_new
-g_io_channel_new_file PRIVATE
-#endif
-#endif
-#endif
-
-#if IN_HEADER(__G_IOCHANNEL_H__)
-#if IN_FILE(__G_IO_WIN32_C__)
-#ifdef G_OS_WIN32
-g_io_channel_unix_get_fd
-g_io_channel_unix_new
-#ifndef _WIN64
-g_io_channel_new_file PRIVATE
-#endif
-g_io_channel_new_file_utf8
-g_io_channel_win32_get_fd
-g_io_channel_win32_make_pollfd
-g_io_channel_win32_new_fd
-g_io_channel_win32_new_messages
-g_io_channel_win32_new_socket
-#ifndef _WIN64
-g_io_channel_win32_new_stream_socket PRIVATE
-#endif
-g_io_channel_win32_poll
-g_io_channel_win32_set_debug
-#endif
 #endif
 #endif
 
@@ -1030,15 +856,6 @@ g_sequence_range_get_midpoint
 #endif
 #endif
 
-#if IN_HEADER(__G_SHELL_H__)
-#if IN_FILE(__G_SHELL_C__)
-g_shell_error_quark
-g_shell_parse_argv
-g_shell_quote
-g_shell_unquote
-#endif
-#endif
-
 #if IN_HEADER(__G_SLIST_H__)
 #if IN_FILE(__G_SLIST_C__)
 g_slist_alloc
@@ -1074,31 +891,6 @@ g_slist_remove_link
 g_slist_reverse
 g_slist_sort
 g_slist_sort_with_data
-#endif
-#endif
-
-#if IN_HEADER(__G_SPAWN_H__)
-#if IN_FILE(__G_SPAWN_C__)
-#ifndef _WIN64
-g_spawn_async PRIVATE
-g_spawn_async_with_pipes PRIVATE
-#endif
-g_spawn_close_pid
-#ifndef _WIN64
-g_spawn_command_line_async PRIVATE
-g_spawn_command_line_sync PRIVATE
-#endif
-g_spawn_error_quark
-#ifndef _WIN64
-g_spawn_sync PRIVATE
-#endif
-#ifdef G_OS_WIN32
-g_spawn_async_utf8
-g_spawn_async_with_pipes_utf8
-g_spawn_command_line_async_utf8
-g_spawn_command_line_sync_utf8
-g_spawn_sync_utf8
-#endif
 #endif
 #endif
 
@@ -1320,45 +1112,6 @@ g_assertion_message_cmpnum G_GNUC_NORETURN
 g_assertion_message_cmpstr G_GNUC_NORETURN
 g_assertion_message_expr G_GNUC_NORETURN
 g_assertion_message_error G_GNUC_NORETURN
-g_strcmp0
-g_test_add_data_func
-g_test_add_func
-g_test_add_vtable
-g_test_bug
-g_test_bug_base
-#ifdef INCLUDE_VARIABLES
-g_test_config_vars
-#endif
-g_test_create_case
-g_test_create_suite
-g_test_get_root
-g_test_init
-g_test_log_buffer_free
-g_test_log_buffer_new
-g_test_log_buffer_pop
-g_test_log_buffer_push
-g_test_log_msg_free
-g_test_log_type_name
-g_test_maximized_result
-g_test_message
-g_test_minimized_result
-g_test_queue_destroy
-g_test_queue_free
-g_test_rand_double
-g_test_rand_double_range
-g_test_rand_int
-g_test_rand_int_range
-g_test_run
-g_test_run_suite
-g_test_suite_add
-g_test_suite_add_suite
-g_test_timer_elapsed
-g_test_timer_last
-g_test_timer_start
-g_test_trap_assertions
-g_test_trap_fork
-g_test_trap_has_passed
-g_test_trap_reached_timeout
 #endif
 #endif
 
@@ -1459,9 +1212,6 @@ g_utf8_strdown G_GNUC_MALLOC
 #if IN_HEADER(__G_UNICODE_H__)
 #if IN_FILE(__G_UTF8_C__)
 g_get_charset
-g_ucs4_to_utf16 G_GNUC_MALLOC
-g_ucs4_to_utf8 G_GNUC_MALLOC
-g_utf16_to_ucs4 G_GNUC_MALLOC
 g_utf16_to_utf8 G_GNUC_MALLOC
 g_utf8_find_next_char
 g_utf8_find_prev_char
@@ -1475,18 +1225,10 @@ g_utf8_strlen
 g_utf8_strncpy
 g_utf8_strrchr
 g_utf8_strreverse
-g_utf8_to_ucs4 G_GNUC_MALLOC
-g_utf8_to_ucs4_fast G_GNUC_MALLOC
 g_utf8_to_utf16 G_GNUC_MALLOC
 g_utf8_validate
 g_unichar_to_utf8
 g_unichar_validate
-#endif
-#endif
-
-#if IN_HEADER(__GLIBINTL_H__)
-#if IN_FILE(__G_UTILS_C__)
-glib_gettext G_GNUC_FORMAT(1)
 #endif
 #endif
 
@@ -1501,23 +1243,14 @@ g_direct_hash G_GNUC_CONST
 
 #if IN_HEADER(__G_UTILS_H__)
 #if IN_FILE(__G_UTILS_C__)
-g_atexit
 #ifndef G_DISABLE_DEPRECATED
 g_basename
 #endif
-g_get_application_name
 #ifndef _WIN64
-g_find_program_in_path PRIVATE
-g_get_current_dir PRIVATE
 g_getenv PRIVATE
-g_unsetenv PRIVATE
-g_get_home_dir PRIVATE
 #endif
-g_get_host_name
 #ifndef _WIN64
-g_setenv PRIVATE
 #endif
-g_listenv
 #ifdef G_OS_WIN32
 g_find_program_in_path_utf8
 g_get_current_dir_utf8
@@ -1526,44 +1259,30 @@ g_unsetenv_utf8
 g_setenv_utf8
 g_get_home_dir_utf8
 #endif
-g_get_language_names
 g_get_prgname
 #ifndef _WIN64
-g_get_real_name PRIVATE
 #endif
 #ifdef G_OS_WIN32
 g_get_real_name_utf8
 #endif
-g_get_system_config_dirs
-g_get_system_data_dirs
 #ifdef G_OS_WIN32
 g_win32_get_system_data_dirs_for_module
 #endif
 #ifndef _WIN64
-g_get_tmp_dir PRIVATE
 #endif
 #ifdef G_OS_WIN32
 g_get_tmp_dir_utf8
 #endif
-g_get_user_cache_dir
-g_get_user_config_dir
-g_get_user_data_dir
-g_get_user_special_dir
 #ifndef _WIN64
-g_get_user_name PRIVATE
 #endif
 #ifdef G_OS_WIN32
 g_get_user_name_utf8
 #endif
-glib_check_version
 g_nullify_pointer
 g_parse_debug_string
 g_path_get_basename G_GNUC_MALLOC
-g_path_get_dirname G_GNUC_MALLOC
 g_path_is_absolute
 g_path_skip_root
-g_set_application_name
-g_set_prgname
 #ifdef INCLUDE_INTERNAL_SYMBOLS
 g_bit_nth_lsf
 g_bit_nth_msf

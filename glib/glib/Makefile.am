@@ -19,9 +19,9 @@ gregex_c =
 gregex_h =
 endif
 
-SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre . tests
+SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre .
 
-DIST_SUBDIRS = libcharset gnulib pcre update-pcre tests
+DIST_SUBDIRS = libcharset gnulib pcre update-pcre
 
 AM_CPPFLAGS = 				\
 	-I$(top_srcdir) 		\
@@ -100,46 +100,30 @@ libglib_2_0_la_SOURCES = 	\
 	garray.c		\
 	gasyncqueue.c		\
 	gatomic.c		\
-	gbacktrace.c		\
-	gbase64.c		\
-	gbookmarkfile.c 	\
 	gbsearcharray.h		\
-	gcache.c		\
-	gchecksum.c		\
-	gcompletion.c		\
 	gconvert.c		\
 	gdataset.c		\
 	gdatasetprivate.h	\
-	gdate.c         	\
 	gdir.c			\
 	gerror.c		\
 	gfileutils.c		\
 	ghash.c			\
 	ghook.c			\
-	giochannel.c    	\
-	gkeyfile.c        	\
 	glibintl.h		\
 	glist.c			\
 	gmain.c         	\
-	gmappedfile.c		\
-	gmarkup.c		\
 	gmem.c			\
 	gmessages.c		\
 	gmirroringtable.h	\
-	gnode.c			\
-	goption.c		\
 	gpattern.c		\
 	gpoll.c			\
-	gprimes.c		\
 	gqsort.c		\
 	gqueue.c		\
 	grel.c			\
 	grand.c			\
-	$(gregex_c)		\
 	gscanner.c		\
 	gscripttable.h		\
 	gsequence.c		\
-	gshell.c		\
 	gslice.c		\
 	gslist.c		\
 	gstdio.c		\
@@ -151,28 +135,11 @@ libglib_2_0_la_SOURCES = 	\
 	gthreadpool.c   	\
 	gtimer.c		\
 	gtree.c			\
-	guniprop.c		\
 	gutf8.c			\
-	gunibreak.h		\
-	gunibreak.c		\
-	gunichartables.h	\
-	gunicollate.c		\
-	gunicomp.h		\
-	gunidecomp.h		\
-	gunidecomp.c		\
-	gunicodeprivate.h	\
-	gurifuncs.c 		\
 	gutils.c		\
 	gdebug.h		\
 	gprintf.c		\
 	gprintfint.h
-
-EXTRA_libglib_2_0_la_SOURCES = \
-	giounix.c	\
-	giowin32.c	\
-	gspawn.c	\
-	gspawn-win32.c	\
-	gwin32.c
 
 glibincludedir=$(includedir)/glib-2.0
 glibinclude_HEADERS =   \
@@ -219,7 +186,7 @@ glibsubinclude_HEADERS =   \
 	gquark.h	\
 	gqueue.h	\
 	grand.h		\
-	$(gregex_h)	\
+	gregex.h	\
 	grel.h		\
 	gscanner.h	\
 	gsequence.h	\
@@ -330,9 +297,6 @@ bin_PROGRAMS	 = ${INSTALL_PROGS}
 
 if OS_UNIX
 
-INSTALL_PROGS	+= gtester
-gtester_SOURCES	 = gtester.c
-gtester_LDADD	 = libglib-2.0.la 
 
 auto_config_binscripts = gtester-report
 bin_SCRIPTS = ${auto_config_binscripts}

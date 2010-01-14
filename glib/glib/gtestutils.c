@@ -41,6 +41,8 @@
 #include <sys/select.h>
 #endif /* HAVE_SYS_SELECT_H */
 
+#ifndef OPERA_MINIMAL_GST
+
 /* --- structures --- */
 struct GTestCase
 {
@@ -1279,6 +1281,8 @@ gtest_default_log_handler (const gchar    *log_domain,
   g_free (msg);
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 void
 g_assertion_message (const char     *domain,
                      const char     *file,
@@ -1296,7 +1300,9 @@ g_assertion_message (const char     *domain,
                    func, func[0] ? ":" : "",
                    " ", message, NULL);
   g_printerr ("**\n%s\n", s);
+#ifndef OPERA_MINIMAL_GST
   g_test_log (G_TEST_LOG_ERROR, s, NULL, 0, NULL);
+#endif /* !OPERA_MINIMAL_GST */
   g_free (s);
   abort();
 }
@@ -1312,6 +1318,8 @@ g_assertion_message_expr (const char     *domain,
   g_assertion_message (domain, file, line, func, s);
   g_free (s);
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 void
 g_assertion_message_cmpnum (const char     *domain,
@@ -2007,6 +2015,8 @@ g_test_log_msg_free (GTestLogMsg *tmsg)
  * Since: 2.16
  **/
 /* --- macros docs END --- */
+
+#endif /* !OPERA_MINIMAL_GST */
 
 #define __G_TEST_UTILS_C__
 #include "galiasdef.c"

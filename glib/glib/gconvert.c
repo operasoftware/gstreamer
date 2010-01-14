@@ -24,6 +24,14 @@
 
 #include "glib.h"
 
+GQuark
+g_convert_error_quark (void)
+{
+  return g_quark_from_static_string ("g_convert_error");
+}
+
+#ifndef OPERA_MINIMAL_GST
+
 #ifndef G_OS_WIN32
 #include <iconv.h>
 #endif
@@ -56,14 +64,6 @@
 #endif
 
 #include "galias.h"
-
-GQuark 
-g_convert_error_quark (void)
-{
-  return g_quark_from_static_string ("g_convert_error");
-}
-
-#ifndef OPERA_MINIMAL_GST
 
 static gboolean
 try_conversion (const char *to_codeset,
