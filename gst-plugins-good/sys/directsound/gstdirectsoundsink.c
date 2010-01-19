@@ -450,8 +450,8 @@ gst_directsound_sink_prepare (GstAudioSink * asink, GstRingBufferSpec * spec)
         GST_MSECOND);
 
     spec->segsize =
-        gst_util_uint64_scale_int (wfx.nAvgBytesPerSec, spec->latency_time,
-        GST_MSECOND);
+        (gst_util_uint64_scale_int (wfx.nAvgBytesPerSec, spec->latency_time,
+         GST_MSECOND) / spec->bytes_per_sample) * spec->bytes_per_sample;
     spec->segtotal = dsoundsink->buffer_size / spec->segsize;
   } else {
     wfx.cbSize = 0;
