@@ -251,6 +251,8 @@ g_time_val_add (GTimeVal *time_, glong microseconds)
     }
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /* converts a broken down date representation, relative to UTC, to
  * a timestamp; it uses timegm() if it's available.
  */
@@ -464,6 +466,8 @@ g_time_val_to_iso8601 (GTimeVal *time_)
   
   return retval;
 }
+
+#endif // !OPERA_MINIMAL_GST
 
 #define __G_TIMER_C__
 #include "galiasdef.c"
