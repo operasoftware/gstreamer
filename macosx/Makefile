@@ -26,6 +26,7 @@ glib:
 	AUTOGEN_SUBDIR_MODE=1 ./autogen.sh && \
 	./configure --prefix="$(PREFIX)" \
 		--disable-regex \
+		--disable-gtk-doc \
 	&& make install
 
 gstreamer: glib
@@ -165,17 +166,25 @@ gst-plugins-good: gst-plugins-base
 
 debug:
 	PREFIX="$(PWD)/Debug" \
-	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch i386" \
+	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Debug/lib dist/debug "@executable_path/../Resources/gstreamer"
+	rm -fR dist/debug/plugins-dbg
 	mv dist/debug/gstreamer-0.10 dist/debug/plugins-dbg
 
 release:
 	PREFIX="$(PWD)/Release" \
-	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch i386" \
+	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Release/lib dist/release "@executable_path/../Resources/gstreamer"
+	rm -fR dist/release/plugins
 	mv dist/release/gstreamer-0.10 dist/release/plugins
-	strip -u -r dist/release/*.dylib dist/release/plugins/*.so
+#	strip -u -r dist/release/*.dylib dist/release/plugins/*.so
 
 all: debug release
