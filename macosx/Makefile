@@ -171,9 +171,9 @@ debug:
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	make gstreamer gst-plugins-base gst-plugins-good
-	python makedist.py Debug/lib dist/debug "@executable_path/../Resources/gstreamer"
-	rm -fR dist/debug/plugins-dbg
-	mv dist/debug/gstreamer-0.10 dist/debug/plugins-dbg
+	python makedist.py Debug/lib dist/debug_i386 "@executable_path/../Resources/gstreamer"
+	rm -fR dist/debug_i386/plugins-dbg
+	mv dist/debug_i386/gstreamer-0.10 dist/debug_i386/plugins-dbg
 
 release:
 	PREFIX="$(PWD)/Release" \
@@ -182,9 +182,32 @@ release:
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	make gstreamer gst-plugins-base gst-plugins-good
-	python makedist.py Release/lib dist/release "@executable_path/../Resources/gstreamer"
-	rm -fR dist/release/plugins
-	mv dist/release/gstreamer-0.10 dist/release/plugins
-#	strip -u -r dist/release/*.dylib dist/release/plugins/*.so
+	python makedist.py Release/lib dist/release_i386 "@executable_path/../Resources/gstreamer"
+	rm -fR dist/release_i386/plugins
+	mv dist/release_i386/gstreamer-0.10 dist/release_i386/plugins
+#	strip -u -r dist/release_i386/*.dylib dist/release_i386/plugins/*.so
+
+debugppc:
+	PREFIX="$(PWD)/Debugppc" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch ppc" \
+	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	make gstreamer gst-plugins-base gst-plugins-good
+	python makedist.py Debugppc/lib dist/debug_ppc "@executable_path/../Resources/gstreamer"
+	rm -fR dist/debug_ppc/plugins-dbg
+	mv dist/debug_ppc/gstreamer-0.10 dist/debug_ppc/plugins-dbg
+
+releaseppc:
+	PREFIX="$(PWD)/Releaseppc" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch ppc" \
+	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	make gstreamer gst-plugins-base gst-plugins-good
+	python makedist.py Releaseppc/lib dist/release_ppc "@executable_path/../Resources/gstreamer"
+	rm -fR dist/release_ppc/plugins
+	mv dist/release_ppc/gstreamer-0.10 dist/release_ppc/plugins
+#	strip -u -r dist/release_ppc/*.dylib dist/release_ppc/plugins/*.so
 
 all: debug release
