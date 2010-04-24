@@ -11,7 +11,7 @@
  ********************************************************************
 
  function: illustrate seeking, and test it too
- last mod: $Id: seeking_example.c 16037 2009-05-26 21:10:58Z xiphmont $
+ last mod: $Id: seeking_example.c 16329 2009-07-24 01:53:20Z xiphmont $
 
  ********************************************************************/
 
@@ -116,7 +116,10 @@ int main(){
     i=0;
     while(i<pcmlength*2){
       int ret=ov_read(&ov,bigassbuffer+i,pcmlength*2-i,1,1,1,&dummy);
-      if(ret<0)continue;
+      if(ret<0){
+        fprintf(stderr,"Error reading file.\n");
+        exit(1);
+      }
       if(ret){
         i+=ret;
       }else{
