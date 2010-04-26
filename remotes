@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Add the upstream repositories as a remotes
+
+cd glib
+git remote add upstream "git://git.gnome.org/glib"
+cd ..
+
+for path in gstreamer gst-plugins-base gst-plugins-good; do
+    cd $path
+    git remote add upstream "git://anongit.freedesktop.org/gstreamer/$path"
+    cd ..
+done
