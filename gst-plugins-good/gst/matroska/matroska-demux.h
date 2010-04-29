@@ -28,6 +28,10 @@
 #include "ebml-read.h"
 #include "matroska-ids.h"
 
+/* Add Opera to make unique GType */
+#define GstMatroskaDemux GstOperaMatroskaDemux
+#define GstMatroskaDemuxClass GstOperaMatroskaDemuxClass
+
 G_BEGIN_DECLS
 
 #define GST_TYPE_MATROSKA_DEMUX \

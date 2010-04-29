@@ -24,6 +24,10 @@
 
 #include <gst/gst.h>
 
+/* Add Opera to make unique GType */
+#define GstEbmlRead GstOperaEbmlRead
+#define GstEbmlReadClass GstOperaEbmlReadClass
+
 G_BEGIN_DECLS
 
 #define GST_TYPE_EBML_READ \

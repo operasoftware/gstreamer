@@ -78,7 +78,7 @@ gst_ebml_read_get_type (void)
     };
 
     gst_ebml_read_type =
-        g_type_register_static (GST_TYPE_ELEMENT, "GstEbmlRead",
+        g_type_register_static (GST_TYPE_ELEMENT, "GstOperaEbmlRead",
         &gst_ebml_read_info, 0);
   }
 

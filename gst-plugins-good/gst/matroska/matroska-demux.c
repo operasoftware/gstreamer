@@ -6971,9 +6971,18 @@ gst_matroska_demux_plugin_init (GstPlugin * plugin)
   gst_riff_init ();
 
   /* create an elementfactory for the matroska_demux element */
-  if (!gst_element_register (plugin, "matroskademux",
-          GST_RANK_PRIMARY, GST_TYPE_MATROSKA_DEMUX))
+  if (!gst_element_register (plugin, "opera_matroskademux",
+          GST_RANK_PRIMARY + 1, GST_TYPE_MATROSKA_DEMUX))
     return FALSE;
 
   return TRUE;
 }
+
+#ifdef OPERA_MINIMAL_GST
+GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
+    GST_VERSION_MINOR,
+    "opera_matroska",
+    "Matroska stream handling",
+    gst_matroska_demux_plugin_init,
+    VERSION, "LGPL", GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN)
+#endif /* OPERA_MINIMAL_GST */

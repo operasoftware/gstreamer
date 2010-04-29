@@ -2,13 +2,8 @@ plugin_LTLIBRARIES = libgstmatroska.la
 
 libgstmatroska_la_SOURCES = \
 	ebml-read.c \
-	ebml-write.c \
-	matroska.c \
 	matroska-demux.c \
-	matroska-ids.c \
-	matroska-mux.c \
-	webm-mux.c \
-	lzo.c
+	matroska-ids.c
 
 noinst_HEADERS = \
 	ebml-ids.h \
