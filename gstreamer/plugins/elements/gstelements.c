@@ -29,15 +29,19 @@
 
 #include "gstcapsfilter.h"
 #include "gstfakesink.h"
+#ifndef OPERA_MINIMAL_GST
 #include "gstfakesrc.h"
 #include "gstfdsrc.h"
 #include "gstfdsink.h"
 #include "gstfilesink.h"
 #include "gstfilesrc.h"
+#endif
 #include "gstidentity.h"
 #include "gstqueue.h"
+#ifndef OPERA_MINIMAL_GST
 #include "gstqueue2.h"
 #include "gsttee.h"
+#endif
 #include "gsttypefindelement.h"
 #include "gstmultiqueue.h"
 
@@ -51,18 +55,24 @@ struct _elements_entry
 
 static struct _elements_entry _elements[] = {
   {"capsfilter", GST_RANK_NONE, gst_capsfilter_get_type},
+#ifndef OPERA_MINIMAL_GST
   {"fakesrc", GST_RANK_NONE, gst_fake_src_get_type},
+#endif
   {"fakesink", GST_RANK_NONE, gst_fake_sink_get_type},
+#ifndef OPERA_MINIMAL_GST
 #if defined(HAVE_SYS_SOCKET_H) || defined(_MSC_VER)
   {"fdsrc", GST_RANK_NONE, gst_fd_src_get_type},
   {"fdsink", GST_RANK_NONE, gst_fd_sink_get_type},
 #endif
   {"filesrc", GST_RANK_PRIMARY, gst_file_src_get_type},
+#endif
   {"identity", GST_RANK_NONE, gst_identity_get_type},
   {"queue", GST_RANK_NONE, gst_queue_get_type},
+#ifndef OPERA_MINIMAL_GST
   {"queue2", GST_RANK_NONE, gst_queue2_get_type},
   {"filesink", GST_RANK_PRIMARY, gst_file_sink_get_type},
   {"tee", GST_RANK_NONE, gst_tee_get_type},
+#endif
   {"typefind", GST_RANK_NONE, gst_type_find_element_get_type},
   {"multiqueue", GST_RANK_NONE, gst_multi_queue_get_type},
   {NULL, 0},
