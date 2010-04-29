@@ -62,6 +62,7 @@
 
 #include <gst/base/gsttypefindhelper.h>
 
+#ifndef OPERA_MINIMAL_GST
 #ifdef HAVE_ZLIB
 #include <zlib.h>
 #endif
@@ -71,6 +72,7 @@
 #endif
 
 #include "lzo.h"
+#endif
 
 #include "matroska-demux.h"
 #include "matroska-ids.h"
@@ -286,6 +288,7 @@ gst_matroska_track_free (GstMatroskaTrackContext * track)
   g_free (track->codec_priv);
   g_free (track->codec_state);
 
+#ifndef OPERA_MINIMAL_GST
   if (track->encodings != NULL) {
     int i;
 
@@ -298,6 +301,7 @@ gst_matroska_track_free (GstMatroskaTrackContext * track)
     }
     g_array_free (track->encodings, TRUE);
   }
+#endif /* OPERA_MINIMAL_GST */
 
   if (track->pending_tags)
     gst_tag_list_free (track->pending_tags);
@@ -467,6 +471,7 @@ gst_matroska_demux_stream_from_num (GstMatroskaDemux * demux, guint track_num)
   return -1;
 }
 
+#ifndef OPERA_MINIMAL_GST
 static gint
 gst_matroska_demux_encoding_cmp (GstMatroskaTrackEncoding * a,
     GstMatroskaTrackEncoding * b)
@@ -821,7 +826,6 @@ gst_matroska_decompress_data (GstMatroskaTrackEncoding * enc,
       ret = FALSE;
       goto out;
     }
-
   } else if (algo == GST_MATROSKA_TRACK_COMPRESSION_ALGORITHM_HEADERSTRIP) {
     /* header stripped encoded data */
     if (enc->comp_settings_length > 0) {
@@ -1044,6 +1048,7 @@ gst_matroska_demux_read_track_encodings (GstMatroskaDemux * demux,
 
   return gst_matroska_decode_content_encodings (context->encodings);
 }
+#endif /* OPERA_MINIMAL_GST */
 
 static gboolean
 gst_matroska_demux_tracknumber_unique (GstMatroskaDemux * demux, guint64 num)
@@ -1696,10 +1701,12 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
         break;
       }
 
+#ifndef OPERA_MINIMAL_GST
       case GST_MATROSKA_ID_CONTENTENCODINGS:{
         ret = gst_matroska_demux_read_track_encodings (demux, context);
         break;
       }
+#endif /* OPERA_MINIMAL_GST */
 
       case GST_MATROSKA_ID_TRACKTIMECODESCALE:{
         gdouble num;
@@ -1746,6 +1753,7 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
 
   DEBUG_ELEMENT_STOP (demux, ebml, "TrackEntry", ret);
 
+#ifndef OPERA_MINIMAL_GST
   /* Decode codec private data if necessary */
   if (context->encodings && context->encodings->len > 0 && context->codec_priv
       && context->codec_priv_size > 0) {
@@ -1756,6 +1764,7 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
       ret = GST_FLOW_ERROR;
     }
   }
+#endif /* OPERA_MINIMAL_GST */
 
   if (context->type == 0 || context->codec_id == NULL || (ret != GST_FLOW_OK
           && ret != GST_FLOW_UNEXPECTED)) {
@@ -4537,6 +4546,7 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
         stream->codec_state = data;
         stream->codec_state_size = data_len;
 
+#ifndef OPERA_MINIMAL_GST
         /* Decode if necessary */
         if (stream->encodings && stream->encodings->len > 0
             && stream->codec_state && stream->codec_state_size > 0) {
@@ -4546,6 +4556,7 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
             GST_WARNING_OBJECT (demux, "Decoding codec state failed");
           }
         }
+#endif /* OPERA_MINIMAL_GST */
 
         GST_DEBUG_OBJECT (demux, "CodecState of %u bytes",
             stream->codec_state_size);
@@ -4639,6 +4650,7 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
           GST_BUFFER_SIZE (buf) - size, lace_size[n]);
       GST_DEBUG_OBJECT (demux, "created subbuffer %p", sub);
 
+#ifndef OPERA_MINIMAL_GST
       if (stream->encodings != NULL && stream->encodings->len > 0)
         sub = gst_matroska_decode_buffer (stream, sub);
 
@@ -4646,6 +4658,7 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
         GST_WARNING_OBJECT (demux, "Decoding buffer failed");
         goto next_lace;
       }
+#endif /* OPERA_MINIMAL_GST */
 
       GST_BUFFER_TIMESTAMP (sub) = lace_time;
 
