@@ -201,6 +201,7 @@ static void gst_file_src_uri_handler_init (gpointer g_iface,
 static void
 _do_init (GType filesrc_type)
 {
+#ifndef OPERA_MINIMAL_GST
   static const GInterfaceInfo urihandler_info = {
     gst_file_src_uri_handler_init,
     NULL,
@@ -209,6 +210,7 @@ _do_init (GType filesrc_type)
 
   g_type_add_interface_static (filesrc_type, GST_TYPE_URI_HANDLER,
       &urihandler_info);
+#endif /* !OPERA_MINIMAL_GST */
   GST_DEBUG_CATEGORY_INIT (gst_file_src_debug, "filesrc", 0, "filesrc element");
 }
 
@@ -363,11 +365,14 @@ gst_file_src_set_location (GstFileSrc * src, const gchar * location)
     /* we store the filename as received by the application. On Windoes this
      * should be UTF8 */
     src->filename = g_strdup (location);
+#ifndef OPERA_MINIMAL_GST
     src->uri = gst_uri_construct ("file", src->filename);
+#endif
   }
   g_object_notify (G_OBJECT (src), "location");
+#ifndef OPERA_MINIMAL_GST
   gst_uri_handler_new_uri (GST_URI_HANDLER (src), src->uri);
-
+#endif
   return TRUE;
 
   /* ERROR */
@@ -917,6 +922,7 @@ static gboolean
 gst_file_src_query (GstBaseSrc * basesrc, GstQuery * query)
 {
   gboolean ret = FALSE;
+#ifndef OPERA_MINIMAL_GST
   GstFileSrc *src = GST_FILE_SRC (basesrc);
 
   switch (GST_QUERY_TYPE (query)) {
@@ -928,7 +934,7 @@ gst_file_src_query (GstBaseSrc * basesrc, GstQuery * query)
       ret = FALSE;
       break;
   }
-
+#endif /* !OPERA_MINIMAL_GST */
   if (!ret)
     ret = GST_BASE_SRC_CLASS (parent_class)->query (basesrc, query);
 
@@ -1106,6 +1112,8 @@ gst_file_src_stop (GstBaseSrc * basesrc)
   return TRUE;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /*** GSTURIHANDLER INTERFACE *************************************************/
 
 static GstURIType
@@ -1195,3 +1203,5 @@ gst_file_src_uri_handler_init (gpointer g_iface, gpointer iface_data)
   iface->get_uri = gst_file_src_uri_get_uri;
   iface->set_uri = gst_file_src_uri_set_uri;
 }
+
+#endif /* !OPERA_MINIMAL_GST */
