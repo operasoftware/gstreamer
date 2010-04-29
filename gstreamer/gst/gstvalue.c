@@ -3805,6 +3805,7 @@ gst_value_compare_fraction (const GValue * value1, const GValue * value2)
   return GST_VALUE_UNORDERED;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /*********
  * GDate *
  *********/
@@ -3929,6 +3930,7 @@ gst_value_transform_string_date (const GValue * src_value, GValue * dest_value)
 {
   gst_value_deserialize_date (dest_value, src_value->data[0].v_pointer);
 }
+#endif
 
 static void
 gst_value_transform_object_string (const GValue * src_value,
@@ -4072,7 +4074,7 @@ static const GTypeValueTable _gst_fraction_value_table = {
 
 FUNC_VALUE_GET_TYPE (fraction, "GstFraction");
 
-
+#ifndef OPERA_MINIMAL_GST
 GType
 gst_date_get_type (void)
 {
@@ -4090,6 +4092,7 @@ gst_date_get_type (void)
 
   return gst_date_type;
 }
+#endif
 
 void
 _gst_value_initialize (void)
@@ -4231,6 +4234,7 @@ _gst_value_initialize (void)
     gst_value.type = GST_TYPE_STRUCTURE;
     gst_value_register (&gst_value);
   }
+#ifndef OPERA_MINIMAL_GST
   {
     static GstValueTable gst_value = {
       0,
@@ -4242,6 +4246,7 @@ _gst_value_initialize (void)
     gst_value.type = gst_date_get_type ();
     gst_value_register (&gst_value);
   }
+#endif
 
   REGISTER_SERIALIZATION (G_TYPE_DOUBLE, double);
   REGISTER_SERIALIZATION (G_TYPE_FLOAT, float);
@@ -4285,10 +4290,12 @@ _gst_value_initialize (void)
       gst_value_transform_double_fraction);
   g_value_register_transform_func (G_TYPE_FLOAT, GST_TYPE_FRACTION,
       gst_value_transform_float_fraction);
+#ifndef OPERA_MINIMAL_GST
   g_value_register_transform_func (GST_TYPE_DATE, G_TYPE_STRING,
       gst_value_transform_date_string);
   g_value_register_transform_func (G_TYPE_STRING, GST_TYPE_DATE,
       gst_value_transform_string_date);
+#endif
   g_value_register_transform_func (GST_TYPE_OBJECT, G_TYPE_STRING,
       gst_value_transform_object_string);
 
@@ -4329,12 +4336,14 @@ _gst_value_initialize (void)
       GST_TYPE_FRACTION_RANGE,
       gst_value_subtract_fraction_range_fraction_range);
 
+#ifndef OPERA_MINIMAL_GST
   /* see bug #317246, #64994, #65041 */
   {
     volatile GType date_type = G_TYPE_DATE;
 
     g_type_name (date_type);
   }
+#endif
 
   gst_value_register_union_func (G_TYPE_INT, GST_TYPE_INT_RANGE,
       gst_value_union_int_int_range);

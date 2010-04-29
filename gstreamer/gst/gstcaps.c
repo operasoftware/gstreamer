@@ -936,10 +936,12 @@ gst_caps_set_simple_valist (GstCaps * caps, const char *field, va_list varargs)
 
     type = va_arg (varargs, GType);
 
+#ifndef OPERA_MINIMAL_GST
     if (G_UNLIKELY (type == G_TYPE_DATE)) {
       g_warning ("Don't use G_TYPE_DATE, use GST_TYPE_DATE instead\n");
       type = GST_TYPE_DATE;
     }
+#endif /* OPERA_MINIMAL_GST */
 #if GLIB_CHECK_VERSION(2,23,3)
     G_VALUE_COLLECT_INIT (&value, type, varargs, 0, &err);
 #else

@@ -125,8 +125,10 @@ _gst_tag_initialize (void)
       G_TYPE_STRING,
       _("album artist sortname"),
       _("The artist of the entire album, as it should be sorted"), NULL);
+#ifndef OPERA_MINIMAL_GST
   gst_tag_register (GST_TAG_DATE, GST_TAG_FLAG_META, GST_TYPE_DATE,
       _("date"), _("date the data was created (as a GDate structure)"), NULL);
+#endif
   gst_tag_register (GST_TAG_GENRE, GST_TAG_FLAG_META,
       G_TYPE_STRING,
       _("genre"),
@@ -1579,6 +1581,7 @@ TAG_MERGE_FUNCS (pointer, gpointer, (*value != NULL))
  */
 TAG_MERGE_FUNCS (string, gchar *, (*value != NULL && **value != '\0'))
 
+#ifndef OPERA_MINIMAL_GST
 /**
  * gst_tag_list_get_date:
  * @list: a #GstTagList to get the tag from
@@ -1638,6 +1641,7 @@ gst_tag_list_get_date_index (const GstTagList * list,
   *value = (GDate *) g_value_dup_boxed (v);
   return (*value != NULL);
 }
+#endif
 
 /**
  * gst_tag_list_get_buffer:

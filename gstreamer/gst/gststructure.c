@@ -513,10 +513,12 @@ gst_structure_set_valist (GstStructure * structure,
 
     type = va_arg (varargs, GType);
 
+#ifndef OPERA_MINIMAL_GST
     if (G_UNLIKELY (type == G_TYPE_DATE)) {
       g_warning ("Don't use G_TYPE_DATE, use GST_TYPE_DATE instead\n");
       type = GST_TYPE_DATE;
     }
+#endif
 #if GLIB_CHECK_VERSION(2,23,3)
     G_VALUE_COLLECT_INIT (&field.value, type, varargs, 0, &err);
 #else
@@ -586,10 +588,12 @@ gst_structure_id_set_valist (GstStructure * structure,
 
     type = va_arg (varargs, GType);
 
+#ifndef OPERA_MINIMAL_GST
     if (G_UNLIKELY (type == G_TYPE_DATE)) {
       g_warning ("Don't use G_TYPE_DATE, use GST_TYPE_DATE instead\n");
       type = GST_TYPE_DATE;
     }
+#endif
 #ifndef G_VALUE_COLLECT_INIT
     g_value_init (&field.value, type);
     G_VALUE_COLLECT (&field.value, varargs, 0, &err);
@@ -1267,6 +1271,7 @@ gst_structure_get_fourcc (const GstStructure * structure,
   return TRUE;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /**
  * gst_structure_get_date:
  * @structure: a #GstStructure
@@ -1308,6 +1313,7 @@ gst_structure_get_date (const GstStructure * structure, const gchar * fieldname,
 
   return TRUE;
 }
+#endif
 
 /**
  * gst_structure_get_clock_time:

@@ -25,6 +25,8 @@
 #include <gst/gstclock.h>
 #include <gst/glib-compat.h>
 
+typedef struct _GDate GDate;
+
 G_BEGIN_DECLS
 
 #define GST_TYPE_STRUCTURE             (gst_structure_get_type ())
