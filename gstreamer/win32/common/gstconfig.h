@@ -73,25 +73,75 @@
 
 /***** disabling of subsystems *****/
 
-/* wether or not the debugging subsystem is enabled */
+/**
+ * GST_DISABLE_GST_DEBUG:
+ *
+ * Configures the inclusion of the debugging subsystem
+ */
+#ifdef _DEBUG
 /* #undef GST_DISABLE_GST_DEBUG */
+#else
+#define GST_DISABLE_GST_DEBUG 1
+#endif
 
-/* DOES NOT WORK */
-/* #undef GST_DISABLE_LOADSAVE */
+/**
+ * GST_DISABLE_LOADSAVE:
+ *
+ * Configures the inclusion of the plugin graph xml-serialisation
+ * (was used in 0.8 by gst-editor)
+ */
+#define GST_DISABLE_LOADSAVE 1
 
-/* DOES NOT WORK */
-/* #undef GST_DISABLE_PARSE */
+/**
+ * GST_DISABLE_PARSE:
+ *
+ * Configures the inclusion of the gst-lauch parser
+ */
+#define GST_DISABLE_PARSE 1
 
-/* DOES NOT WORK */
+/**
+ * GST_DISABLE_TRACE:
+ *
+ * Configures the inclusion of a resource tracing facillity
+ * (seems to be unused)
+ */
+#ifdef _DEBUG
 /* #undef GST_DISABLE_TRACE */
+#else
+#define GST_DISABLE_TRACE 1
+#endif
 
-/* DOES NOT WORK */
+/**
+ * GST_DISABLE_ALLOC_TRACE:
+ *
+ * Configures the use of a memory tracer based on the resource tracer
+ * if TRACE is disabled, ALLOC_TRACE is disabled as well
+ */
+#ifdef _DEBUG
 /* #undef GST_DISABLE_ALLOC_TRACE */
+#else
+#define GST_DISABLE_ALLOC_TRACE 1
+#endif
 
-/* DOES NOT WORK */
-/* #undef GST_DISABLE_REGISTRY */
+/**
+ * GST_DISABLE_REGISTRY:
+ *
+ * Configures the use of the plugin registry.
+ * If one disables this, required plugins need to be loaded and registered
+ * manually
+ */
+#define GST_DISABLE_REGISTRY 1
 
-/* DOES NOT WORK */
+/**
+ * GST_DISABLE_XML:
+ *
+ * Configures the use libxml2. This setting is derived from the settings of
+ * %GST_DISABLE_LOADSAVE and %GST_DISABLE_REGISTRY (in the xml registry case).
+ */
+#define GST_DISABLE_XML 1
+
+/* FIXME: test and document these! */
+/* Configures the use of external plugins */
 /* #undef GST_DISABLE_PLUGIN */
 
 /* printf extension format */
@@ -116,7 +166,7 @@
 /* whether or not GST_PTR_FORMAT or GST_SEGMENT_FORMAT are using
  * the printf extension mechanism. This is for internal use in our
  * header files so we know whether we can use G_GNUC_PRINTF or not */
-#undef GST_USING_PRINTF_EXTENSION
+/* #undef GST_USING_PRINTF_EXTENSION */
 
 /* whether or not the CPU supports unaligned access */
 #define GST_HAVE_UNALIGNED_ACCESS 1
@@ -126,8 +176,9 @@
 #define GST_HAVE_GLIB_2_8 1
 
 /***** Deal with XML stuff, we have to handle both loadsave and registry *****/
-
-#if (! (defined(GST_DISABLE_LOADSAVE) && defined(GST_DISABLE_REGISTRY)) )
+/* FIXME: move include to where we need it */
+/*#if (! (defined(GST_DISABLE_LOADSAVE) && defined(GST_DISABLE_REGISTRY)) )*/
+#ifndef GST_DISABLE_XML
 # include <libxml/parser.h>
 #else
 # define GST_DISABLE_LOADSAVE_REGISTRY
@@ -149,14 +200,18 @@
  * On Windows, this exports the plugin definition from the DLL.
  * On other platforms, this gets defined as a no-op.
  */
-#if defined(WIN32) && (!defined(__MINGW32__))
+#ifdef _MSC_VER
 #define GST_PLUGIN_EXPORT __declspec(dllexport) extern
+#ifdef GST_STATIC_COMPILATION
+#define GST_EXPORT extern
+#else
 #ifdef GST_EXPORTS
 #define GST_EXPORT __declspec(dllexport) extern
 #else
 #define GST_EXPORT __declspec(dllimport) extern
 #endif
-#else /* not WIN32 */
+#endif
+#else /* not _MSC_VER */
 #define GST_PLUGIN_EXPORT
 #define GST_EXPORT extern
 #endif
