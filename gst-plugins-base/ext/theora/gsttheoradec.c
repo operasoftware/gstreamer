@@ -189,10 +189,12 @@ gst_theora_dec_reset (GstTheoraDec * dec)
   g_list_free (dec->pendingevents);
   dec->pendingevents = NULL;
 
+#ifndef OPERA_MINIMAL_GST
   if (dec->tags) {
     gst_tag_list_free (dec->tags);
     dec->tags = NULL;
   }
+#endif /* !OPERA_MINIMAL_GST */
 }
 
 #if 0
@@ -700,6 +702,7 @@ theora_dec_setcaps (GstPad * pad, GstCaps * caps)
 static GstFlowReturn
 theora_handle_comment_packet (GstTheoraDec * dec, ogg_packet * packet)
 {
+#ifndef OPERA_MINIMAL_GST
   gchar *encoder = NULL;
   GstBuffer *buf;
   GstTagList *list;
@@ -736,6 +739,7 @@ theora_handle_comment_packet (GstTheoraDec * dec, ogg_packet * packet)
   }
 
   dec->tags = list;
+#endif /* !OPERA_MINIMAL_GST */
 
   return GST_FLOW_OK;
 }
@@ -846,11 +850,13 @@ theora_handle_type_packet (GstTheoraDec * dec, ogg_packet * packet)
     dec->pendingevents = NULL;
   }
 
+#ifndef OPERA_MINIMAL_GST
   if (dec->tags) {
     gst_element_found_tags_for_pad (GST_ELEMENT_CAST (dec), dec->srcpad,
         dec->tags);
     dec->tags = NULL;
   }
+#endif /* !OPERA_MINIMAL_GST */
 
   return ret;
 }
