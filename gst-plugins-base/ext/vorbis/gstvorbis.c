@@ -23,27 +23,36 @@
 
 #include "gst/tag/tag.h"
 
+#ifndef OPERA_MINIMAL_GST
 #include "gstvorbisenc.h"
+#endif /* !OPERA_MINIMAL_GST */
 #include "gstvorbisdec.h"
+#ifndef OPERA_MINIMAL_GST
 #include "gstvorbisparse.h"
 #include "gstvorbistag.h"
 
 GST_DEBUG_CATEGORY (vorbisenc_debug);
+#endif /* !OPERA_MINIMAL_GST */
 GST_DEBUG_CATEGORY (vorbisdec_debug);
+#ifndef OPERA_MINIMAL_GST
 GST_DEBUG_CATEGORY (vorbisparse_debug);
 GST_DEBUG_CATEGORY (vorbistag_debug);
+#endif /* !OPERA_MINIMAL_GST */
 
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
+#ifndef OPERA_MINIMAL_GST
   if (!gst_element_register (plugin, "vorbisenc", GST_RANK_PRIMARY,
           GST_TYPE_VORBISENC))
     return FALSE;
+#endif /* !OPERA_MINIMAL_GST */
 
   if (!gst_element_register (plugin, "vorbisdec", GST_RANK_PRIMARY,
           gst_vorbis_dec_get_type ()))
     return FALSE;
 
+#ifndef OPERA_MINIMAL_GST
   if (!gst_element_register (plugin, "vorbisparse", GST_RANK_NONE,
           gst_vorbis_parse_get_type ()))
     return FALSE;
@@ -54,14 +63,17 @@ plugin_init (GstPlugin * plugin)
 
   GST_DEBUG_CATEGORY_INIT (vorbisenc_debug, "vorbisenc", 0,
       "vorbis encoding element");
+#endif /* !OPERA_MINIMAL_GST */
   GST_DEBUG_CATEGORY_INIT (vorbisdec_debug, "vorbisdec", 0,
       "vorbis decoding element");
+#ifndef OPERA_MINIMAL_GST
   GST_DEBUG_CATEGORY_INIT (vorbisparse_debug, "vorbisparse", 0,
       "vorbis parsing element");
   GST_DEBUG_CATEGORY_INIT (vorbistag_debug, "vorbistag", 0,
       "vorbis tagging element");
 
   gst_tag_register_musicbrainz_tags ();
+#endif /* !OPERA_MINIMAL_GST */
 
   return TRUE;
 }
