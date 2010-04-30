@@ -193,9 +193,11 @@ gst_vorbis_dec_reset (GstVorbisDec * dec)
   g_list_free (dec->pendingevents);
   dec->pendingevents = NULL;
 
+#ifndef OPERA_MINIMAL_GST
   if (dec->taglist)
     gst_tag_list_free (dec->taglist);
   dec->taglist = NULL;
+#endif
 }
 
 
@@ -615,6 +617,7 @@ vorbis_handle_identification_packet (GstVorbisDec * vd)
 static GstFlowReturn
 vorbis_handle_comment_packet (GstVorbisDec * vd, ogg_packet * packet)
 {
+#ifndef OPERA_MINIMAL_GST
   guint bitrate = 0;
   gchar *encoder = NULL;
   GstTagList *list, *old_list;
@@ -683,6 +686,7 @@ vorbis_handle_comment_packet (GstVorbisDec * vd, ogg_packet * packet)
     gst_element_post_message (GST_ELEMENT_CAST (vd),
         gst_message_new_tag (GST_OBJECT (vd), gst_tag_list_copy (vd->taglist)));
   }
+#endif /* !OPERA_MINIMAL_GST */
 
   return GST_FLOW_OK;
 }
@@ -710,11 +714,14 @@ vorbis_handle_type_packet (GstVorbisDec * vd)
     vd->pendingevents = NULL;
   }
 
+#ifndef OPERA_MINIMAL_GST
   if (vd->taglist) {
     /* The tags have already been sent on the bus as messages. */
     gst_pad_push_event (vd->srcpad, gst_event_new_tag (vd->taglist));
     vd->taglist = NULL;
   }
+#endif /* !OPERA_MINIMAL_GST */
+
   return GST_FLOW_OK;
 
   /* ERRORS */
