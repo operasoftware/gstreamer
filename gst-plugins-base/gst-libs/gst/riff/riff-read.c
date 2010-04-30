@@ -105,6 +105,8 @@ too_small:
   }
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /**
  * gst_riff_parse_chunk:
  * @element: caller element (used for debugging).
@@ -194,6 +196,8 @@ bogus_size:
   }
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 /**
  * gst_riff_parse_file_header:
  * @element: caller element (used for debugging/error).
@@ -253,6 +257,8 @@ not_riff:
     return FALSE;
   }
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * gst_riff_parse_strh:
@@ -428,6 +434,8 @@ too_small:
   }
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 /**
  * gst_riff_parse_strf_auds:
  * @element: caller element (used for debugging/error).
@@ -515,6 +523,8 @@ too_small:
     return FALSE;
   }
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /**
  * gst_riff_parse_strf_iavs:
@@ -747,3 +757,5 @@ gst_riff_parse_info (GstElement * element,
 
   return;
 }
+
+#endif /* !OPERA_MINIMAL_GST */

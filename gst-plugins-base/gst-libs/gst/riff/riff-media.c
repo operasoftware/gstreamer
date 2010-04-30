@@ -34,6 +34,8 @@
 GST_DEBUG_CATEGORY_EXTERN (riff_debug);
 #define GST_CAT_DEFAULT riff_debug
 
+#ifndef OPERA_MINIMAL_GST
+
 /**
  * gst_riff_create_video_caps:
  * @codec_fcc: fourCC codec for this codec.
@@ -911,6 +913,8 @@ gst_riff_create_video_caps (guint32 codec_fcc,
   return caps;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 static const struct
 {
   const guint32 ms_mask;
@@ -1683,6 +1687,8 @@ invalid_rate:
   return NULL;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 GstCaps *
 gst_riff_create_iavs_caps (guint32 codec_fcc,
     gst_riff_strh * strh, gst_riff_strf_iavs * strf,
@@ -1807,6 +1813,8 @@ gst_riff_create_video_template_caps (void)
   return caps;
 }
 
+#endif /* !OPERA_MINIMAL_GST */
+
 GstCaps *
 gst_riff_create_audio_template_caps (void)
 {
@@ -1854,6 +1862,8 @@ gst_riff_create_audio_template_caps (void)
   return caps;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 GstCaps *
 gst_riff_create_iavs_template_caps (void)
 {
@@ -1873,3 +1883,5 @@ gst_riff_create_iavs_template_caps (void)
 
   return caps;
 }
+
+#endif /* !OPERA_MINIMAL_GST */
