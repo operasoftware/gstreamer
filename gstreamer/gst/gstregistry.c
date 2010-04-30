@@ -962,6 +962,7 @@ init_scan_context (GstRegistryScanContext * context, GstRegistry * registry)
 
   context->registry = registry;
 
+#ifndef OPERA_MINIMAL_GST
   /* see if forking is enabled and set up the scan helper state accordingly */
   do_fork = _gst_enable_registry_fork;
   if (do_fork) {
@@ -977,6 +978,7 @@ init_scan_context (GstRegistryScanContext * context, GstRegistry * registry)
   if (do_fork)
     context->helper_state = REGISTRY_SCAN_HELPER_NOT_STARTED;
   else
+#endif /* OPERA_MINIMAL_GST */
     context->helper_state = REGISTRY_SCAN_HELPER_DISABLED;
 
   context->helper = NULL;
@@ -987,7 +989,9 @@ static void
 clear_scan_context (GstRegistryScanContext * context)
 {
   if (context->helper) {
+#ifndef OPERA_MINIMAL_GST
     context->changed |= _priv_gst_plugin_loader_funcs.destroy (context->helper);
+#endif /* OPERA_MINIMAL_GST */
     context->helper = NULL;
   }
 }
@@ -998,6 +1002,8 @@ gst_registry_scan_plugin_file (GstRegistryScanContext * context,
 {
   gboolean changed = FALSE;
   GstPlugin *newplugin = NULL;
+
+#ifndef OPERA_MINIMAL_GST
 
 #ifdef G_OS_WIN32
   /* Disable external plugin loader on Windows until it is ported properly. */
@@ -1030,6 +1036,8 @@ gst_registry_scan_plugin_file (GstRegistryScanContext * context,
       context->helper_state = REGISTRY_SCAN_HELPER_DISABLED;
     }
   }
+
+#endif /* OPERA_MINIMAL_GST */
 
   /* Check if the helper is disabled (or just got disabled above) */
   if (context->helper_state == REGISTRY_SCAN_HELPER_DISABLED) {
