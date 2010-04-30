@@ -85,7 +85,9 @@
 
 #include <string.h>
 #include <gst/gst.h>
+#ifndef OPERA_MINIMAL_GST
 #include <gst/pbutils/pbutils.h>
+#endif
 
 #include "gstplay-marshal.h"
 #include "gstplay-enum.h"
@@ -1371,8 +1373,10 @@ unknown_type:
     chain->deadend = TRUE;
     chain->endcaps = gst_caps_ref (caps);
 
+#ifndef OPERA_MINIMAL_GST
     gst_element_post_message (GST_ELEMENT_CAST (dbin),
         gst_missing_decoder_message_new (GST_ELEMENT_CAST (dbin), caps));
+#endif
 
     g_signal_emit (G_OBJECT (dbin),
         gst_decode_bin_signals[SIGNAL_UNKNOWN_TYPE], 0, pad, caps);
@@ -1389,6 +1393,7 @@ unknown_type:
       gchar *desc;
 
       if (caps && !gst_caps_is_empty (caps)) {
+#ifndef OPERA_MINIMAL_GST
         desc = gst_pb_utils_get_decoder_description (caps);
         GST_ELEMENT_ERROR (dbin, STREAM, CODEC_NOT_FOUND,
             (_("A %s plugin is required to play this stream, "
@@ -1396,6 +1401,12 @@ unknown_type:
             ("No decoder to handle media type '%s'",
                 gst_structure_get_name (gst_caps_get_structure (caps, 0))));
         g_free (desc);
+#else
+        GST_ELEMENT_ERROR (dbin, STREAM, CODEC_NOT_FOUND,
+            ("A plugin is required to play this stream, but not installed."),
+            ("No decoder to handle media type '%s'",
+                gst_structure_get_name (gst_caps_get_structure (caps, 0))));
+#endif
       } else {
         GST_ELEMENT_ERROR (dbin, STREAM, TYPE_NOT_FOUND,
             (_("Could not determine type of stream")),
@@ -3406,8 +3417,10 @@ gst_decode_bin_change_state (GstElement * element, GstStateChange transition)
 /* ERRORS */
 missing_typefind:
   {
+#ifndef OPERA_MINIMAL_GST
     gst_element_post_message (element,
         gst_missing_element_message_new (element, "typefind"));
+#endif
     GST_ELEMENT_ERROR (dbin, CORE, MISSING_PLUGIN, (NULL), ("no typefind!"));
     return GST_STATE_CHANGE_FAILURE;
   }
@@ -3441,3 +3454,12 @@ gst_decode_bin_plugin_init (GstPlugin * plugin)
   return gst_element_register (plugin, "decodebin2", GST_RANK_NONE,
       GST_TYPE_DECODE_BIN);
 }
+
+#ifdef OPERA_MINIMAL_GST
+GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
+    GST_VERSION_MINOR,
+    "decodebin2",
+    "decoder bin",
+    gst_decode_bin_plugin_init,
+	VERSION, GST_LICENSE, GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN)
+#endif
