@@ -34,6 +34,7 @@ plugin_init (GstPlugin * plugin)
           gst_theora_dec_get_type ()))
     return FALSE;
 
+#ifndef OPERA_MINIMAL_GST
   if (!gst_element_register (plugin, "theoraenc", GST_RANK_PRIMARY,
           gst_theora_enc_get_type ()))
     return FALSE;
@@ -41,6 +42,7 @@ plugin_init (GstPlugin * plugin)
   if (!gst_element_register (plugin, "theoraparse", GST_RANK_NONE,
           gst_theora_parse_get_type ()))
     return FALSE;
+#endif /* !OPERA_MINIMAL_GST */
 
   return TRUE;
 }
