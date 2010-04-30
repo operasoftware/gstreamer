@@ -1097,11 +1097,13 @@ gst_ogg_chain_new_stream (GstOggChain * chain, glong serialno)
   gst_object_set_name (GST_OBJECT (ret), name);
   g_free (name);
 
+#ifndef OPERA_MINIMAL_GST
   /* FIXME: either do something with it or remove it */
   list = gst_tag_list_new ();
   gst_tag_list_add (list, GST_TAG_MERGE_REPLACE, GST_TAG_SERIAL, serialno,
       NULL);
   gst_tag_list_free (list);
+#endif /* !OPERA_MINIMAL_GST */
 
   GST_DEBUG_OBJECT (chain->ogg,
       "created new ogg src %p for stream with serial %08lx", ret, serialno);
@@ -1661,8 +1663,10 @@ gst_ogg_demux_activate_chain (GstOggDemux * ogg, GstOggChain * chain,
   if (event) {
     gst_ogg_demux_send_event (ogg, event);
 
+#ifndef OPERA_MINIMAL_GST
     gst_element_found_tags (GST_ELEMENT_CAST (ogg),
         gst_tag_list_new_full (GST_TAG_CONTAINER_FORMAT, "Ogg", NULL));
+#endif /* !OPERA_MINIMAL_GST */
   }
 
   GST_DEBUG_OBJECT (ogg, "starting chain");
