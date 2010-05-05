@@ -2449,9 +2449,11 @@ gst_decode_group_new (GstDecodeBin * dbin, GstDecodeChain * parent)
   /* ERRORS */
 missing_multiqueue:
   {
+#ifndef OPERA_MINIMAL_GST
     gst_element_post_message (GST_ELEMENT_CAST (dbin),
         gst_missing_element_message_new (GST_ELEMENT_CAST (dbin),
             "multiqueue"));
+#endif
     GST_ELEMENT_ERROR (dbin, CORE, MISSING_PLUGIN, (NULL), ("no multiqueue!"));
     g_slice_free (GstDecodeGroup, group);
     return NULL;
