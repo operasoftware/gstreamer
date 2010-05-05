@@ -484,6 +484,7 @@ gst_ogg_demux_chain_peer (GstOggPad * pad, ogg_packet * packet,
       "%p streaming to peer serial %08lx", pad, pad->map.serialno);
 
   if (pad->map.is_ogm) {
+#ifndef OPERA_MINIMAL_GST
     const guint8 *data;
     long bytes;
 
@@ -537,6 +538,7 @@ gst_ogg_demux_chain_peer (GstOggPad * pad, ogg_packet * packet,
         bytes--;
       }
     }
+#endif /* OPERA_MINIMAL_GST */
   } else {
     offset = 0;
     trim = 0;
