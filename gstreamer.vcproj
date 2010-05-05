@@ -60,7 +60,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib"
-				OutputFile="$(OutDir)\$(ProjectName)-dbg.dll"
+				OutputFile="$(OutDir)\$(ProjectName).dll"
 				ModuleDefinitionFile="gstreamer-dbg.def"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -85,7 +85,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir dist&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dll&quot; dist&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -163,7 +162,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir dist&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dll&quot; dist&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

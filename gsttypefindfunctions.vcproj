@@ -84,7 +84,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir dist\plugins-dbg&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dll&quot; dist\plugins-dbg&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist\plugins-dbg&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -161,7 +160,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).dll&quot; dist\plugins&#x0D;&#x0A;copy /y &quot;$(TargetDir)$(TargetName).pdb&quot; dist\plugins&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
