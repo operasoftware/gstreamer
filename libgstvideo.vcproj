@@ -158,6 +158,10 @@
 				RelativePath=".\gst-plugins-base\gst-libs\gst\video\gstvideosink.c"
 				>
 			</File>
+			<File
+				RelativePath=".\gst-plugins-base\gst-libs\gst\video\video.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
