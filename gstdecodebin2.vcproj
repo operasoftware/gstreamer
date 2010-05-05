@@ -53,6 +53,7 @@
 				RuntimeLibrary="3"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				CompileAs="1"
 				ForcedIncludeFiles="$(ProjectDir)src\msvc_pragmas.h"
 			/>
 			<Tool
