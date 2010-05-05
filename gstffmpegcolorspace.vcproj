@@ -175,10 +175,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\gst-plugins-base\gst\ffmpegcolorspace\gstffmpeg.c"
-				>
-			</File>
-			<File
 				RelativePath=".\gst-plugins-base\gst\ffmpegcolorspace\gstffmpegcodecmap.c"
 				>
 			</File>
