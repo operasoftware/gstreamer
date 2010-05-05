@@ -2167,8 +2167,10 @@ g_type_register_static
 	_gst_debug_nameof_funcptr
 	_gst_debug_register_funcptr
 #endif
+;	_gst_disable_registry_cache DATA
 	_gst_element_error_printf
 ;	_gst_elementclass_factory DATA
+;	_gst_plugin_loader_client_run
 ;	_gst_plugin_register_static
 ;	_gst_trace_add_entry
 ;	_gst_trace_mutex DATA
@@ -2188,7 +2190,6 @@ g_type_register_static
 ;	gst_atomic_int_set
 	gst_bin_add
 	gst_bin_add_many
-	gst_bin_child_proxy_get_children_count
 	gst_bin_find_unconnected_pad
 	gst_bin_find_unlinked_pad
 	gst_bin_flags_get_type
@@ -2301,6 +2302,7 @@ g_type_register_static
 ;	gst_caps_save_thyself
 	gst_caps_set_simple
 	gst_caps_set_simple_valist
+	gst_caps_set_value
 	gst_caps_subtract
 	gst_caps_to_string
 	gst_caps_truncate
@@ -2395,7 +2397,6 @@ g_type_register_static
 	gst_element_class_set_details_simple
 	gst_element_continue_state
 	gst_element_create_all_pads
-	gst_element_default_error
 	gst_element_factory_can_sink_caps
 	gst_element_factory_can_src_caps
 	gst_element_factory_create
@@ -2455,7 +2456,6 @@ g_type_register_static
 	gst_element_register
 	gst_element_release_request_pad
 	gst_element_remove_pad
-	gst_element_request_compatible_pad
 	gst_element_requires_clock
 	gst_element_seek
 	gst_element_seek_simple
@@ -2489,6 +2489,7 @@ g_type_register_static
 	gst_event_new_new_segment_full
 	gst_event_new_qos
 	gst_event_new_seek
+	gst_event_new_sink_message
 	gst_event_new_step
 	gst_event_new_tag
 	gst_event_parse_buffer_size
@@ -2497,6 +2498,7 @@ g_type_register_static
 	gst_event_parse_new_segment_full
 	gst_event_parse_qos
 	gst_event_parse_seek
+	gst_event_parse_sink_message
 	gst_event_parse_step
 	gst_event_parse_tag
 	gst_event_set_seqnum
@@ -2621,6 +2623,7 @@ g_type_register_static
 	gst_message_new_info
 	gst_message_new_latency
 	gst_message_new_new_clock
+	gst_message_new_qos
 	gst_message_new_request_state
 	gst_message_new_segment_done
 	gst_message_new_segment_start
@@ -2642,6 +2645,9 @@ g_type_register_static
 	gst_message_parse_error
 	gst_message_parse_info
 	gst_message_parse_new_clock
+	gst_message_parse_qos
+	gst_message_parse_qos_stats
+	gst_message_parse_qos_values
 	gst_message_parse_request_state
 	gst_message_parse_segment_done
 	gst_message_parse_segment_start
@@ -2654,6 +2660,8 @@ g_type_register_static
 	gst_message_parse_tag_full
 	gst_message_parse_warning
 	gst_message_set_buffering_stats
+	gst_message_set_qos_stats
+	gst_message_set_qos_values
 	gst_message_set_seqnum
 	gst_message_set_stream_status_object
 	gst_message_type_get_name
@@ -2711,6 +2719,7 @@ g_type_register_static
 	gst_pad_flags_get_type
 	gst_pad_get_allowed_caps
 	gst_pad_get_caps
+	gst_pad_get_caps_reffed
 	gst_pad_get_direction
 	gst_pad_get_element_private
 	gst_pad_get_fixed_caps_func
@@ -2740,6 +2749,7 @@ g_type_register_static
 	gst_pad_pause_task
 	gst_pad_peer_accept_caps
 	gst_pad_peer_get_caps
+	gst_pad_peer_get_caps_reffed
 	gst_pad_peer_query
 	gst_pad_presence_get_type
 	gst_pad_proxy_getcaps
@@ -2833,6 +2843,7 @@ g_type_register_static
 	gst_plugin_feature_get_name
 	gst_plugin_feature_get_rank
 	gst_plugin_feature_get_type
+	gst_plugin_feature_list_copy
 	gst_plugin_feature_list_free
 	gst_plugin_feature_load
 	gst_plugin_feature_set_name
@@ -2948,6 +2959,7 @@ g_type_register_static
 	gst_registry_get_default
 	gst_registry_get_feature_list
 	gst_registry_get_feature_list_by_plugin
+	gst_registry_get_feature_list_cookie
 	gst_registry_get_path_list
 	gst_registry_get_plugin_list
 	gst_registry_get_type
@@ -3026,6 +3038,8 @@ g_type_register_static
 	gst_structure_id_get
 	gst_structure_id_get_valist
 	gst_structure_id_get_value
+	gst_structure_id_has_field
+	gst_structure_id_has_field_typed
 	gst_structure_id_new
 	gst_structure_id_set
 	gst_structure_id_set_valist
@@ -3174,9 +3188,14 @@ g_type_register_static
 	gst_uri_protocol_is_valid
 	gst_uri_type_get_type
 	gst_util_array_binary_search
+	gst_util_double_to_fraction
 	gst_util_dump_mem
+	gst_util_fraction_add
+	gst_util_fraction_multiply
+	gst_util_fraction_to_double
 	gst_util_gdouble_to_guint64
 	gst_util_get_timestamp
+	gst_util_greatest_common_divisor
 	gst_util_guint64_to_gdouble
 	gst_util_seqnum_compare
 	gst_util_seqnum_next
@@ -3411,6 +3430,7 @@ g_type_register_static
 	gst_data_queue_is_full
 	gst_data_queue_limits_changed
 	gst_data_queue_new
+	gst_data_queue_new_full
 	gst_data_queue_pop
 	gst_data_queue_push
 	gst_data_queue_set_flushing
@@ -3419,6 +3439,7 @@ g_type_register_static
 	gst_type_find_helper_for_buffer
 	gst_type_find_helper_for_extension
 	gst_type_find_helper_get_range
+	gst_type_find_helper_get_range_ext
 
 ; libgstinterfaces
 
@@ -3611,12 +3632,12 @@ g_type_register_static
 ;	gst_video_filter_get_type
 ;	gst_video_format_convert
 ;	gst_video_format_from_fourcc
-;	gst_video_format_get_component_height
-;	gst_video_format_get_component_offset
-;	gst_video_format_get_component_width
+	gst_video_format_get_component_height
+	gst_video_format_get_component_offset
+	gst_video_format_get_component_width
 ;	gst_video_format_get_pixel_stride
-;	gst_video_format_get_row_stride
-;	gst_video_format_get_size
+	gst_video_format_get_row_stride
+	gst_video_format_get_size
 ;	gst_video_format_get_type
 ;	gst_video_format_has_alpha
 ;	gst_video_format_is_rgb
@@ -3735,6 +3756,8 @@ g_flags_register_static
 g_value_peek_pointer
 g_value_take_object
 g_value_set_int64
+g_slice_alloc0
+g_value_reset
 
 ; gstcoreelements
 
