@@ -132,6 +132,7 @@ static const GstOggMap mappers[] = {
     is_header_vorbis,
     packet_duration_vorbis
   },
+#ifndef OPERA_MINIMAL_GST
   {
     "Speex", 5, 80,
     "audio/x-speex",
@@ -271,6 +272,7 @@ static const GstOggMap mappers[] = {
     is_header_ogm,
     packet_duration_ogm
   }
+#endif /* OPERA_MINIMAL_GST */
 };
 /* *INDENT-ON* */
 
@@ -564,6 +566,8 @@ is_header_theora (GstOggStream * pad, ogg_packet * packet)
   return (packet->bytes > 0 && (packet->packet[0] & 0x80) == 0x80);
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /* dirac */
 
 static gboolean
@@ -657,6 +661,7 @@ granule_to_granulepos_dirac (GstOggStream * pad, gint64 granule,
   return -1;
 }
 
+#endif /* OPERA_MINIMAL_GST */
 
 /* vorbis */
 
@@ -726,6 +731,8 @@ packet_duration_vorbis (GstOggStream * pad, ogg_packet * packet)
 
   return duration;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /* speex */
 
@@ -1272,6 +1279,7 @@ setup_kate_mapper (GstOggStream * pad, ogg_packet * packet)
   return TRUE;
 }
 
+#endif /* OPERA_MINIMAL_GST */
 
 gboolean
 gst_ogg_stream_setup_map (GstOggStream * pad, ogg_packet * packet)
