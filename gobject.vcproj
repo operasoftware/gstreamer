@@ -224,7 +224,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running glib-genmarshal"
-						CommandLine="cd &quot;$(InputDir)&quot;&#x0D;&#x0A;echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh&#x0D;&#x0A;echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh&#x0D;&#x0A;echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh&#x0D;&#x0A;copy xgen-gmh gmarshal.h&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c&#x0D;&#x0A;"
+						CommandLine="cd &quot;$(InputDir)&quot;&#x0D;&#x0A;echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh&#x0D;&#x0A;echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh&#x0D;&#x0A;echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh&#x0D;&#x0A;move xgen-gmh gmarshal.h&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c&#x0D;&#x0A;"
 						Outputs="&quot;$(InputDir)\gmarshal.h&quot;;&quot;$(InputDir)\gmarshal.c&quot;"
 					/>
 				</FileConfiguration>
@@ -234,7 +234,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running glib-genmarshal"
-						CommandLine="cd &quot;$(InputDir)&quot;&#x0D;&#x0A;echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh&#x0D;&#x0A;echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh&#x0D;&#x0A;echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh&#x0D;&#x0A;copy xgen-gmh gmarshal.h&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c&#x0D;&#x0A;"
+						CommandLine="cd &quot;$(InputDir)&quot;&#x0D;&#x0A;echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh&#x0D;&#x0A;echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh&#x0D;&#x0A;echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh&#x0D;&#x0A;move xgen-gmh gmarshal.h&#x0D;&#x0A;&quot;$(SolutionDir)\tools\glib-genmarshal.exe&quot; --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c&#x0D;&#x0A;"
 						Outputs="&quot;$(InputDir)\gmarshal.h&quot;;&quot;$(InputDir)\gmarshal.c&quot;"
 					/>
 				</FileConfiguration>
