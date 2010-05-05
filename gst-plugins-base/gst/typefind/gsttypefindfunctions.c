@@ -49,6 +49,8 @@
 GST_DEBUG_CATEGORY_STATIC (type_find_debug);
 #define GST_CAT_DEFAULT type_find_debug
 
+#ifndef OPERA_MINIMAL_GST
+
 /* DataScanCtx: helper for typefind functions that scan through data
  * step-by-step, to avoid doing a peek at each and every offset */
 
@@ -2823,6 +2825,7 @@ ircam_type_find (GstTypeFind * tf, gpointer ununsed)
   }
 }
 
+#endif /* OPERA_MINIMAL_GST */
 
 /*** video/x-matroska ***/
 static GstStaticCaps matroska_caps = GST_STATIC_CAPS ("video/x-matroska");
@@ -2871,6 +2874,8 @@ matroska_type_find (GstTypeFind * tf, gpointer ununsed)
       break;
     }
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /*** application/mxf ***/
 static GstStaticCaps mxf_caps = GST_STATIC_CAPS ("application/mxf");
@@ -2953,6 +2958,7 @@ dv_type_find (GstTypeFind * tf, gpointer private)
   }
 }
 
+#endif /* OPERA_MINIMAL_GST */
 
 /*** application/ogg and application/x-annodex ***/
 static GstStaticCaps ogg_caps = GST_STATIC_CAPS ("application/ogg");
@@ -3044,6 +3050,8 @@ theora_type_find (GstTypeFind * tf, gpointer private)
     gst_type_find_suggest (tf, GST_TYPE_FIND_MAXIMUM, THEORA_CAPS);
   }
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 /*** kate ***/
 static void
@@ -3516,6 +3524,8 @@ xdgmime_typefind (GstTypeFind * find, gpointer user_data)
 }
 #endif /* USE_GIO */
 
+#endif /* OPERA_MINIMAL_GST */
+
 /*** generic typefind for streams that have some data at a specific position***/
 typedef struct
 {
@@ -3720,6 +3730,7 @@ plugin_init (GstPlugin * plugin)
       GST_DEBUG_FG_GREEN | GST_DEBUG_BG_RED, "generic type find functions");
 
   /* must use strings, macros don't accept initializers */
+#ifndef OPERA_MINIMAL_GST
   TYPE_FIND_REGISTER_START_WITH (plugin, "video/x-ms-asf", GST_RANK_SECONDARY,
       asf_exts,
       "\060\046\262\165\216\146\317\021\246\331\000\252\000\142\316\154", 16,
@@ -3771,8 +3782,10 @@ plugin_init (GstPlugin * plugin)
       mpeg_sys_type_find, mpeg_sys_exts, MPEG_SYS_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "video/mpegts", GST_RANK_PRIMARY,
       mpeg_ts_type_find, mpeg_ts_exts, MPEGTS_CAPS, NULL, NULL);
+#endif /* OPERA_MINIMAL_GST */
   TYPE_FIND_REGISTER (plugin, "application/ogg", GST_RANK_PRIMARY,
       ogganx_type_find, ogg_exts, OGGANX_CAPS, NULL, NULL);
+#ifndef OPERA_MINIMAL_GST
   TYPE_FIND_REGISTER (plugin, "video/mpeg-elementary", GST_RANK_MARGINAL,
       mpeg_video_stream_type_find, mpeg_video_exts, MPEG_VIDEO_CAPS, NULL,
       NULL);
@@ -3817,8 +3830,10 @@ plugin_init (GstPlugin * plugin)
       smil_type_find, smil_exts, SMIL_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "application/xml", GST_RANK_MARGINAL,
       xml_type_find, xml_exts, GENERIC_XML_CAPS, NULL, NULL);
+#endif /* OPERA_MINIMAL_GST */
   TYPE_FIND_REGISTER_RIFF (plugin, "audio/x-wav", GST_RANK_PRIMARY, wav_exts,
       "WAVE");
+#ifndef OPERA_MINIMAL_GST
   TYPE_FIND_REGISTER (plugin, "audio/x-aiff", GST_RANK_SECONDARY,
       aiff_type_find, aiff_exts, AIFF_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "audio/x-svx", GST_RANK_SECONDARY, svx_type_find,
@@ -3851,8 +3866,10 @@ plugin_init (GstPlugin * plugin)
       tiff_exts, TIFF_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "image/x-portable-pixmap", GST_RANK_SECONDARY,
       pnm_type_find, pnm_exts, PNM_CAPS, NULL, NULL);
+#endif /* OPERA_MINIMAL_GST */
   TYPE_FIND_REGISTER (plugin, "video/x-matroska", GST_RANK_PRIMARY,
       matroska_type_find, matroska_exts, MATROSKA_CAPS, NULL, NULL);
+#ifndef OPERA_MINIMAL_GST
   TYPE_FIND_REGISTER (plugin, "application/mxf", GST_RANK_PRIMARY,
       mxf_type_find, mxf_exts, MXF_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER_START_WITH (plugin, "video/x-mve", GST_RANK_SECONDARY,
@@ -3891,10 +3908,12 @@ plugin_init (GstPlugin * plugin)
       kate_type_find, NULL, NULL, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "audio/x-flac", GST_RANK_PRIMARY,
       flac_type_find, flac_exts, FLAC_CAPS, NULL, NULL);
+#endif /* OPERA_MINIMAL_GST */
   TYPE_FIND_REGISTER (plugin, "audio/x-vorbis", GST_RANK_PRIMARY,
       vorbis_type_find, NULL, VORBIS_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "video/x-theora", GST_RANK_PRIMARY,
       theora_type_find, NULL, THEORA_CAPS, NULL, NULL);
+#ifndef OPERA_MINIMAL_GST
   TYPE_FIND_REGISTER (plugin, "application/x-ogm-video", GST_RANK_PRIMARY,
       ogmvideo_type_find, NULL, OGMVIDEO_CAPS, NULL, NULL);
   TYPE_FIND_REGISTER (plugin, "application/x-ogm-audio", GST_RANK_PRIMARY,
@@ -3967,6 +3986,7 @@ plugin_init (GstPlugin * plugin)
   TYPE_FIND_REGISTER_START_WITH (plugin, "image/vnd.adobe.photoshop",
       GST_RANK_SECONDARY, psd_exts, "8BPS\000\001\000\000\000\000", 10,
       GST_TYPE_FIND_LIKELY);
+#endif /* OPERA_MINIMAL_GST */
 
 #ifdef USE_GIO
   TYPE_FIND_REGISTER (plugin, "xdgmime-base", GST_RANK_MARGINAL,
