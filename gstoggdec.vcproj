@@ -215,44 +215,28 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\gst-plugins-base\ext\theora\theoradec.c"
+				RelativePath=".\gst-plugins-base\ext\ogg\gstoggstream.c"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="include/glib-2.0;include/gstreamer-0.10;gst-plugins-base/gst-libs;gst-plugins-base/win32/common"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="include/glib-2.0;include/gstreamer-0.10;gst-plugins-base/gst-libs;gst-plugins-base/win32/common"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\gst-plugins-base\ext\vorbis\vorbisdec.c"
+				RelativePath=".\gst-plugins-base\ext\theora\gsttheoradec.c"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="include/glib-2.0;include/gstreamer-0.10;gst-plugins-base/gst-libs;gst-plugins-base/win32/common"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="include/glib-2.0;include/gstreamer-0.10;gst-plugins-base/gst-libs;gst-plugins-base/win32/common"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\gst-plugins-base\ext\vorbis\gstvorbiscommon.c"
+				>
+			</File>
+			<File
+				RelativePath=".\gst-plugins-base\ext\vorbis\gstvorbisdec.c"
+				>
+			</File>
+			<File
+				RelativePath=".\gst-plugins-base\ext\vorbis\gstvorbisdeclib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\gst-plugins-base\ext\ogg\vorbis_parse.c"
+				>
 			</File>
 		</Filter>
 		<Filter
