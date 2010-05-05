@@ -75,7 +75,204 @@ struct _GstOggMap
   GstOggMapPacketDurationFunc packet_duration_func;
 };
 
-static const GstOggMap mappers[];
+static gboolean setup_theora_mapper (GstOggStream * pad, ogg_packet * packet);
+static gint64 granulepos_to_granule_theora (GstOggStream * pad, gint64 granulepos);
+static gint64 granule_to_granulepos_default (GstOggStream * pad, gint64 granule, gint64 keyframe_granule);
+static gboolean is_keyframe_theora (GstOggStream * pad, gint64 granulepos);
+static gboolean is_header_theora (GstOggStream * pad, ogg_packet * packet);
+static gint64 packet_duration_constant (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_vorbis_mapper (GstOggStream * pad, ogg_packet * packet);
+static gint64 granulepos_to_granule_default (GstOggStream * pad, gint64 granulepos);
+static gboolean is_keyframe_true (GstOggStream * pad, gint64 granulepos);
+static gboolean is_header_vorbis (GstOggStream * pad, ogg_packet * packet);
+static gint64 packet_duration_vorbis (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_speex_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean is_header_count (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_pcm_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_cmml_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_fishead_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean is_header_true (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_fLaC_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean is_header_fLaC (GstOggStream * pad, ogg_packet * packet);
+static gint64 packet_duration_flac (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_flac_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean is_header_flac (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_celt_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_kate_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_dirac_mapper (GstOggStream * pad, ogg_packet * packet);
+static gint64 granulepos_to_granule_dirac (GstOggStream * pad, gint64 gp);
+static gint64 granule_to_granulepos_dirac (GstOggStream * pad, gint64 granule, gint64 keyframe_granule);
+static gboolean is_keyframe_dirac (GstOggStream * pad, gint64 granulepos);
+static gboolean setup_ogmaudio_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean is_header_ogm (GstOggStream * pad, ogg_packet * packet);
+static gint64 packet_duration_ogm (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_ogmvideo_mapper (GstOggStream * pad, ogg_packet * packet);
+static gboolean setup_ogmtext_mapper (GstOggStream * pad, ogg_packet * packet);
+
+/* *INDENT-OFF* */
+/* indent hates our freedoms */
+static const GstOggMap mappers[] = {
+  {
+    "\200theora", 7, 42,
+    "video/x-theora",
+    setup_theora_mapper,
+    granulepos_to_granule_theora,
+    granule_to_granulepos_default,
+    is_keyframe_theora,
+    is_header_theora,
+    packet_duration_constant
+  },
+  {
+    "\001vorbis", 7, 22,
+    "audio/x-vorbis",
+    setup_vorbis_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    is_keyframe_true,
+    is_header_vorbis,
+    packet_duration_vorbis
+  },
+  {
+    "Speex", 5, 80,
+    "audio/x-speex",
+    setup_speex_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    is_keyframe_true,
+    is_header_count,
+    packet_duration_constant
+  },
+  {
+    "PCM     ", 8, 0,
+    "audio/x-raw-int",
+    setup_pcm_mapper,
+    NULL,
+    NULL,
+    NULL,
+    is_header_count,
+    NULL
+  },
+  {
+    "CMML\0\0\0\0", 8, 0,
+    "text/x-cmml",
+    setup_cmml_mapper,
+    NULL,
+    NULL,
+    NULL,
+    is_header_count,
+    NULL
+  },
+  {
+    "Annodex", 7, 0,
+    "application/x-annodex",
+    setup_fishead_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    NULL,
+    is_header_count,
+    NULL
+  },
+  {
+    "fishead", 7, 64,
+    "application/octet-stream",
+    setup_fishead_mapper,
+    NULL,
+    NULL,
+    NULL,
+    is_header_true,
+    NULL
+  },
+  {
+    "fLaC", 4, 0,
+    "audio/x-flac",
+    setup_fLaC_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    is_keyframe_true,
+    is_header_fLaC,
+    packet_duration_flac
+  },
+  {
+    "\177FLAC", 5, 36,
+    "audio/x-flac",
+    setup_flac_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    is_keyframe_true,
+    is_header_flac,
+    packet_duration_flac
+  },
+  {
+    "AnxData", 7, 0,
+    "application/octet-stream",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+  },
+  {
+    "CELT    ", 8, 0,
+    "audio/x-celt",
+    setup_celt_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    NULL,
+    is_header_count,
+    packet_duration_constant
+  },
+  {
+    "\200kate\0\0\0", 8, 0,
+    "text/x-kate",
+    setup_kate_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    NULL,
+    is_header_count,
+    NULL
+  },
+  {
+    "BBCD\0", 5, 13,
+    "video/x-dirac",
+    setup_dirac_mapper,
+    granulepos_to_granule_dirac,
+    granule_to_granulepos_dirac,
+    is_keyframe_dirac,
+    is_header_count,
+    packet_duration_constant
+  },
+  {
+    "\001audio\0\0\0", 9, 53,
+    "application/x-ogm-audio",
+    setup_ogmaudio_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    is_keyframe_true,
+    is_header_ogm,
+    packet_duration_ogm
+  },
+  {
+    "\001video\0\0\0", 9, 53,
+    "application/x-ogm-video",
+    setup_ogmvideo_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    NULL,
+    is_header_ogm,
+    packet_duration_constant
+  },
+  {
+    "\001text\0\0\0", 9, 9,
+    "application/x-ogm-text",
+    setup_ogmtext_mapper,
+    granulepos_to_granule_default,
+    granule_to_granulepos_default,
+    is_keyframe_true,
+    is_header_ogm,
+    packet_duration_ogm
+  }
+};
+/* *INDENT-ON* */
 
 GstClockTime
 gst_ogg_stream_get_packet_start_time (GstOggStream * pad, ogg_packet * packet)
@@ -1075,171 +1272,6 @@ setup_kate_mapper (GstOggStream * pad, ogg_packet * packet)
   return TRUE;
 }
 
-
-/* *INDENT-OFF* */
-/* indent hates our freedoms */
-static const GstOggMap mappers[] = {
-  {
-    "\200theora", 7, 42,
-    "video/x-theora",
-    setup_theora_mapper,
-    granulepos_to_granule_theora,
-    granule_to_granulepos_default,
-    is_keyframe_theora,
-    is_header_theora,
-    packet_duration_constant
-  },
-  {
-    "\001vorbis", 7, 22,
-    "audio/x-vorbis",
-    setup_vorbis_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    is_keyframe_true,
-    is_header_vorbis,
-    packet_duration_vorbis
-  },
-  {
-    "Speex", 5, 80,
-    "audio/x-speex",
-    setup_speex_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    is_keyframe_true,
-    is_header_count,
-    packet_duration_constant
-  },
-  {
-    "PCM     ", 8, 0,
-    "audio/x-raw-int",
-    setup_pcm_mapper,
-    NULL,
-    NULL,
-    NULL,
-    is_header_count,
-    NULL
-  },
-  {
-    "CMML\0\0\0\0", 8, 0,
-    "text/x-cmml",
-    setup_cmml_mapper,
-    NULL,
-    NULL,
-    NULL,
-    is_header_count,
-    NULL
-  },
-  {
-    "Annodex", 7, 0,
-    "application/x-annodex",
-    setup_fishead_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    NULL,
-    is_header_count,
-    NULL
-  },
-  {
-    "fishead", 7, 64,
-    "application/octet-stream",
-    setup_fishead_mapper,
-    NULL,
-    NULL,
-    NULL,
-    is_header_true,
-    NULL
-  },
-  {
-    "fLaC", 4, 0,
-    "audio/x-flac",
-    setup_fLaC_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    is_keyframe_true,
-    is_header_fLaC,
-    packet_duration_flac
-  },
-  {
-    "\177FLAC", 5, 36,
-    "audio/x-flac",
-    setup_flac_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    is_keyframe_true,
-    is_header_flac,
-    packet_duration_flac
-  },
-  {
-    "AnxData", 7, 0,
-    "application/octet-stream",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-  },
-  {
-    "CELT    ", 8, 0,
-    "audio/x-celt",
-    setup_celt_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    NULL,
-    is_header_count,
-    packet_duration_constant
-  },
-  {
-    "\200kate\0\0\0", 8, 0,
-    "text/x-kate",
-    setup_kate_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    NULL,
-    is_header_count,
-    NULL
-  },
-  {
-    "BBCD\0", 5, 13,
-    "video/x-dirac",
-    setup_dirac_mapper,
-    granulepos_to_granule_dirac,
-    granule_to_granulepos_dirac,
-    is_keyframe_dirac,
-    is_header_count,
-    packet_duration_constant
-  },
-  {
-    "\001audio\0\0\0", 9, 53,
-    "application/x-ogm-audio",
-    setup_ogmaudio_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    is_keyframe_true,
-    is_header_ogm,
-    packet_duration_ogm
-  },
-  {
-    "\001video\0\0\0", 9, 53,
-    "application/x-ogm-video",
-    setup_ogmvideo_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    NULL,
-    is_header_ogm,
-    packet_duration_constant
-  },
-  {
-    "\001text\0\0\0", 9, 9,
-    "application/x-ogm-text",
-    setup_ogmtext_mapper,
-    granulepos_to_granule_default,
-    granule_to_granulepos_default,
-    is_keyframe_true,
-    is_header_ogm,
-    packet_duration_ogm
-  }
-};
-/* *INDENT-ON* */
 
 gboolean
 gst_ogg_stream_setup_map (GstOggStream * pad, ogg_packet * packet)
