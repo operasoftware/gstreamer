@@ -6965,6 +6965,75 @@ gst_matroska_demux_change_state (GstElement * element,
   return ret;
 }
 
+#ifndef OPERA_MINIMAL_GST
+gboolean
+gst_matroska_demux_plugin_init (GstPlugin * plugin)
+{
+  gst_riff_init ();
+
+  /* create an elementfactory for the matroska_demux element */
+  if (!gst_element_register (plugin, "matroskademux",
+          GST_RANK_PRIMARY, GST_TYPE_MATROSKA_DEMUX))
+    return FALSE;
+
+  return TRUE;
+}
+#else /* OPERA_MINIMAL_GST */
+/* WebM typefinder copied from gst-plugins-base typefinders to avoid
+ * depending on a new version. */
+static gboolean
+ebml_check_header (GstTypeFind * tf, const gchar * doctype, int doctype_len)
+{
+  /* 4 bytes for EBML ID, 1 byte for header length identifier */
+  guint8 *data = gst_type_find_peek (tf, 0, 4 + 1);
+  gint len_mask = 0x80, size = 1, n = 1, total;
+
+  if (!data)
+    return FALSE;
+
+  /* ebml header? */
+  if (data[0] != 0x1A || data[1] != 0x45 || data[2] != 0xDF || data[3] != 0xA3)
+    return FALSE;
+
+  /* length of header */
+  total = data[4];
+  while (size <= 8 && !(total & len_mask)) {
+    size++;
+    len_mask >>= 1;
+  }
+  if (size > 8)
+    return FALSE;
+  total &= (len_mask - 1);
+  while (n < size)
+    total = (total << 8) | data[4 + n++];
+
+  /* get new data for full header, 4 bytes for EBML ID,
+   * EBML length tag and the actual header */
+  data = gst_type_find_peek (tf, 0, 4 + size + total);
+  if (!data)
+    return FALSE;
+
+  /* the header must contain the doctype. For now, we don't parse the
+   * whole header but simply check for the availability of that array
+   * of characters inside the header. Not fully fool-proof, but good
+   * enough. */
+  for (n = 4 + size; n <= 4 + size + total - doctype_len; n++)
+    if (!memcmp (&data[n], doctype, doctype_len))
+      return TRUE;
+
+  return FALSE;
+}
+
+static GstStaticCaps webm_caps = GST_STATIC_CAPS ("video/webm");
+
+#define WEBM_CAPS (gst_static_caps_get(&webm_caps))
+static void
+webm_type_find (GstTypeFind * tf, gpointer ununsed)
+{
+  if (ebml_check_header (tf, "webm", 4))
+    gst_type_find_suggest (tf, GST_TYPE_FIND_MAXIMUM, WEBM_CAPS);
+}
+
 gboolean
 gst_matroska_demux_plugin_init (GstPlugin * plugin)
 {
@@ -6975,10 +7044,13 @@ gst_matroska_demux_plugin_init (GstPlugin * plugin)
           GST_RANK_PRIMARY + 1, GST_TYPE_MATROSKA_DEMUX))
     return FALSE;
 
+  if (!gst_type_find_register (plugin, "video/webm", GST_RANK_PRIMARY,
+          webm_type_find, NULL, WEBM_CAPS, NULL, NULL))
+    return FALSE;
+
   return TRUE;
 }
 
-#ifdef OPERA_MINIMAL_GST
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
     GST_VERSION_MINOR,
     "opera_matroska",
