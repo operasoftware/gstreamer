@@ -213,11 +213,12 @@ gst_matroska_demux_finalize (GObject * object)
     g_ptr_array_free (demux->src, TRUE);
     demux->src = NULL;
   }
-
+#ifndef OPERA_MINIMAL_GST
   if (demux->global_tags) {
     gst_tag_list_free (demux->global_tags);
     demux->global_tags = NULL;
   }
+#endif /* OPERA_MINIMAL_GST */
 
   g_object_unref (demux->adapter);
 
@@ -270,7 +271,9 @@ gst_matroska_demux_init (GstMatroskaDemux * demux,
   demux->writing_app = NULL;
   demux->muxing_app = NULL;
   demux->index = NULL;
+#ifndef OPERA_MINIMAL_GST
   demux->global_tags = NULL;
+#endif
 
   demux->adapter = gst_adapter_new ();
 
@@ -301,10 +304,10 @@ gst_matroska_track_free (GstMatroskaTrackContext * track)
     }
     g_array_free (track->encodings, TRUE);
   }
-#endif /* OPERA_MINIMAL_GST */
 
   if (track->pending_tags)
     gst_tag_list_free (track->pending_tags);
+#endif /* OPERA_MINIMAL_GST */
 
   if (track->index_table)
     g_array_free (track->index_table, TRUE);
@@ -401,11 +404,13 @@ gst_matroska_demux_reset (GstElement * element)
   demux->index_parsed = FALSE;
   demux->tracks_parsed = FALSE;
   demux->segmentinfo_parsed = FALSE;
+#ifndef OPERA_MINIMAL_GST
   demux->attachments_parsed = FALSE;
 
   g_list_foreach (demux->tags_parsed, (GFunc) gst_ebml_level_free, NULL);
   g_list_free (demux->tags_parsed);
   demux->tags_parsed = NULL;
+#endif /* OPERA_MINIMAL_GST */
 
   gst_segment_init (&demux->segment, GST_FORMAT_TIME);
   demux->last_stop_end = GST_CLOCK_TIME_NONE;
@@ -444,10 +449,12 @@ gst_matroska_demux_reset (GstElement * element)
   }
   demux->element_index_writer_id = -1;
 
+#ifndef OPERA_MINIMAL_GST
   if (demux->global_tags) {
     gst_tag_list_free (demux->global_tags);
   }
   demux->global_tags = gst_tag_list_new ();
+#endif /* OPERA_MINIMAL_GST */
 }
 
 static gint
@@ -1077,7 +1084,9 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
   gchar *padname = NULL;
   GstFlowReturn ret;
   guint32 id;
+#ifndef OPERA_MINIMAL_GST
   GstTagList *list = NULL;
+#endif
   gchar *codec = NULL;
 
   DEBUG_ELEMENT_START (demux, ebml, "TrackEntry");
@@ -1793,9 +1802,11 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
           context->codec_id,
           (guint8 *) context->codec_priv, context->codec_priv_size, &codec);
       if (codec) {
+#ifndef OPERA_MINIMAL_GST
         list = gst_tag_list_new ();
         gst_tag_list_add (list, GST_TAG_MERGE_REPLACE,
             GST_TAG_VIDEO_CODEC, codec, NULL);
+#endif /* OPERA_MINIMAL_GST */
         g_free (codec);
       }
       break;
@@ -1811,9 +1822,11 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
           context->codec_id,
           context->codec_priv, context->codec_priv_size, &codec);
       if (codec) {
+#ifndef OPERA_MINIMAL_GST
         list = gst_tag_list_new ();
         gst_tag_list_add (list, GST_TAG_MERGE_REPLACE,
             GST_TAG_AUDIO_CODEC, codec, NULL);
+#endif /* OPERA_MINIMAL_GST */
         g_free (codec);
       }
       break;
@@ -1845,7 +1858,7 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
     GST_LOG ("stream %d: language=eng (assuming default)", context->index);
     context->language = g_strdup ("eng");
   }
-
+#ifndef OPERA_MINIMAL_GST
   if (context->language) {
     const gchar *lang;
 
@@ -1857,6 +1870,7 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
     gst_tag_list_add (list, GST_TAG_MERGE_REPLACE,
         GST_TAG_LANGUAGE_CODE, (lang) ? lang : context->language, NULL);
   }
+#endif /* OPERA_MINIMAL_GST */
 
   if (caps == NULL) {
     GST_WARNING_OBJECT (demux, "could not determine caps for stream with "
@@ -1894,7 +1908,9 @@ gst_matroska_demux_add_stream (GstMatroskaDemux * demux)
   GST_INFO_OBJECT (demux, "Adding pad '%s' with caps %" GST_PTR_FORMAT,
       padname, caps);
 
+#ifndef OPERA_MINIMAL_GST
   context->pending_tags = list;
+#endif
 
   gst_pad_set_element_private (context->pad, context);
 
@@ -2082,6 +2098,7 @@ gst_matroskademux_do_index_seek (GstMatroskaDemux * demux,
   return entry;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /* takes ownership of taglist */
 static void
 gst_matroska_demux_found_global_tag (GstMatroskaDemux * demux,
@@ -2098,6 +2115,7 @@ gst_matroska_demux_found_global_tag (GstMatroskaDemux * demux,
     gst_element_found_tags (GST_ELEMENT (demux), taglist);
   }
 }
+#endif /* OPERA_MINIMAL_GST */
 
 /* returns FALSE if there are no pads to deliver event to,
  * otherwise TRUE (whatever the outcome of event sending),
@@ -2125,6 +2143,7 @@ gst_matroska_demux_send_event (GstMatroskaDemux * demux, GstEvent * event)
     gst_pad_push_event (stream->pad, event);
     ret = TRUE;
 
+#ifndef OPERA_MINIMAL_GST
     /* FIXME: send global tags before stream tags */
     if (G_UNLIKELY (is_newsegment && stream->pending_tags != NULL)) {
       GST_DEBUG_OBJECT (demux, "Sending pending_tags %p for pad %s:%s : %"
@@ -2134,8 +2153,10 @@ gst_matroska_demux_send_event (GstMatroskaDemux * demux, GstEvent * event)
           stream->pending_tags);
       stream->pending_tags = NULL;
     }
+#endif /* OPERA_MINIMAL_GST */
   }
 
+#ifndef OPERA_MINIMAL_GST
   if (G_UNLIKELY (is_newsegment && demux->global_tags != NULL)) {
     gst_tag_list_add (demux->global_tags, GST_TAG_MERGE_REPLACE,
         GST_TAG_CONTAINER_FORMAT, "Matroska", NULL);
@@ -2144,6 +2165,7 @@ gst_matroska_demux_send_event (GstMatroskaDemux * demux, GstEvent * event)
     gst_element_found_tags (GST_ELEMENT (demux), demux->global_tags);
     demux->global_tags = NULL;
   }
+#endif /* OPERA_MINIMAL_GST */
 
   gst_event_unref (event);
   return ret;
@@ -3126,6 +3148,7 @@ gst_matroska_demux_parse_info (GstMatroskaDemux * demux)
         break;
       }
 
+#ifndef OPERA_MINIMAL_GST
       case GST_MATROSKA_ID_TITLE:{
         gchar *text;
         GstTagList *taglist;
@@ -3141,6 +3164,7 @@ gst_matroska_demux_parse_info (GstMatroskaDemux * demux)
         g_free (text);
         break;
       }
+#endif /* OPERA_MINIMAL_GST */
 
       default:
         GST_WARNING_OBJECT (demux,
@@ -3171,6 +3195,8 @@ gst_matroska_demux_parse_info (GstMatroskaDemux * demux)
 
   return ret;
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 static GstFlowReturn
 gst_matroska_demux_parse_metadata_id_simple_tag (GstMatroskaDemux * demux,
@@ -3691,6 +3717,8 @@ gst_matroska_demux_parse_chapters (GstMatroskaDemux * demux)
   return ret;
 }
 
+#endif /* OPERA_MINIMAL_GST */
+
 /*
  * Read signed/unsigned "EBML" numbers.
  * Return: number of bytes processed.
@@ -3846,6 +3874,8 @@ no_buffer:
   }
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 static GstFlowReturn
 gst_matroska_demux_push_flac_codec_priv_data (GstMatroskaDemux * demux,
     GstMatroskaTrackContext * stream)
@@ -3923,6 +3953,8 @@ gst_matroska_demux_push_speex_codec_priv_data (GstMatroskaDemux * demux,
     return gst_matroska_demux_push_hdr_buf (demux, stream, pdata + 80,
         stream->codec_priv_size - 80);
 }
+
+#endif /* OPERA_MINIMAL_GST */
 
 static GstFlowReturn
 gst_matroska_demux_push_xiph_codec_priv_data (GstMatroskaDemux * demux,
@@ -4493,7 +4525,7 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
           ret = gst_matroska_demux_push_xiph_codec_priv_data (demux, stream);
           stream->send_xiph_headers = FALSE;
         }
-
+#ifndef OPERA_MINIMAL_GST
         if (stream->send_flac_headers) {
           ret = gst_matroska_demux_push_flac_codec_priv_data (demux, stream);
           stream->send_flac_headers = FALSE;
@@ -4503,7 +4535,7 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
           ret = gst_matroska_demux_push_speex_codec_priv_data (demux, stream);
           stream->send_speex_headers = FALSE;
         }
-#ifndef OPERA_MINIMAL_GST
+
         if (stream->send_dvd_event) {
           gst_matroska_demux_push_dvd_clut_change_event (demux, stream);
           /* FIXME: should we send this event again after (flushing) seek ? */
@@ -5053,12 +5085,16 @@ gst_matroska_demux_parse_contents_seekentry (GstMatroskaDemux * demux)
 
   switch (seek_id) {
     case GST_MATROSKA_ID_CUES:
+#ifndef OPERA_MINIMAL_GST
     case GST_MATROSKA_ID_TAGS:
+#endif
     case GST_MATROSKA_ID_TRACKS:
     case GST_MATROSKA_ID_SEEKHEAD:
     case GST_MATROSKA_ID_SEGMENTINFO:
+#ifndef OPERA_MINIMAL_GST
     case GST_MATROSKA_ID_ATTACHMENTS:
     case GST_MATROSKA_ID_CHAPTERS:
+#endif
     {
       guint level_up = demux->level_up;
       guint64 before_pos, length;
@@ -5117,9 +5153,11 @@ gst_matroska_demux_parse_contents_seekentry (GstMatroskaDemux * demux)
             ret = gst_matroska_demux_parse_index (demux);
           }
           break;
+#ifndef OPERA_MINIMAL_GST
         case GST_MATROSKA_ID_TAGS:
           ret = gst_matroska_demux_parse_metadata (demux);
           break;
+#endif /* OPERA_MINIMAL_GST */
         case GST_MATROSKA_ID_TRACKS:
           if (!demux->tracks_parsed) {
             ret = gst_matroska_demux_parse_tracks (demux);
@@ -5153,6 +5191,7 @@ gst_matroska_demux_parse_contents_seekentry (GstMatroskaDemux * demux)
           ret = gst_matroska_demux_parse_contents (demux);
           break;
         }
+#ifndef OPERA_MINIMAL_GST
         case GST_MATROSKA_ID_ATTACHMENTS:
           if (!demux->attachments_parsed) {
             ret = gst_matroska_demux_parse_attachments (demux);
@@ -5161,6 +5200,7 @@ gst_matroska_demux_parse_contents_seekentry (GstMatroskaDemux * demux)
         case GST_MATROSKA_ID_CHAPTERS:
           ret = gst_matroska_demux_parse_chapters (demux);
           break;
+#endif /* OPERA_MINIMAL_GST */
       }
 
     finish:
@@ -5288,6 +5328,7 @@ gst_matroska_demux_loop_stream_parse_id (GstMatroskaDemux * demux,
       break;
     }
 
+#ifndef OPERA_MINIMAL_GST
       /* metadata
        * can exist more than one time with different content */
     case GST_MATROSKA_ID_TAGS:
@@ -5296,6 +5337,7 @@ gst_matroska_demux_loop_stream_parse_id (GstMatroskaDemux * demux,
         return ret;
       break;
     }
+#endif /* OPERA_MINIMAL_GST */
 
       /* file index (if seekable, seek to Cues/Tags/etc to parse it) */
     case GST_MATROSKA_ID_SEEKHEAD:
@@ -5397,6 +5439,7 @@ gst_matroska_demux_loop_stream_parse_id (GstMatroskaDemux * demux,
       break;
     }
 
+#ifndef OPERA_MINIMAL_GST
       /* attachments - contains files attached to the mkv container
        * like album art, etc */
     case GST_MATROSKA_ID_ATTACHMENTS:{
@@ -5417,6 +5460,7 @@ gst_matroska_demux_loop_stream_parse_id (GstMatroskaDemux * demux,
         return ret;
       break;
     }
+#endif /* OPERA_MINIMAL_GST */
 
     default:
       GST_WARNING_OBJECT (demux, "Unknown Segment subelement 0x%x at %"
@@ -5915,6 +5959,7 @@ next:
           if (ret != GST_FLOW_OK)
             goto exit;
           break;
+#ifndef OPERA_MINIMAL_GST
         case GST_MATROSKA_ID_ATTACHMENTS:
           if (!demux->attachments_parsed) {
             gst_matroska_demux_take (demux, length + needed);
@@ -5930,6 +5975,7 @@ next:
         case GST_MATROSKA_ID_CHAPTERS:
           name = "Cues";
           goto skip;
+#endif /* OPERA_MINIMAL_GST */
         case GST_MATROSKA_ID_SEEKHEAD:
           gst_matroska_demux_take (demux, length + needed);
           DEBUG_ELEMENT_START (demux, ebml, "SeekHead");
@@ -6235,8 +6281,10 @@ gst_matroska_demux_video_caps (GstMatroskaTrackVideoContext *
   g_assert (codec_name != NULL);
 
   context->send_xiph_headers = FALSE;
+#ifndef OPERA_MINIMAL_GST
   context->send_flac_headers = FALSE;
   context->send_speex_headers = FALSE;
+#endif /* OPERA_MINIMAL_GST */
 
   /* TODO: check if we have all codec types from matroska-ids.h
    *       check if we have to do more special things with codec_private
@@ -6617,8 +6665,10 @@ gst_matroska_demux_audio_caps (GstMatroskaTrackAudioContext *
   g_assert (codec_name != NULL);
 
   context->send_xiph_headers = FALSE;
+#ifndef OPERA_MINIMAL_GST
   context->send_flac_headers = FALSE;
   context->send_speex_headers = FALSE;
+#endif /* OPERA_MINIMAL_GST */
 
   /* TODO: check if we have all codec types from matroska-ids.h
    *       check if we have to do more special things with codec_private

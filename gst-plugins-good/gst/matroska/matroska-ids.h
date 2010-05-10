@@ -501,6 +501,7 @@ struct _GstMatroskaTrackContext {
    * for time == 0 is not enough to detect that. Used by demuxer */
   gboolean      send_xiph_headers;
 
+#ifndef OPERA_MINIMAL_GST
   /* Special flag for Flac, for which we need to reconstruct the header
    * buffer from the codec_priv data before sending any data, and just
    * testing for time == 0 is not enough to detect that. Used by demuxer */
@@ -515,6 +516,7 @@ struct _GstMatroskaTrackContext {
    * (if available) first before sending any data, and just testing
    * for time == 0 is not enough to detect that. Used by demuxer */
   gboolean      send_dvd_event;
+#endif /* OPERA_MINIMAL_GST */
 
   /* Special counter for muxer to skip the first N vorbis/theora headers -
    * they are put into codec private data, not muxed into the stream */
@@ -525,12 +527,14 @@ struct _GstMatroskaTrackContext {
                                       GstMatroskaTrackContext *context,
 				      GstBuffer **buffer);
 
+#ifndef OPERA_MINIMAL_GST
   /* Tags to send after newsegment event */
   GstTagList   *pending_tags;
 
   /* A GArray of GstMatroskaTrackEncoding structures which contain the
    * encoding (compression/encryption) settings for this track, if any */
   GArray       *encodings;
+#endif /* OPERA_MINIMAL_GST */
 
   /* Whether the stream is EOS */
   gboolean      eos;
@@ -553,7 +557,9 @@ typedef struct _GstMatroskaTrackAudioContext {
 
   guint         samplerate, channels, bitdepth;
 
+#ifndef OPERA_MINIMAL_GST
   guint32       wvpk_block_index;
+#endif
 } GstMatroskaTrackAudioContext;
 
 typedef struct _GstMatroskaTrackSubtitleContext {

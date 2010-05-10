@@ -84,8 +84,10 @@ typedef struct _GstMatroskaDemux {
   gboolean                 index_parsed;
   gboolean                 tracks_parsed;
   gboolean                 segmentinfo_parsed;
+#ifndef OPERA_MINIMAL_GST
   gboolean                 attachments_parsed;
   GList                   *tags_parsed;
+#endif
 
   /* start-of-segment */
   guint64                  ebml_segment_start;
@@ -103,7 +105,9 @@ typedef struct _GstMatroskaDemux {
 
   GstEvent                *close_segment;
   GstEvent                *new_segment;
+#ifndef OPERA_MINIMAL_GST
   GstTagList              *global_tags;
+#endif
 
   /* push based mode usual suspects */
   guint64                  offset;
