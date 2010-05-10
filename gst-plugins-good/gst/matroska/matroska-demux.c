@@ -3975,6 +3975,8 @@ gst_matroska_demux_push_xiph_codec_priv_data (GstMatroskaDemux * demux,
   return GST_FLOW_OK;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 static void
 gst_matroska_demux_push_dvd_clut_change_event (GstMatroskaDemux * demux,
     GstMatroskaTrackContext * stream)
@@ -4310,6 +4312,8 @@ gst_matroska_demux_check_subtitle_buffer (GstElement * element,
   return GST_FLOW_OK;
 }
 
+#endif /* OPERA_MINIMAL_GST */
+
 static GstFlowReturn
 gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
     guint64 cluster_time, guint64 cluster_offset, gboolean is_simpleblock)
@@ -4499,12 +4503,13 @@ gst_matroska_demux_parse_blockgroup_or_simpleblock (GstMatroskaDemux * demux,
           ret = gst_matroska_demux_push_speex_codec_priv_data (demux, stream);
           stream->send_speex_headers = FALSE;
         }
-
+#ifndef OPERA_MINIMAL_GST
         if (stream->send_dvd_event) {
           gst_matroska_demux_push_dvd_clut_change_event (demux, stream);
           /* FIXME: should we send this event again after (flushing) seek ? */
           stream->send_dvd_event = FALSE;
         }
+#endif /* OPERA_MINIMAL_GST */
 
         if (ret != GST_FLOW_OK)
           break;
@@ -6128,6 +6133,7 @@ gst_matroska_demux_sink_activate_pull (GstPad * sinkpad, gboolean active)
   return TRUE;
 }
 
+#ifndef OPERA_MINIMAL_GST
 /*
  * XXX: This code is duplicated in gst/qtdemux/qtdemux.c. Please replicate any
  * changes you make over there as well.
@@ -6215,6 +6221,7 @@ avc_get_profile_and_level_string (const guint8 * avc_data, gint size,
     *level = avc_level_idc_to_string (GST_READ_UINT8 (avc_data + 3),
         GST_READ_UINT8 (avc_data + 2));
 }
+#endif /* OPERA_MINIMAL_GST */
 
 static GstCaps *
 gst_matroska_demux_video_caps (GstMatroskaTrackVideoContext *
@@ -6239,6 +6246,9 @@ gst_matroska_demux_video_caps (GstMatroskaTrackVideoContext *
    *  GST_MATROSKA_CODEC_ID_VIDEO_SNOW
    */
 
+#ifdef OPERA_MINIMAL_GST
+  if (0) {
+#else
   if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_VIDEO_VFW_FOURCC)) {
     gst_riff_strf_vids *vids = NULL;
 
@@ -6443,6 +6453,7 @@ gst_matroska_demux_video_caps (GstMatroskaTrackVideoContext *
     caps = gst_caps_new_simple ("video/x-dirac", NULL);
     context->send_xiph_headers = FALSE;
     *codec_name = g_strdup_printf ("Dirac");
+#endif /* OPERA_MINIMAL_GST */
   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_VIDEO_VP8)) {
     caps = gst_caps_new_simple ("video/x-vp8", NULL);
     *codec_name = g_strdup_printf ("On2 VP8");
@@ -6534,6 +6545,8 @@ gst_matroska_demux_video_caps (GstMatroskaTrackVideoContext *
   return caps;
 }
 
+#ifndef OPERA_MINIMAL_GST
+
 /*
  * Some AAC specific code... *sigh*
  * FIXME: maybe we should use '15' and code the sample rate explicitly
@@ -6590,6 +6603,8 @@ aac_profile_idx (const gchar * codec_id)
 
 #define AAC_SYNC_EXTENSION_TYPE 0x02b7
 
+#endif /* OPERA_MINIMAL_GST */
+
 static GstCaps *
 gst_matroska_demux_audio_caps (GstMatroskaTrackAudioContext *
     audiocontext, const gchar * codec_id, guint8 * data, guint size,
@@ -6616,6 +6631,9 @@ gst_matroska_demux_audio_caps (GstMatroskaTrackAudioContext *
    *  GST_MATROSKA_CODEC_ID_AUDIO_QUICKTIME_QDM2
    */
 
+#ifdef OPERA_MINIMAL_GST
+  if (0) {
+#else
   if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_MPEG1_L1) ||
       !strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_MPEG1_L2) ||
       !strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_MPEG1_L3)) {
@@ -6669,10 +6687,12 @@ gst_matroska_demux_audio_caps (GstMatroskaTrackAudioContext *
   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_DTS)) {
     caps = gst_caps_new_simple ("audio/x-dts", NULL);
     *codec_name = g_strdup ("DTS audio");
+#endif /* OPERA_MINIMAL_GST */
   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_VORBIS)) {
     caps = gst_caps_new_simple ("audio/x-vorbis", NULL);
     context->send_xiph_headers = TRUE;
     /* vorbis decoder does tags */
+#ifndef OPERA_MINIMAL_GST
   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_FLAC)) {
     caps = gst_caps_new_simple ("audio/x-flac", NULL);
     context->send_flac_headers = TRUE;
@@ -6843,6 +6863,7 @@ gst_matroska_demux_audio_caps (GstMatroskaTrackAudioContext *
   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_AUDIO_REAL_ATRC)) {
     caps = gst_caps_new_simple ("audio/x-vnd.sony.atrac3", NULL);
     *codec_name = g_strdup ("Sony ATRAC3");
+#endif /* OPERA_MINIMAL_GST */
   } else {
     GST_WARNING ("Unknown codec '%s', cannot build Caps", codec_id);
     return NULL;
@@ -6869,6 +6890,7 @@ static GstCaps *
 gst_matroska_demux_subtitle_caps (GstMatroskaTrackSubtitleContext *
     subtitlecontext, const gchar * codec_id, gpointer data, guint size)
 {
+#ifndef OPERA_MINIMAL_GST
   GstCaps *caps = NULL;
   GstMatroskaTrackContext *context =
       (GstMatroskaTrackContext *) subtitlecontext;
@@ -6920,6 +6942,9 @@ gst_matroska_demux_subtitle_caps (GstMatroskaTrackSubtitleContext *
   }
 
   return caps;
+#else
+  return gst_caps_new_simple ("application/x-subtitle-unknown", NULL);
+#endif /* OPERA_MINIMAL_GST */
 }
 
 static void
