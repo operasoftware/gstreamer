@@ -21,10 +21,10 @@
 ;g_array_prepend_vals
 ;g_array_remove_index
 ;g_array_remove_index_fast
-;g_array_remove_range
+g_array_remove_range
 ;g_array_set_size
-;g_array_sized_new
-;g_array_sort
+g_array_sized_new
+g_array_sort
 ;g_array_sort_with_data
 ;g_byte_array_append
 ;g_byte_array_free
@@ -37,13 +37,13 @@
 ;g_byte_array_sized_new
 ;g_byte_array_sort
 ;g_byte_array_sort_with_data
-;g_ptr_array_add
+g_ptr_array_add
 ;g_ptr_array_foreach
-;g_ptr_array_free
-;g_ptr_array_new
+g_ptr_array_free
+g_ptr_array_new
 ;g_ptr_array_remove
 ;g_ptr_array_remove_fast
-;g_ptr_array_remove_index
+g_ptr_array_remove_index
 ;g_ptr_array_remove_index_fast
 ;g_ptr_array_remove_range
 ;g_ptr_array_set_size
@@ -1742,7 +1742,7 @@ g_assertion_message_expr G_GNUC_NORETURN
 ;g_enum_complete_type_info
 ;g_enum_get_value
 ;g_enum_get_value_by_name
-;g_enum_get_value_by_nick
+g_enum_get_value_by_nick
 ;g_enum_register_static
 ;g_flags_complete_type_info
 ;g_flags_get_first_value
@@ -1994,7 +1994,7 @@ g_type_check_instance_is_a
 g_type_class_peek_parent
 ;g_type_class_peek_static
 g_type_class_ref
-;g_type_class_unref
+g_type_class_unref
 ;g_type_class_unref_uncached
 ;g_type_create_instance
 ;g_type_default_interface_peek
@@ -3635,14 +3635,14 @@ g_type_register_static
 	gst_video_format_get_component_height
 	gst_video_format_get_component_offset
 	gst_video_format_get_component_width
-;	gst_video_format_get_pixel_stride
+	gst_video_format_get_pixel_stride
 	gst_video_format_get_row_stride
 	gst_video_format_get_size
 ;	gst_video_format_get_type
 ;	gst_video_format_has_alpha
 ;	gst_video_format_is_rgb
 ;	gst_video_format_is_yuv
-;	gst_video_format_new_caps
+	gst_video_format_new_caps
 ;	gst_video_format_new_caps_interlaced
 ;	gst_video_format_parse_caps
 ;	gst_video_format_parse_caps_interlaced
