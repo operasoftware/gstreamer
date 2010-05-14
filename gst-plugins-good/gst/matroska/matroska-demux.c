@@ -7139,10 +7139,12 @@ gst_matroska_demux_plugin_init (GstPlugin * plugin)
   return TRUE;
 }
 
+#ifndef G_OS_WIN32
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
     GST_VERSION_MINOR,
     "opera_matroska",
     "Matroska stream handling",
     gst_matroska_demux_plugin_init,
     VERSION, "LGPL", GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN)
+#endif /* !G_OS_WIN32 */
 #endif /* OPERA_MINIMAL_GST */
