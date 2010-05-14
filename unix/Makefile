@@ -27,7 +27,7 @@ all: plugins
 .libvpx: .libvpx.configure
 	make -C ../libvpx -j libvpx.a
 
-.gst-plugins-good.configure:
+.gst-plugins-good.configure: .libvpx
 	cd ../gst-plugins-good; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PWD)/gst-plugins-good" \
@@ -112,7 +112,7 @@ all: plugins
 	touch $@
 
 .PHONY: gst-plugins-good
-gst-plugins-good: .gst-plugins-good.configure .libvpx
+gst-plugins-good: .gst-plugins-good.configure
 	make -C ../gst-plugins-good -j install
 
 plugins: gst-plugins-good
