@@ -44,7 +44,7 @@
 				AdditionalIncludeDirectories="include/glib-2.0;include/gstreamer-0.10;gst-plugins-good/gst-libs;gst-plugins-good/win32/common"
 				PreprocessorDefinitions="WIN32;_DEBUG;HAVE_CONFIG_H"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 				CompileAs="1"
@@ -90,7 +90,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			InheritedPropertySheets=".\gst-opera.vsprops;.\winddk-crt.vsprops"
+			InheritedPropertySheets=".\gst-opera.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -115,7 +115,7 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="include/glib-2.0;include/gstreamer-0.10;gst-plugins-good/gst-libs;gst-plugins-good/win32/common"
 				PreprocessorDefinitions="WIN32;NDEBUG;HAVE_CONFIG_H"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -132,7 +132,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/NODEFAULTLIB C:\WinDDK\6001.18002\lib\crt\i386\msvcrt.lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
