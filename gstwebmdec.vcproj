@@ -61,7 +61,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="vpx-vp8-debug-nodocs-x86-win32mt-vs8-v2.0.0-rc8/lib/Win32/vpxmtd.lib"
+				AdditionalDependencies="vpxmtd.lib"
+				AdditionalLibraryDirectories="libvpx\Win32\Debug"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -135,7 +136,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="on2-vp8-x86-win32mt-vs8-v2.0.0-rc7/lib/Win32/on2_codecsmt.lib"
+				AdditionalDependencies="vpxmt.lib"
+				AdditionalLibraryDirectories="libvpx\Win32\Release"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -184,7 +186,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="&quot;vpx-vp8-debug-nodocs-x86-win32mt-vs8-v2.0.0-rc8/include&quot;;&quot;vpx-vp8-debug-nodocs-x86-win32mt-vs8-v2.0.0-rc8/build&quot;;&quot;vpx-vp8-debug-nodocs-x86-win32mt-vs8-v2.0.0-rc8/src&quot;"
+						AdditionalIncludeDirectories="libvpx;libvpx/vpx_codec;libvpx/vp8"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -192,7 +194,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="&quot;on2-vp8-x86-win32mt-vs8-v2.0.0-rc7/include&quot;;&quot;on2-vp8-x86-win32mt-vs8-v2.0.0-rc7/build&quot;;&quot;on2-vp8-x86-win32mt-vs8-v2.0.0-rc7/src&quot;"
+						AdditionalIncludeDirectories="libvpx;libvpx/vpx_codec;libvpx/vp8"
 					/>
 				</FileConfiguration>
 			</File>
