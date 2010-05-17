@@ -1,5 +1,16 @@
-To build the release profile, Microsoft WDK must be installed in
-C:\WinDDK\6001.18002
+== Linux ==
+
+$ cd unix
+$ make
+
+== Mac ==
+
+pkg-config and yasm from MacPorts are needed.
+
+$ cd macosx
+$ make release
+
+== Windows ==
 
 To build gstdirectsoundsink, DirectX 9.0 SDK October 2004 Update must
 be unpacked (not installed) in dxsdk_oct2004. Download URL:
