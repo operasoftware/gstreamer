@@ -21,6 +21,15 @@ libtheora: libogg
 		--disable-examples \
 	&& make install
 
+libvpx:
+	cd "../libvpx"; make clean; \
+	./configure \
+		--target=x86-darwin8-gcc \
+		--enable-pic \
+		--enable-runtime-cpu-detect \
+		--disable-vp8-encoder \
+	&& make libvpx.a
+
 glib:
 	cd "../glib"; make clean; \
 	AUTOGEN_SUBDIR_MODE=1 ./autogen.sh && \
@@ -84,7 +93,7 @@ gst-plugins-base: libogg libvorbis libtheora glib
 		--disable-freetypetest \
 	&& make install
 
-gst-plugins-good: gst-plugins-base
+gst-plugins-good: gst-plugins-base libvpx
 	cd "../gst-plugins-good"; make clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
@@ -123,6 +132,7 @@ gst-plugins-good: gst-plugins-base
 		--disable-rtp \
 		--disable-rtpmanager \
 		--disable-rtsp \
+		--disable-shapewipe \
 		--disable-smpte \
 		--disable-spectrum \
 		--disable-udp \
