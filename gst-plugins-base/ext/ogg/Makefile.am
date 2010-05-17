@@ -3,7 +3,8 @@ plugin_LTLIBRARIES = libgstogg.la
 libgstogg_la_SOURCES = \
 	gstogg.c \
 	gstoggdemux.c \
-	gstoggstream.c
+	gstoggstream.c \
+	vorbis_parse.c
 
 noinst_HEADERS = \
 	gstogg.h \
