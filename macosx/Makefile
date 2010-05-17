@@ -42,6 +42,7 @@ gstreamer: glib
 		--disable-option-parsing \
 		--disable-trace \
 		--disable-alloc-trace \
+		--disable-registry \
 		--disable-net \
 		--disable-valgrind \
 		--disable-examples \
