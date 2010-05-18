@@ -1,7 +1,7 @@
 export PATH := $(PREFIX)/bin:$(PATH)
 export PKG_CONFIG_PATH := $(PREFIX)/lib/pkgconfig/
 
-.PHONY: all debug release clean libogg libvorbis libtheora glib gstreamer gst-plugins-base gst-plugins-good
+.PHONY: all debug release clean libogg libvorbis libtheora libvpx glib gstreamer gst-plugins-base gst-plugins-good debug release debugppc releaseppc
 
 libogg:
 	cd "../libogg"; make clean; \
@@ -19,12 +19,13 @@ libtheora: libogg
 		--disable-spec \
 		--disable-encode \
 		--disable-examples \
+		"$(LIBTHEORA_CONFIGURE)" \
 	&& make install
 
 libvpx:
 	cd "../libvpx"; make clean; \
 	./configure \
-		--target=x86-darwin8-gcc \
+		--target="$(LIBVPX_TARGET)" \
 		--enable-pic \
 		--enable-runtime-cpu-detect \
 		--disable-vp8-encoder \
@@ -181,6 +182,7 @@ debug:
 	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Debug/lib dist/debug_i386 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/debug_i386/plugins-dbg
@@ -192,6 +194,7 @@ release:
 	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Release/lib dist/release_i386 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/release_i386/plugins
@@ -204,6 +207,8 @@ debugppc:
 	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch ppc" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	LIBVPX_TARGET="ppc32-darwin8-gcc" \
+	LIBTHEORA_CONFIGURE="--disable-asm" \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Debugppc/lib dist/debug_ppc "@executable_path/../Resources/gstreamer"
 	rm -fR dist/debug_ppc/plugins-dbg
@@ -215,6 +220,8 @@ releaseppc:
 	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch ppc" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	LIBVPX_TARGET="ppc32-darwin8-gcc" \
+	LIBTHEORA_CONFIGURE="--disable-asm" \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Releaseppc/lib dist/release_ppc "@executable_path/../Resources/gstreamer"
 	rm -fR dist/release_ppc/plugins
