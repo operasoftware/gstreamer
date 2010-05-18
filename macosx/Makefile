@@ -124,7 +124,6 @@ gst-plugins-good: gst-plugins-base libvpx
 		--disable-goom2k1 \
 		--disable-law \
 		--disable-level \
-		--disable-matroska \
 		--disable-monoscope \
 		--disable-multifile \
 		--disable-multipart \
