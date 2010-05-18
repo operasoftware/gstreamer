@@ -58,11 +58,12 @@
 #include <gst/riff/riff-ids.h>
 #include <gst/riff/riff-media.h>
 
+#ifndef OPERA_MINIMAL_GST
+
 #include <gst/tag/tag.h>
 
 #include <gst/base/gsttypefindhelper.h>
 
-#ifndef OPERA_MINIMAL_GST
 #ifdef HAVE_ZLIB
 #include <zlib.h>
 #endif
@@ -72,7 +73,8 @@
 #endif
 
 #include "lzo.h"
-#endif
+
+#endif /* OPERA_MINIMAL_GST */
 
 #include "matroska-demux.h"
 #include "matroska-ids.h"
