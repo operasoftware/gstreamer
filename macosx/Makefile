@@ -185,8 +185,8 @@ debug:
 	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Debug/lib dist/debug_i386 "@executable_path/../Resources/gstreamer"
-	rm -fR dist/debug_i386/plugins-dbg
-	mv dist/debug_i386/gstreamer-0.10 dist/debug_i386/plugins-dbg
+	rm -fR dist/debug_i386/plugins
+	mv dist/debug_i386/gstreamer-0.10 dist/debug_i386/plugins
 
 release:
 	PREFIX="$(PWD)/Release" \
@@ -211,8 +211,8 @@ debugppc:
 	LIBTHEORA_CONFIGURE="--disable-asm" \
 	make gstreamer gst-plugins-base gst-plugins-good
 	python makedist.py Debugppc/lib dist/debug_ppc "@executable_path/../Resources/gstreamer"
-	rm -fR dist/debug_ppc/plugins-dbg
-	mv dist/debug_ppc/gstreamer-0.10 dist/debug_ppc/plugins-dbg
+	rm -fR dist/debug_ppc/plugins
+	mv dist/debug_ppc/gstreamer-0.10 dist/debug_ppc/plugins
 
 releaseppc:
 	PREFIX="$(PWD)/Releaseppc" \
