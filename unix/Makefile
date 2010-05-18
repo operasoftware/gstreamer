@@ -124,5 +124,5 @@ plugins: gst-plugins-good
 .PHONY: clean
 clean:
 	rm -rf gst-plugins-good/ plugins/ .libvpx.configure .gst-plugins-good.configure
-	make -C ../libvpx clean
-	make -C ../gst-plugins-good clean
+	make -C ../libvpx clean || :
+	make -C ../gst-plugins-good clean || :
