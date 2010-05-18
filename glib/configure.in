@@ -2404,7 +2404,7 @@ if test x$enable_regex = xtrue; then
   fi
   AC_SUBST(PCRE_WARN_CFLAGS)
 else
-  AM_CONDITIONAL(USE_SYSTEM_PCRE, false])
+  AM_CONDITIONAL(USE_SYSTEM_PCRE, false)
 fi
 
 dnl **********************
