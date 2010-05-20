@@ -3,15 +3,11 @@ plugin_LTLIBRARIES = \
 
 libgstvp8_la_SOURCES = \
 	gstvp8dec.c \
-	gstvp8enc.c \
 	gstvp8utils.c \
 	plugin.c \
 	gst/video/gstbasevideocodec.c \
 	gst/video/gstbasevideodecoder.c \
-	gst/video/gstbasevideoencoder.c \
-	gst/video/gstbasevideoparse.c \
-	gst/video/gstbasevideoutils.c \
-	gst/video/gstvideocompat.c
+	gst/video/gstbasevideoutils.c
 
 fixbaseclasses = \
         -DGstBaseVideoCodec=VP8BaseVideoCodec \
