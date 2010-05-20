@@ -32,7 +32,7 @@ static gboolean
 plugin_init (GstPlugin * plugin)
 {
 #ifdef HAVE_VP8_DECODER
-  gst_element_register (plugin, "vp8dec", GST_RANK_PRIMARY,
+  gst_element_register (plugin, "opera_vp8dec", GST_RANK_PRIMARY + 1,
       gst_vp8_dec_get_type ());
 #endif
 
@@ -46,6 +46,6 @@ plugin_init (GstPlugin * plugin)
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
     GST_VERSION_MINOR,
-    "vp8",
+    "opera_vp8",
     "VP8 plugin",
     plugin_init, VERSION, "LGPL", GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN)

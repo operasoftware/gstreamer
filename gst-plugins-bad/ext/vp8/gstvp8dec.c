@@ -46,6 +46,10 @@
 
 #include "gstvp8utils.h"
 
+/* Add Opera to make unique GType */
+#define GstVP8Dec GstOperaVP8Dec
+#define GstVP8DecClass GstOperaVP8DecClass
+
 GST_DEBUG_CATEGORY_STATIC (gst_vp8dec_debug);
 #define GST_CAT_DEFAULT gst_vp8dec_debug
 
@@ -123,7 +127,7 @@ gst_vp8_dec_post_processing_flags_get_type (void)
   if (g_once_init_enter ((gsize *) & id)) {
     GType _id;
 
-    _id = g_flags_register_static ("GstVP8DecPostProcessingFlags", values);
+    _id = g_flags_register_static ("GstOperaVP8DecPostProcessingFlags", values);
 
     g_once_init_leave ((gsize *) & id, _id);
   }
