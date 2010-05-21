@@ -40,6 +40,62 @@
 #define NAN (0.0 / 0.0)
 #endif
 
+#ifdef OPERA_MINIMAL_GST
+/* some things needed to build and run on older GStreamer versions */
+#if !GST_CHECK_VERSION(0,10,22)
+/* copied from gstreamer 0.10.29 gstutils.h */
+inline static gfloat
+GFLOAT_SWAP_LE_BE(gfloat in)
+{
+  union
+  {
+    guint32 i;
+    gfloat f;
+  } u;
+
+  u.f = in;
+  u.i = GUINT32_SWAP_LE_BE (u.i);
+  return u.f;
+}
+
+inline static gdouble
+GDOUBLE_SWAP_LE_BE(gdouble in)
+{
+  union
+  {
+    guint64 i;
+    gdouble d;
+  } u;
+
+  u.d = in;
+  u.i = GUINT64_SWAP_LE_BE (u.i);
+  return u.d;
+}
+
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+#define GFLOAT_TO_LE(val)    ((gfloat) (val))
+#define GFLOAT_TO_BE(val)    (GFLOAT_SWAP_LE_BE (val))
+#define GDOUBLE_TO_LE(val)   ((gdouble) (val))
+#define GDOUBLE_TO_BE(val)   (GDOUBLE_SWAP_LE_BE (val))
+
+#elif G_BYTE_ORDER == G_BIG_ENDIAN
+#define GFLOAT_TO_LE(val)    (GFLOAT_SWAP_LE_BE (val))
+#define GFLOAT_TO_BE(val)    ((gfloat) (val))
+#define GDOUBLE_TO_LE(val)   (GDOUBLE_SWAP_LE_BE (val))
+#define GDOUBLE_TO_BE(val)   ((gdouble) (val))
+
+#else /* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN */
+#error unknown ENDIAN type
+#endif /* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN */
+
+#define GFLOAT_FROM_LE(val)  (GFLOAT_TO_LE (val))
+#define GFLOAT_FROM_BE(val)  (GFLOAT_TO_BE (val))
+#define GDOUBLE_FROM_LE(val) (GDOUBLE_TO_LE (val))
+#define GDOUBLE_FROM_BE(val) (GDOUBLE_TO_BE (val))
+#endif /* !GST_CHECK_VERSION(0,10,22) */
+
+#endif /* OPERA_MINIMAL_GST */
+
 GST_DEBUG_CATEGORY_STATIC (ebmlread_debug);
 #define GST_CAT_DEFAULT ebmlread_debug
 

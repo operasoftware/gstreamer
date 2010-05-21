@@ -79,6 +79,87 @@
 #include "matroska-demux.h"
 #include "matroska-ids.h"
 
+#ifdef OPERA_MINIMAL_GST
+/* some things needed to build and run on older GStreamer versions */
+/* copied from gstreamer 0.10.29 gstutils.c */
+#define GST_SEARCH_MODE_EXACT OPERA_GST_SEARCH_MODE_EXACT
+#define GST_SEARCH_MODE_BEFORE OPERA_GST_SEARCH_MODE_BEFORE
+#define GST_SEARCH_MODE_AFTER OPERA_GST_SEARCH_MODE_AFTER
+#define GstSearchMode OperaGstSearchMode
+typedef enum {
+  GST_SEARCH_MODE_EXACT = 0,
+  GST_SEARCH_MODE_BEFORE,
+  GST_SEARCH_MODE_AFTER
+} GstSearchMode;
+
+#define gst_util_array_binary_search opera_gst_util_array_binary_search
+static gpointer
+gst_util_array_binary_search (gpointer array, guint num_elements,
+    gsize element_size, GCompareDataFunc search_func, GstSearchMode mode,
+    gconstpointer search_data, gpointer user_data)
+{
+  glong left = 0, right = num_elements - 1, m;
+  gint ret;
+  guint8 *data = (guint8 *) array;
+
+  g_return_val_if_fail (array != NULL, NULL);
+  g_return_val_if_fail (element_size > 0, NULL);
+  g_return_val_if_fail (search_func != NULL, NULL);
+
+  /* 0. No elements => return NULL */
+  if (num_elements == 0)
+    return NULL;
+
+  /* 1. If search_data is before the 0th element return the 0th element */
+  ret = search_func (data, search_data, user_data);
+  if ((ret >= 0 && mode == GST_SEARCH_MODE_AFTER) || ret == 0)
+    return data;
+  else if (ret > 0)
+    return NULL;
+
+  /* 2. If search_data is after the last element return the last element */
+  ret =
+      search_func (data + (num_elements - 1) * element_size, search_data,
+      user_data);
+  if ((ret <= 0 && mode == GST_SEARCH_MODE_BEFORE) || ret == 0)
+    return data + (num_elements - 1) * element_size;
+  else if (ret < 0)
+    return NULL;
+
+  /* 3. else binary search */
+  while (TRUE) {
+    m = left + (right - left) / 2;
+
+    ret = search_func (data + m * element_size, search_data, user_data);
+
+    if (ret == 0) {
+      return data + m * element_size;
+    } else if (ret < 0) {
+      left = m + 1;
+    } else {
+      right = m - 1;
+    }
+
+    /* No exact match found */
+    if (right < left) {
+      if (mode == GST_SEARCH_MODE_EXACT) {
+        return NULL;
+      } else if (mode == GST_SEARCH_MODE_AFTER) {
+        if (ret < 0)
+          return (m < num_elements) ? data + (m + 1) * element_size : NULL;
+        else
+          return data + m * element_size;
+      } else {
+        if (ret < 0)
+          return data + m * element_size;
+        else
+          return (m > 0) ? data + (m - 1) * element_size : NULL;
+      }
+    }
+  }
+}
+#endif /* OPERA_MINIMAL_GST */
+
 GST_DEBUG_CATEGORY_STATIC (matroskademux_debug);
 #define GST_CAT_DEFAULT matroskademux_debug
 
