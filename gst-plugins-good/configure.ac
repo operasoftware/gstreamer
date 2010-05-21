@@ -52,8 +52,8 @@ AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
 dnl *** required versions of GStreamer stuff ***
-GST_REQ=0.10.29
-GSTPB_REQ=0.10.29
+GST_REQ=0.10.19
+GSTPB_REQ=0.10.19
 
 dnl *** autotools stuff ****
 
@@ -204,7 +204,7 @@ AC_CHECK_TYPE([struct ip_mreqn], [
 dnl *** checks for dependency libraries ***
 
 dnl GLib is required
-AG_GST_GLIB_CHECK([2.18])
+AG_GST_GLIB_CHECK([2.16])
 
 dnl checks for gstreamer
 dnl uninstalled is selected preferentially -- see pkg-config(1)
