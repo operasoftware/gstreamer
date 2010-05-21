@@ -24,6 +24,10 @@
 
 G_BEGIN_DECLS
 
+/* Add Opera to make unique GType */
+#define GstBaseVideoDecoder GstOperaBaseVideoDecoder
+#define GstBaseVideoDecoderClass GstOperaBaseVideoDecoderClass
+
 #define GST_TYPE_BASE_VIDEO_DECODER \
   (gst_base_video_decoder_get_type())
 #define GST_BASE_VIDEO_DECODER(obj) \
