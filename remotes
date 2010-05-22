@@ -6,7 +6,7 @@ cd glib
 git remote add upstream "git://git.gnome.org/glib"
 cd ..
 
-for path in gstreamer gst-plugins-base gst-plugins-good; do
+for path in gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad; do
     cd $path
     git remote add upstream "git://anongit.freedesktop.org/gstreamer/$path"
     cd ..

@@ -20,17 +20,25 @@ all: plugins
 	./configure --target="$(TARGET)" \
 		--enable-pic \
 		--enable-runtime-cpu-detect \
-		--disable-vp8-encoder
+		--disable-vp8-encoder \
+		--disable-multithread \
+		--disable-examples \
+		--disable-install-docs \
+		--disable-install-bins \
+		--disable-install-srcs
 	touch $@
 
 .PHONY: .libvpx
 .libvpx: .libvpx.configure
-	make -C ../libvpx -j libvpx.a
+	make -C ../libvpx -j install
+	mkdir -p tmp/include/vpx tmp/lib
+	cp ../libvpx/vpx-vp8dx-*/include/* tmp/include/vpx
+	cp ../libvpx/vpx-vp8dx-*/lib/* tmp/lib
 
-.gst-plugins-good.configure: .libvpx
+.gst-plugins-good.configure:
 	cd ../gst-plugins-good; \
 	./autogen.sh --noconfigure && \
-	./configure --prefix="$(PWD)/gst-plugins-good" \
+	./configure --prefix="$(PWD)/tmp" \
 		--with-package-origin="http://www.opera.com/" \
 		--disable-nls \
 		--disable-rpath \
@@ -115,14 +123,144 @@ all: plugins
 gst-plugins-good: .gst-plugins-good.configure
 	make -C ../gst-plugins-good -j install
 
-plugins: gst-plugins-good
+.gst-plugins-bad.configure: .libvpx
+	cd ../gst-plugins-bad; \
+	./autogen.sh --noconfigure && \
+	./configure --prefix="$(PWD)/tmp" \
+		--with-package-origin="http://www.opera.com/" \
+		--disable-nls \
+		--disable-rpath \
+		--disable-examples \
+		--disable-adpcmdec \
+		--disable-adpcmenc \
+		--disable-aiff \
+		--disable-asfmux \
+		--disable-audioparsers \
+		--disable-autoconvert \
+		--disable-camerabin \
+		--disable-legacyresample \
+		--disable-bayer \
+		--disable-cdxaparse \
+		--disable-dataurisrc \
+		--disable-dccp \
+		--disable-debugutils \
+		--disable-dtmf \
+		--disable-dvdspu \
+		--disable-festival \
+		--disable-freeze \
+		--disable-frei0r \
+		--disable-h264parse \
+		--disable-hdvparse \
+		--disable-id3tag \
+		--disable-invtelecine \
+		--disable-jpegformat \
+		--disable-librfb \
+		--disable-liveadder \
+		--disable-mpegdemux \
+		--disable-mpegtsmux \
+		--disable-mpegpsmux \
+		--disable-mpeg4videoparse \
+		--disable-mpegvideoparse \
+		--disable-mve \
+		--disable-mxf \
+		--disable-nsf \
+		--disable-nuvdemux \
+		--disable-pcapparse \
+		--disable-pnm \
+		--disable-qtmux \
+		--disable-rawparse \
+		--disable-real \
+		--disable-rtpmux \
+		--disable-scaletempo \
+		--disable-sdp \
+		--disable-segmentclip \
+		--disable-selector \
+		--disable-siren \
+		--disable-speed \
+		--disable-subenc \
+		--disable-stereo \
+		--disable-tta \
+		--disable-valve \
+		--disable-videomeasure \
+		--disable-videosignal \
+		--disable-vmnc \
+		--disable-directsound \
+		--disable-directdraw \
+		--disable-osx_video \
+		--disable-quicktime \
+		--disable-vcd \
+		--disable-alsa \
+		--disable-assrender \
+		--disable-amrwb \
+		--disable-apexsink \
+		--disable-bz2 \
+		--disable-cdaudio \
+		--disable-celt \
+		--disable-cog \
+		--disable-dc1394 \
+		--disable-directfb \
+		--disable-dirac \
+		--disable-dts \
+		--disable-divx \
+		--disable-resindvd \
+		--disable-metadata \
+		--disable-faac \
+		--disable-faad \
+		--disable-fbdev \
+		--disable-flite \
+		--disable-gsm \
+		--disable-jack \
+		--disable-jp2k \
+		--disable-kate \
+		--disable-ladspa \
+		--disable-lv2 \
+		--disable-libmms \
+		--disable-modplug \
+		--disable-mimic \
+		--disable-mpeg2enc \
+		--disable-mplex \
+		--disable-musepack \
+		--disable-musicbrainz \
+		--disable-mythtv \
+		--disable-nas \
+		--disable-neon \
+		--disable-ofa \
+		--disable-rsvg \
+		--disable-timidity \
+		--disable-wildmidi \
+		--disable-sdl \
+		--disable-sdltest \
+		--disable-sndfile \
+		--disable-soundtouch \
+		--disable-spc \
+		--disable-gme \
+		--disable-swfdec \
+		--disable-theoradec \
+		--disable-xvid \
+		--disable-dvb \
+		--disable-wininet \
+		--disable-acm \
+		--disable-vdpau \
+		--disable-schro \
+		--disable-zbar \
+		CFLAGS="$(CFLAGS) -DOPERA_MINIMAL_GST" \
+		CPPFLAGS="-I$(PWD)/tmp/include" \
+		LDFLAGS="-L$(PWD)/tmp/lib"
+	touch $@
+
+.PHONY: gst-plugins-bad
+gst-plugins-bad: .gst-plugins-bad.configure
+	make -C ../gst-plugins-bad -j install
+
+plugins: gst-plugins-good gst-plugins-bad
 	mkdir -p plugins/
-	cp gst-plugins-good/lib/gstreamer-0.10/libgstvp8.so plugins/libgstoperavp8.so
-	cp gst-plugins-good/lib/gstreamer-0.10/libgstmatroska.so plugins/libgstoperamatroska.so
+	cp tmp/lib/gstreamer-0.10/libgstmatroska.so plugins/libgstoperamatroska.so
+	cp tmp/lib/gstreamer-0.10/libgstvp8.so plugins/libgstoperavp8.so
 	strip -g plugins/*.so
 
 .PHONY: clean
 clean:
-	rm -rf gst-plugins-good/ plugins/ .libvpx.configure .gst-plugins-good.configure
+	rm -rf tmp/ plugins/ .libvpx.configure .gst-plugins-good.configure .gst-plugins-bad.configure
 	make -C ../libvpx clean || :
 	make -C ../gst-plugins-good clean || :
+	make -C ../gst-plugins-bad clean || :

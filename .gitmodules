@@ -19,6 +19,9 @@
 [submodule "gst-plugins-good"]
 	path = gst-plugins-good
 	url = ../gst-plugins-good.git
+[submodule "gst-plugins-bad"]
+	path = gst-plugins-bad
+	url = ../gst-plugins-bad.git
 [submodule "libvpx"]
 	path = libvpx
 	url = ../libvpx.git
