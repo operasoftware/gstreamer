@@ -549,6 +549,9 @@ typedef struct _GstMatroskaTrackVideoContext {
   GstMatroskaAspectRatioMode asr_mode;
   guint32       fourcc;
 
+  /* QoS */
+  GstClockTime  earliest_time;
+
   GstBuffer     *dirac_unit;
 } GstMatroskaTrackVideoContext;
 
