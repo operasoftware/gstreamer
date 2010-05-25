@@ -359,6 +359,7 @@ gst_vp8_dec_parse_data (GstBaseVideoDecoder * decoder, gboolean at_eos)
   return GST_FLOW_OK;
 }
 
+#ifndef OPERA_MINIMAL_GST
 static void
 gst_vp8_dec_send_tags (GstVP8Dec * dec)
 {
@@ -371,6 +372,7 @@ gst_vp8_dec_send_tags (GstVP8Dec * dec)
   gst_element_found_tags_for_pad (GST_ELEMENT (dec),
       GST_BASE_VIDEO_CODEC_SRC_PAD (dec), list);
 }
+#endif /* OPERA_MINIMAL_GST */
 
 static void
 gst_vp8_dec_image_to_buffer (GstVP8Dec * dec, const vpx_image_t * img,
@@ -455,7 +457,9 @@ gst_vp8_dec_handle_frame (GstBaseVideoDecoder * decoder, GstVideoFrame * frame,
     decoder->state.width = stream_info.w;
     decoder->state.height = stream_info.h;
     decoder->state.format = GST_VIDEO_FORMAT_I420;
+#ifndef OPERA_MINIMAL_GST
     gst_vp8_dec_send_tags (dec);
+#endif
 
     caps = vpx_codec_get_caps (&vpx_codec_vp8_dx_algo);
 

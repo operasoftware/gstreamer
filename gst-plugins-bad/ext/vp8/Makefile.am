@@ -26,7 +26,7 @@ libgstvp8_la_CFLAGS = \
 	$(fixbaseclasses)
 libgstvp8_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
 libgstvp8_la_LIBADD = $(GST_LIBS) $(GST_BASE_LIBS)
-libgstvp8_la_LIBADD += $(GST_PLUGINS_BASE_LIBS) -lgsttag-@GST_MAJORMINOR@ -lgstvideo-@GST_MAJORMINOR@
+libgstvp8_la_LIBADD += $(GST_PLUGINS_BASE_LIBS) -lgstvideo-@GST_MAJORMINOR@
 libgstvp8_la_LIBADD += $(VPX_LIBS)
 
 noinst_HEADERS = \
