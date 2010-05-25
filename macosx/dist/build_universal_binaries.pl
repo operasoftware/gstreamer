@@ -9,7 +9,7 @@ my ($volume_path, $directories_path, $file_path) = File::Spec->splitpath(File::S
 my $script_dir = defined($volume_path) && $volume_path ne "" ? File::Spec->catdir($volume_path, $directories_path) : $directories_path;
 
 lipo_libs($script_dir, "release", "plugins");
-lipo_libs($script_dir, "debug",   "plugins-dbg");
+lipo_libs($script_dir, "debug",   "plugins");
 
 sub lipo_libs
 {

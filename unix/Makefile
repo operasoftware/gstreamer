@@ -86,6 +86,7 @@ all: plugins
 		--disable-y4m \
 		--disable-directsound \
 		--disable-oss \
+		--disable-oss4 \
 		--disable-sunaudio \
 		--disable-osx_video \
 		--disable-gst_v4l2 \
