@@ -138,11 +138,13 @@ gst_vp8_dec_post_processing_flags_get_type (void)
 #undef C_FLAGS
 
 static void gst_vp8_dec_finalize (GObject * object);
+#ifndef OPERA_MINIMAL_GST
 static void gst_vp8_dec_set_property (GObject * object, guint prop_id,
     const GValue * value, GParamSpec * pspec);
 static void gst_vp8_dec_get_property (GObject * object, guint prop_id,
     GValue * value, GParamSpec * pspec);
 
+#endif /* OPERA_MINIMAL_GST */
 static gboolean gst_vp8_dec_start (GstBaseVideoDecoder * decoder);
 static gboolean gst_vp8_dec_stop (GstBaseVideoDecoder * decoder);
 static gboolean gst_vp8_dec_reset (GstBaseVideoDecoder * decoder);
@@ -197,10 +199,13 @@ gst_vp8_dec_class_init (GstVP8DecClass * klass)
   element_class = GST_ELEMENT_CLASS (klass);
   base_video_decoder_class = GST_BASE_VIDEO_DECODER_CLASS (klass);
 
+#ifndef OPERA_MINIMAL_GST
   gobject_class->set_property = gst_vp8_dec_set_property;
   gobject_class->get_property = gst_vp8_dec_get_property;
+#endif /* OPERA_MINIMAL_GST */
   gobject_class->finalize = gst_vp8_dec_finalize;
 
+#ifndef OPERA_MINIMAL_GST
   g_object_class_install_property (gobject_class, PROP_POST_PROCESSING,
       g_param_spec_boolean ("post-processing", "Post Processing",
           "Enable post processing", DEFAULT_POST_PROCESSING,
@@ -223,6 +228,7 @@ gst_vp8_dec_class_init (GstVP8DecClass * klass)
           "Noise level",
           0, 16, DEFAULT_NOISE_LEVEL,
           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+#endif /* OPERA_MINIMAL_GST */
 
   base_video_decoder_class->start = gst_vp8_dec_start;
   base_video_decoder_class->stop = gst_vp8_dec_stop;
@@ -255,6 +261,8 @@ gst_vp8_dec_finalize (GObject * object)
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
+
+#ifndef OPERA_MINIMAL_GST
 
 static void
 gst_vp8_dec_set_property (GObject * object, guint prop_id,
@@ -312,6 +320,8 @@ gst_vp8_dec_get_property (GObject * object, guint prop_id, GValue * value,
       break;
   }
 }
+
+#endif /* OPERA_MINIMAL_GST */
 
 static gboolean
 gst_vp8_dec_start (GstBaseVideoDecoder * decoder)
