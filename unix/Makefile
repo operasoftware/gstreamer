@@ -64,6 +64,7 @@ all: plugins
 		--disable-flx \
 		--disable-goom \
 		--disable-goom2k1 \
+		--disable-imagefreeze \
 		--disable-law \
 		--disable-level \
 		--disable-monoscope \
