@@ -7274,8 +7274,6 @@ webm_type_find (GstTypeFind * tf, gpointer ununsed)
 gboolean
 gst_matroska_demux_plugin_init (GstPlugin * plugin)
 {
-  gst_riff_init ();
-
   /* create an elementfactory for the matroska_demux element */
   if (!gst_element_register (plugin, "opera_matroskademux",
           GST_RANK_PRIMARY + 1, GST_TYPE_MATROSKA_DEMUX))
