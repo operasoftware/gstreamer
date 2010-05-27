@@ -9,6 +9,9 @@ pkg-config and yasm from MacPorts are needed.
 
 $ cd macosx
 $ make release
+$ make releaseppc
+$ cd dist
+$ ./build_universal_binaries.pl
 
 == Windows ==
 
