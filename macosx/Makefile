@@ -26,8 +26,7 @@ libtheora: libogg
 .PHONY: libvpx
 libvpx:
 	cd "../libvpx"; make clean; \
-	rm -rf vpx-vp8dx-*; \
-	./configure \
+	./configure --prefix="$(PREFIX)" \
 		--target="$(LIBVPX_TARGET)" \
 		--enable-pic \
 		--enable-runtime-cpu-detect \
@@ -38,9 +37,6 @@ libvpx:
 		--disable-install-bins \
 		--disable-install-srcs \
 	&& make install
-	mkdir -p "$(PREFIX)/include/vpx" "$(PREFIX)/lib"
-	cp ../libvpx/vpx-vp8dx-*/include/* "$(PREFIX)/include/vpx"
-	cp ../libvpx/vpx-vp8dx-*/lib/* "$(PREFIX)/lib"
 
 .PHONY: glib
 glib:
