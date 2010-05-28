@@ -182,7 +182,7 @@ enum
 static GstStaticPadTemplate sink_templ = GST_STATIC_PAD_TEMPLATE ("sink",
     GST_PAD_SINK,
     GST_PAD_ALWAYS,
-    GST_STATIC_CAPS ("video/x-matroska; video/webm")
+    GST_STATIC_CAPS ("video/webm")
     );
 
 /* TODO: fill in caps! */
@@ -2716,8 +2716,7 @@ gst_matroska_demux_parse_header (GstMatroskaDemux * demux)
 
   ret = GST_FLOW_ERROR;
   if (doctype) {
-    if (g_str_equal (doctype, GST_MATROSKA_DOCTYPE_MATROSKA) ||
-        g_str_equal (doctype, GST_MATROSKA_DOCTYPE_WEBM)) {
+    if (g_str_equal (doctype, GST_MATROSKA_DOCTYPE_WEBM)) {
       if (version <= 2) {
         GST_INFO_OBJECT (demux, "Input is %s version %d", doctype, version);
         ret = GST_FLOW_OK;
@@ -7279,7 +7278,7 @@ gst_matroska_demux_plugin_init (GstPlugin * plugin)
           GST_RANK_PRIMARY + 1, GST_TYPE_MATROSKA_DEMUX))
     return FALSE;
 
-  if (!gst_type_find_register (plugin, "video/webm", GST_RANK_PRIMARY,
+  if (!gst_type_find_register (plugin, "video/webm", GST_RANK_PRIMARY + 1,
           webm_type_find, NULL, WEBM_CAPS, NULL, NULL))
     return FALSE;
 
