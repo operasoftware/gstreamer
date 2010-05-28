@@ -1,23 +1,9 @@
-TARGET ?= "generic-gnu"
-
-KERNEL = $(shell uname -s)
-MACHINE = $(shell uname -m)
-ifeq ($(KERNEL),Linux)
-  ifeq ($(MACHINE),i686)
-    TARGET = "x86-linux-gcc"
-  else
-    ifeq ($(MACHINE),x86_64)
-      TARGET = "x86_64-linux-gcc"
-    endif
-  endif
-endif
-
 .PHONY: all
 all: plugins
 
 .libvpx.configure:
 	cd ../libvpx; \
-	./configure --target="$(TARGET)" \
+	./configure --prefix="$(PWD)/tmp" \
 		--enable-pic \
 		--enable-runtime-cpu-detect \
 		--disable-vp8-encoder \
@@ -31,9 +17,6 @@ all: plugins
 .PHONY: .libvpx
 .libvpx: .libvpx.configure
 	make -C ../libvpx -j install
-	mkdir -p tmp/include/vpx tmp/lib
-	cp ../libvpx/vpx-vp8dx-*/include/* tmp/include/vpx
-	cp ../libvpx/vpx-vp8dx-*/lib/* tmp/lib
 
 .gst-plugins-good.configure:
 	cd ../gst-plugins-good; \
