@@ -1,9 +1,12 @@
+TOP ?= $(shell pwd)
+PREFIX = $(TOP)/tmp
+
 .PHONY: all
 all: plugins
 
 .libvpx.configure:
 	cd ../libvpx; \
-	./configure --prefix="$(PWD)/tmp" \
+	./configure --prefix="$(PREFIX)" \
 		--enable-pic \
 		--enable-runtime-cpu-detect \
 		--disable-vp8-encoder \
@@ -21,7 +24,7 @@ all: plugins
 .gst-plugins-good.configure:
 	cd ../gst-plugins-good; \
 	./autogen.sh --noconfigure && \
-	./configure --prefix="$(PWD)/tmp" \
+	./configure --prefix="$(PREFIX)" \
 		--with-package-origin="http://www.opera.com/" \
 		--disable-nls \
 		--disable-rpath \
@@ -111,7 +114,7 @@ gst-plugins-good: .gst-plugins-good.configure
 .gst-plugins-bad.configure: .libvpx
 	cd ../gst-plugins-bad; \
 	./autogen.sh --noconfigure && \
-	./configure --prefix="$(PWD)/tmp" \
+	./configure --prefix="$(PREFIX)" \
 		--with-package-origin="http://www.opera.com/" \
 		--disable-nls \
 		--disable-rpath \
@@ -229,19 +232,26 @@ gst-plugins-good: .gst-plugins-good.configure
 		--disable-schro \
 		--disable-zbar \
 		CFLAGS="$(CFLAGS) -DOPERA_MINIMAL_GST" \
-		CPPFLAGS="-I$(PWD)/tmp/include" \
-		LDFLAGS="-L$(PWD)/tmp/lib"
+		CPPFLAGS="-I$(PREFIX)/include" \
+		LDFLAGS="-L$(PREFIX)/lib"
 	touch $@
 
 .PHONY: gst-plugins-bad
 gst-plugins-bad: .gst-plugins-bad.configure
 	make -C ../gst-plugins-bad -j install
 
-plugins: gst-plugins-good gst-plugins-bad
-	mkdir -p plugins/
-	cp tmp/lib/gstreamer-0.10/libgstmatroska.so plugins/libgstoperamatroska.so
-	cp tmp/lib/gstreamer-0.10/libgstvp8.so plugins/libgstoperavp8.so
-	strip -g plugins/*.so
+plugins/libgstoperamatroska.so: gst-plugins-good
+	mkdir -p plugins
+	cp "$(PREFIX)/lib/gstreamer-0.10/libgstmatroska.so" $@
+	strip -g $@
+
+plugins/libgstoperavp8.so: gst-plugins-bad
+	mkdir -p plugins
+	cp "$(PREFIX)/lib/gstreamer-0.10/libgstvp8.so" $@
+	strip -g $@
+
+.PHONY: plugins
+plugins: plugins/libgstoperamatroska.so plugins/libgstoperavp8.so
 
 .PHONY: clean
 clean:
