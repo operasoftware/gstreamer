@@ -11,6 +11,7 @@ all: plugins
 		--enable-runtime-cpu-detect \
 		--disable-vp8-encoder \
 		--disable-multithread \
+		--disable-postproc \
 		--disable-examples \
 		--disable-install-docs \
 		--disable-install-bins \
