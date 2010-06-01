@@ -81,6 +81,7 @@
 
 #ifdef OPERA_MINIMAL_GST
 /* some things needed to build and run on older GStreamer versions */
+
 /* copied from gstreamer 0.10.29 gstutils.c */
 #define GST_SEARCH_MODE_EXACT OPERA_GST_SEARCH_MODE_EXACT
 #define GST_SEARCH_MODE_BEFORE OPERA_GST_SEARCH_MODE_BEFORE
@@ -157,6 +158,65 @@ gst_util_array_binary_search (gpointer array, guint num_elements,
       }
     }
   }
+}
+
+/* copied from gstreamer 0.10.29 gstsegment.c */
+#define gst_segment_to_position opera_gst_segment_to_position
+static gint64
+gst_segment_to_position (GstSegment * segment, GstFormat format,
+    gint64 running_time)
+{
+  gint64 result;
+  gint64 start, stop, accum;
+
+  g_return_val_if_fail (segment != NULL, -1);
+
+  if (G_UNLIKELY (running_time == -1))
+    return -1;
+
+  if (G_UNLIKELY (segment->format == GST_FORMAT_UNDEFINED))
+    segment->format = format;
+
+  /* if we have the position for the same format as the segment, we can compare
+   * the start and stop values, otherwise we assume 0 and -1 */
+  if (G_LIKELY (segment->format == format)) {
+    start = segment->start;
+    stop = segment->stop;
+    accum = segment->accum;
+  } else {
+    start = 0;
+    stop = -1;
+    accum = 0;
+  }
+
+  /* this running_time was for a previous segment */
+  if (running_time < accum)
+    return -1;
+
+  /* start by subtracting the accumulated time */
+  result = running_time - accum;
+
+  /* move into the segment at the right rate */
+  if (G_UNLIKELY (segment->abs_rate != 1.0))
+    result = ceil (result * segment->abs_rate);
+
+  if (G_LIKELY (segment->rate > 0.0)) {
+    /* bring to corrected position in segment */
+    result += start;
+
+    /* outside of the segment boundary stop */
+    if (G_UNLIKELY (stop != -1 && result > stop))
+      return -1;
+  } else {
+    /* cannot continue if no stop position set or outside of
+     * the segment. */
+    if (G_UNLIKELY (stop == -1 || result + start > stop))
+      return -1;
+
+    /* bring to corrected position in segment */
+    result = stop - result;
+  }
+  return result;
 }
 #endif /* OPERA_MINIMAL_GST */
 
