@@ -5,13 +5,12 @@ $ make
 
 == Mac ==
 
+Build on 10.5 Prefered
+
 pkg-config and yasm from MacPorts are needed.
 
 $ cd macosx
-$ make release
-$ make releaseppc
-$ cd dist
-$ ./build_universal_binaries.pl
+$ make release (or debug)
 
 == Windows ==
 

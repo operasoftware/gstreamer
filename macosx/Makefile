@@ -44,8 +44,10 @@ glib:
 	cd "../glib"; make clean; \
 	AUTOGEN_SUBDIR_MODE=1 ./autogen.sh && \
 	./configure --prefix="$(PREFIX)" \
+		--enable-shared \
 		--disable-regex \
 		--disable-gtk-doc \
+		"$(GLIB_CONFIGURE)" \
 	&& make install
 
 .PHONY: gstreamer
@@ -313,8 +315,8 @@ gst-plugins-bad: gst-plugins-base libvpx
 		LDFLAGS="-L$(PREFIX)/lib" \
 	&& make install
 
-.PHONY: debug
-debug:
+.PHONY: debugintel
+debugintel:
 	PREFIX="$(PWD)/Debug" \
 	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
@@ -326,8 +328,8 @@ debug:
 	rm -fR dist/debug_i386/plugins
 	mv dist/debug_i386/gstreamer-0.10 dist/debug_i386/plugins
 
-.PHONY: release
-release:
+.PHONY: releaseintel
+releaseintel:
 	PREFIX="$(PWD)/Release" \
 	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
@@ -347,6 +349,7 @@ debugppc:
 	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch ppc" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	GLIB_CONFIGURE="--host=powerpc-apple-darwin9" \
 	LIBVPX_TARGET="ppc32-darwin8-gcc" \
 	LIBTHEORA_CONFIGURE="--disable-asm" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
@@ -361,6 +364,7 @@ releaseppc:
 	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch ppc" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
+	GLIB_CONFIGURE="--host=powerpc-apple-darwin9" \
 	LIBVPX_TARGET="ppc32-darwin8-gcc" \
 	LIBTHEORA_CONFIGURE="--disable-asm" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
@@ -369,5 +373,10 @@ releaseppc:
 	mv dist/release_ppc/gstreamer-0.10 dist/release_ppc/plugins
 #	strip -u -r dist/release_ppc/*.dylib dist/release_ppc/plugins/*.so
 
-.PHONY: all
-all: debug release
+.PHONY: release
+release: releaseintel releaseppc
+	cd dist; perl build_universal_binaries.pl
+	
+.PHONY: debug
+debug: debugintel debugppc
+	cd dist; perl build_universal_binaries.pl	
