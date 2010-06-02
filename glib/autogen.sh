@@ -19,6 +19,7 @@ for LIBTOOLIZE in libtoolize glibtoolize; do
 	case $libtool_version in
 	    1.4*|1.5*|2.2*)
 		have_libtool=true
+		break
 		;;
 	esac
     fi
