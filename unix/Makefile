@@ -20,10 +20,10 @@ all: plugins
 
 .PHONY: .libvpx
 .libvpx: .libvpx.configure
-	make -C ../libvpx -j install
+	$(MAKE) -C ../libvpx -j install
 
-GST_CFLAGS=$(shell pkg-config --cflags gstreamer-0.10) -fPIC
-GST_LIBS=-lgstreamer-0.10 -lgstbase-0.10 -lgstvideo-0.10 -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lm
+GST_CFLAGS=$(shell pkg-config --cflags gstreamer-video-0.10) -fPIC
+GST_LIBS=$(shell pkg-config --libs gstreamer-video-0.10) -lm
 GST_OPERA_CFLAGS=-DOPERA_MINIMAL_GST -DVERSION=\"0.10\" -DPACKAGE=\"gst-opera\" -DGST_PACKAGE_NAME=\"GStreamer\ Opera\ Plug-ins\" -DGST_PACKAGE_ORIGIN=\"http://sourcecode.opera.com/gstreamer/\"
 VPX_CFLAGS=-I"$(PREFIX)/include"
 VPX_LDFLAGS=-L"$(PREFIX)/lib"
@@ -74,4 +74,4 @@ plugins: plugins/libgstoperamatroska.so plugins/libgstoperavp8.so
 .PHONY: clean
 clean:
 	rm -rf "$(PREFIX)" plugins/ .libvpx.configure
-	make -C ../libvpx clean || :
+	$(MAKE) -C ../libvpx clean || :
