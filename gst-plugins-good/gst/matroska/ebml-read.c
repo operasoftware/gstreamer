@@ -30,9 +30,10 @@
 
 #include <math.h>
 
-/* NAN is supposed to be in math.h, Microsoft defines it in xmath.h */
+/* NAN is supposed to be in math.h, Microsoft defines _NANCODE in ymath.h */
 #ifdef _MSC_VER
-#include <xmath.h>
+#include <ymath.h>
+#define NAN _NANCODE
 #endif
 
 /* If everything goes wrong try 0.0/0.0 which should be NAN */
