@@ -20,7 +20,7 @@ all: plugins
 
 .PHONY: .libvpx
 .libvpx: .libvpx.configure
-	$(MAKE) -C ../libvpx -j install
+	$(MAKE) -C ../libvpx install
 
 GST_CFLAGS=$(shell pkg-config --cflags gstreamer-video-0.10) -fPIC
 GST_LIBS=$(shell pkg-config --libs gstreamer-video-0.10) -lm
