@@ -58,11 +58,11 @@ GST_VP8_SOURCES = \
 GST_VP8_CFLAGS = -DHAVE_VP8_DECODER
 
 GST_BASE_VIDEO_SOURCES = \
-	../gst-plugins-bad/ext/vp8/gst/video/gstbasevideocodec.c \
-	../gst-plugins-bad/ext/vp8/gst/video/gstbasevideodecoder.c \
-	../gst-plugins-bad/ext/vp8/gst/video/gstbasevideoutils.c
+	../gst-plugins-bad/gst-libs/gst/video/gstbasevideocodec.c \
+	../gst-plugins-bad/gst-libs/gst/video/gstbasevideodecoder.c \
+	../gst-plugins-bad/gst-libs/gst/video/gstbasevideoutils.c
 
-GST_BASE_VIDEO_CFLAGS = -I../gst-plugins-bad/ext/vp8
+GST_BASE_VIDEO_CFLAGS = -DGST_USE_UNSTABLE_API -I../gst-plugins-bad/gst-libs
 
 plugins/libgstoperavp8.so: $(GST_VP8_SOURCES) $(GST_BASE_VIDEO_SOURCES) | .libvpx
 	mkdir -p plugins
