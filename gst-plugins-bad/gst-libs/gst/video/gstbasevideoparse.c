@@ -26,8 +26,8 @@
 #include <string.h>
 #include <math.h>
 
-GST_DEBUG_CATEGORY_EXTERN (basevideo_debug);
-#define GST_CAT_DEFAULT basevideo_debug
+GST_DEBUG_CATEGORY (basevideoparse_debug);
+#define GST_CAT_DEFAULT basevideoparse_debug
 
 
 
@@ -67,6 +67,9 @@ GST_BOILERPLATE (GstBaseVideoParse, gst_base_video_parse,
 static void
 gst_base_video_parse_base_init (gpointer g_class)
 {
+  GST_DEBUG_CATEGORY_INIT (basevideoparse_debug, "basevideoparse", 0,
+      "Base Video Parse");
+
 
 }
 
@@ -129,7 +132,7 @@ gst_base_video_parse_reset (GstBaseVideoParse * base_video_parse)
     base_video_parse->caps = NULL;
   }
 
-  gst_segment_init (&base_video_parse->state.segment, GST_FORMAT_TIME);
+  gst_segment_init (&base_video_parse->segment, GST_FORMAT_TIME);
   gst_adapter_clear (base_video_parse->input_adapter);
   gst_adapter_clear (base_video_parse->output_adapter);
 
@@ -278,8 +281,8 @@ gst_base_video_parse_src_query (GstPad * pad, GstQuery * query)
 
       time = gst_util_uint64_scale (base_parse->presentation_frame_number,
           base_parse->state.fps_n, base_parse->state.fps_d);
-      time += base_parse->state.segment.time;
-      GST_DEBUG ("query position %" G_GINT64_FORMAT, time);
+      time += base_parse->segment.time;
+      GST_DEBUG ("query position %" GST_TIME_FORMAT, GST_TIME_ARGS (time));
       res = gst_base_video_encoded_video_convert (&base_parse->state,
           GST_FORMAT_TIME, time, &format, &value);
       if (!res)
@@ -484,9 +487,9 @@ gst_base_video_parse_sink_event (GstPad * pad, GstEvent * event)
       if (rate <= 0.0)
         goto newseg_wrong_rate;
 
-      GST_DEBUG ("newsegment %" G_GINT64_FORMAT " %" G_GINT64_FORMAT, start,
-          time);
-      gst_segment_set_newsegment (&base_video_parse->state.segment, update,
+      GST_DEBUG ("newsegment %" GST_TIME_FORMAT " %" GST_TIME_FORMAT,
+          GST_TIME_ARGS (start), GST_TIME_ARGS (time));
+      gst_segment_set_newsegment (&base_video_parse->segment, update,
           rate, format, start, stop, time);
 
       ret =
@@ -580,19 +583,11 @@ gst_base_video_parse_push_all (GstBaseVideoParse * base_video_parse,
   return ret;
 }
 
-static GstBuffer *
-gst_adapter_get_buffer (GstAdapter * adapter)
-{
-  return gst_buffer_ref (GST_BUFFER (adapter->buflist->data));
-
-}
-
 static GstFlowReturn
 gst_base_video_parse_chain (GstPad * pad, GstBuffer * buf)
 {
   GstBaseVideoParse *base_video_parse;
   GstBaseVideoParseClass *klass;
-  GstBuffer *buffer;
   GstFlowReturn ret;
 
   GST_DEBUG ("chain with %d bytes", GST_BUFFER_SIZE (buf));
@@ -638,11 +633,6 @@ gst_base_video_parse_chain (GstPad * pad, GstBuffer * buf)
       return GST_FLOW_OK;
     }
   }
-
-  /* FIXME: use gst_adapter_prev_timestamp() here instead? */
-  buffer = gst_adapter_get_buffer (base_video_parse->input_adapter);
-
-  gst_buffer_unref (buffer);
 
   /* FIXME check klass->parse_data */
 
@@ -855,9 +845,10 @@ gst_base_video_parse_push (GstBaseVideoParse * base_video_parse,
   }
   gst_buffer_set_caps (buffer, base_video_parse->caps);
 
-  GST_DEBUG ("pushing ts=%" G_GINT64_FORMAT " dur=%" G_GINT64_FORMAT " off=%"
-      G_GINT64_FORMAT " off_end=%" G_GINT64_FORMAT,
-      GST_BUFFER_TIMESTAMP (buffer), GST_BUFFER_DURATION (buffer),
+  GST_DEBUG ("pushing ts=%" GST_TIME_FORMAT " dur=%" GST_TIME_FORMAT
+      " off=%" G_GUINT64_FORMAT " off_end=%" G_GUINT64_FORMAT,
+      GST_TIME_ARGS (GST_BUFFER_TIMESTAMP (buffer)),
+      GST_TIME_ARGS (GST_BUFFER_DURATION (buffer)),
       GST_BUFFER_OFFSET (buffer), GST_BUFFER_OFFSET_END (buffer));
 
   if (base_video_parse->discont) {

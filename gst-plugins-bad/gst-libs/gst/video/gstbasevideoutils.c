@@ -25,8 +25,23 @@
 
 #include <string.h>
 
-GST_DEBUG_CATEGORY_EXTERN (basevideo_debug);
-#define GST_CAT_DEFAULT basevideo_debug
+GST_DEBUG_CATEGORY_EXTERN (basevideocodec_debug);
+#define GST_CAT_DEFAULT basevideocodec_debug
+
+
+#if 0
+guint64
+gst_base_video_convert_bytes_to_frames (GstVideoState * state, guint64 bytes)
+{
+  return gst_util_uint64_scale_int (bytes, 1, state->bytes_per_picture);
+}
+
+guint64
+gst_base_video_convert_frames_to_bytes (GstVideoState * state, guint64 frames)
+{
+  return frames * state->bytes_per_picture;
+}
+#endif
 
 
 gboolean
@@ -106,44 +121,16 @@ gst_base_video_encoded_video_convert (GstVideoState * state,
   return res;
 }
 
-gboolean
-gst_base_video_state_from_caps (GstVideoState * state, GstCaps * caps)
-{
-
-  gst_video_format_parse_caps (caps, &state->format,
-      &state->width, &state->height);
-
-  if (!gst_video_parse_caps_framerate (caps, &state->fps_n, &state->fps_d))
-    return FALSE;
-
-  state->par_n = 1;
-  state->par_d = 1;
-  gst_video_parse_caps_pixel_aspect_ratio (caps, &state->par_n, &state->par_d);
-
-  {
-    GstStructure *structure = gst_caps_get_structure (caps, 0);
-    state->interlaced = FALSE;
-    gst_structure_get_boolean (structure, "interlaced", &state->interlaced);
-  }
-
-  state->clean_width = state->width;
-  state->clean_height = state->height;
-  state->clean_offset_left = 0;
-  state->clean_offset_top = 0;
-
-  /* FIXME need better error handling */
-  return TRUE;
-}
-
 GstClockTime
-gst_video_state_get_timestamp (const GstVideoState * state, int frame_number)
+gst_video_state_get_timestamp (const GstVideoState * state,
+    GstSegment * segment, int frame_number)
 {
   if (frame_number < 0) {
-    return state->segment.start -
+    return segment->start -
         (gint64) gst_util_uint64_scale (-frame_number,
         state->fps_d * GST_SECOND, state->fps_n);
   } else {
-    return state->segment.start +
+    return segment->start +
         gst_util_uint64_scale (frame_number,
         state->fps_d * GST_SECOND, state->fps_n);
   }

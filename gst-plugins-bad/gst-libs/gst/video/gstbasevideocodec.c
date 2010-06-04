@@ -26,8 +26,8 @@
 #include <string.h>
 #include <math.h>
 
-GST_DEBUG_CATEGORY (basevideo_debug);
-#define GST_CAT_DEFAULT basevideo_debug
+GST_DEBUG_CATEGORY (basevideocodec_debug);
+#define GST_CAT_DEFAULT basevideocodec_debug
 
 /* GstBaseVideoCodec signals and args */
 enum
@@ -42,8 +42,15 @@ enum
 
 static void gst_base_video_codec_finalize (GObject * object);
 
+//static const GstQueryType *gst_base_video_codec_get_query_types (GstPad *pad);
+//static gboolean gst_base_video_codec_src_query (GstPad *pad, GstQuery *query);
+//static gboolean gst_base_video_codec_sink_query (GstPad *pad, GstQuery *query);
+//static gboolean gst_base_video_codec_src_event (GstPad *pad, GstEvent *event);
+//static gboolean gst_base_video_codec_sink_event (GstPad *pad, GstEvent *event);
 static GstStateChangeReturn gst_base_video_codec_change_state (GstElement *
     element, GstStateChange transition);
+//static GstFlowReturn gst_base_video_codec_push_all (GstBaseVideoCodec *base_video_codec, 
+//    gboolean at_eos);
 
 
 GST_BOILERPLATE (GstBaseVideoCodec, gst_base_video_codec, GstElement,
@@ -52,8 +59,8 @@ GST_BOILERPLATE (GstBaseVideoCodec, gst_base_video_codec, GstElement,
 static void
 gst_base_video_codec_base_init (gpointer g_class)
 {
-  GST_DEBUG_CATEGORY_INIT (basevideo_debug, "basevideo", 0,
-      "Base Video Classes");
+  GST_DEBUG_CATEGORY_INIT (basevideocodec_debug, "basevideocodec", 0,
+      "Base Video Codec");
 
 }
 
@@ -84,6 +91,8 @@ gst_base_video_codec_init (GstBaseVideoCodec * base_video_codec,
   g_return_if_fail (pad_template != NULL);
 
   base_video_codec->sinkpad = gst_pad_new_from_template (pad_template, "sink");
+  //gst_pad_set_query_function (base_video_codec->sinkpad,
+  //    gst_base_video_codec_sink_query);
   gst_element_add_pad (GST_ELEMENT (base_video_codec),
       base_video_codec->sinkpad);
 
@@ -92,7 +101,6 @@ gst_base_video_codec_init (GstBaseVideoCodec * base_video_codec,
   g_return_if_fail (pad_template != NULL);
 
   base_video_codec->srcpad = gst_pad_new_from_template (pad_template, "src");
-  gst_pad_use_fixed_caps (base_video_codec->srcpad);
   gst_element_add_pad (GST_ELEMENT (base_video_codec),
       base_video_codec->srcpad);
 
@@ -108,6 +116,7 @@ gst_base_video_codec_reset (GstBaseVideoCodec * base_video_codec)
 
   base_video_codec->system_frame_number = 0;
 
+  //gst_segment_init (&base_video_codec->state.segment, GST_FORMAT_TIME);
   gst_adapter_clear (base_video_codec->input_adapter);
   gst_adapter_clear (base_video_codec->output_adapter);
 
@@ -254,7 +263,7 @@ gst_base_video_codec_src_query (GstPad * pad, GstQuery * query)
       time = gst_util_uint64_scale (base_codec->system_frame_number,
           base_codec->state.fps_n, base_codec->state.fps_d);
       time += base_codec->state.segment.time;
-      GST_DEBUG ("query position %lld", time);
+      GST_DEBUG ("query position %" GST_TIME_FORMAT, GST_TIME_ARGS (time));
       res = gst_base_video_encoded_video_convert (&base_codec->state,
           GST_FORMAT_TIME, time, &format, &value);
       if (!res)
@@ -453,7 +462,8 @@ gst_base_video_codec_sink_event (GstPad * pad, GstEvent * event)
       if (rate <= 0.0)
         goto newseg_wrong_rate;
 
-      GST_DEBUG ("newsegment %lld %lld", start, time);
+      GST_DEBUG ("newsegment %" GST_TIME_FORMAT " %" GST_TIME_FORMAT,
+          GST_TIME_ARGS (start), GST_TIME_ARGS (time));
       gst_segment_set_newsegment (&base_video_codec->state.segment, update,
           rate, format, start, stop, time);
 

@@ -81,6 +81,7 @@ struct _GstBaseVideoParse
 
   GstVideoFrame *current_frame;
   GstVideoState state;
+  GstSegment segment;
   int distance_from_sync;
 
   gboolean sink_clipping;

@@ -279,7 +279,7 @@ gst_vp8_enc_class_init (GstVP8EncClass * klass)
   g_object_class_install_property (gobject_class, PROP_MAX_KEYFRAME_DISTANCE,
       g_param_spec_int ("max-keyframe-distance", "Maximum Key frame distance",
           "Maximum distance between key frames",
-          1, 9999, DEFAULT_MAX_KEYFRAME_DISTANCE,
+          0, 9999, DEFAULT_MAX_KEYFRAME_DISTANCE,
           (GParamFlags) (G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (gobject_class, PROP_SPEED,
@@ -561,7 +561,7 @@ gst_vp8_enc_finish (GstBaseVideoEncoder * base_video_encoder)
     GstVP8EncCoderHook *hook;
     gboolean invisible, keyframe;
 
-    GST_DEBUG_OBJECT (encoder, "packet %d type %d", pkt->data.frame.sz,
+    GST_DEBUG_OBJECT (encoder, "packet %u type %d", (guint) pkt->data.frame.sz,
         pkt->kind);
 
     if (pkt->kind != VPX_CODEC_CX_FRAME_PKT) {
@@ -606,29 +606,29 @@ gst_vp8_enc_buffer_to_image (GstVP8Enc * enc, GstBuffer * buffer)
   GstBaseVideoEncoder *encoder = (GstBaseVideoEncoder *) enc;
   guint8 *data = GST_BUFFER_DATA (buffer);
 
-  image->fmt = IMG_FMT_I420;
+  image->fmt = VPX_IMG_FMT_I420;
   image->bps = 12;
   image->x_chroma_shift = image->y_chroma_shift = 1;
   image->img_data = data;
   image->w = image->d_w = encoder->state.width;
   image->h = image->d_h = encoder->state.height;
 
-  image->stride[PLANE_Y] =
+  image->stride[VPX_PLANE_Y] =
       gst_video_format_get_row_stride (encoder->state.format, 0,
       encoder->state.width);
-  image->stride[PLANE_U] =
+  image->stride[VPX_PLANE_U] =
       gst_video_format_get_row_stride (encoder->state.format, 1,
       encoder->state.width);
-  image->stride[PLANE_V] =
+  image->stride[VPX_PLANE_V] =
       gst_video_format_get_row_stride (encoder->state.format, 2,
       encoder->state.width);
-  image->planes[PLANE_Y] =
+  image->planes[VPX_PLANE_Y] =
       data + gst_video_format_get_component_offset (encoder->state.format, 0,
       encoder->state.width, encoder->state.height);
-  image->planes[PLANE_U] =
+  image->planes[VPX_PLANE_U] =
       data + gst_video_format_get_component_offset (encoder->state.format, 1,
       encoder->state.width, encoder->state.height);
-  image->planes[PLANE_V] =
+  image->planes[VPX_PLANE_V] =
       data + gst_video_format_get_component_offset (encoder->state.format, 2,
       encoder->state.width, encoder->state.height);
 
@@ -741,7 +741,7 @@ gst_vp8_enc_handle_frame (GstBaseVideoEncoder * base_video_encoder,
     GstBuffer *buffer;
     gboolean invisible;
 
-    GST_DEBUG_OBJECT (encoder, "packet %d type %d", pkt->data.frame.sz,
+    GST_DEBUG_OBJECT (encoder, "packet %u type %d", (guint) pkt->data.frame.sz,
         pkt->kind);
 
     if (pkt->kind != VPX_CODEC_CX_FRAME_PKT) {

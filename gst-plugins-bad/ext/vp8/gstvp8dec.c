@@ -406,7 +406,8 @@ gst_vp8_dec_image_to_buffer (GstVP8Dec * dec, const vpx_image_t * img,
   w = MIN (w, img->w);
 
   for (i = 0; i < h; i++)
-    memcpy (d + i * stride, img->planes[PLANE_Y] + i * img->stride[PLANE_Y], w);
+    memcpy (d + i * stride,
+        img->planes[VPX_PLANE_Y] + i * img->stride[VPX_PLANE_Y], w);
 
   d = GST_BUFFER_DATA (buffer) +
       gst_video_format_get_component_offset (decoder->state.format, 1,
@@ -421,14 +422,16 @@ gst_vp8_dec_image_to_buffer (GstVP8Dec * dec, const vpx_image_t * img,
       decoder->state.width);
   w = MIN (w, img->w >> img->x_chroma_shift);
   for (i = 0; i < h; i++)
-    memcpy (d + i * stride, img->planes[PLANE_U] + i * img->stride[PLANE_U], w);
+    memcpy (d + i * stride,
+        img->planes[VPX_PLANE_U] + i * img->stride[VPX_PLANE_U], w);
 
   d = GST_BUFFER_DATA (buffer) +
       gst_video_format_get_component_offset (decoder->state.format, 2,
       decoder->state.width, decoder->state.height);
   /* Same stride, height, width as above */
   for (i = 0; i < h; i++)
-    memcpy (d + i * stride, img->planes[PLANE_V] + i * img->stride[PLANE_V], w);
+    memcpy (d + i * stride,
+        img->planes[VPX_PLANE_V] + i * img->stride[VPX_PLANE_V], w);
 }
 
 static GstFlowReturn
@@ -440,6 +443,7 @@ gst_vp8_dec_handle_frame (GstBaseVideoDecoder * decoder, GstVideoFrame * frame,
   vpx_codec_err_t status;
   vpx_codec_iter_t iter = NULL;
   vpx_image_t *img;
+  long decoder_deadline = 0;
 
   GST_DEBUG_OBJECT (decoder, "handle_frame");
 
@@ -526,9 +530,17 @@ gst_vp8_dec_handle_frame (GstBaseVideoDecoder * decoder, GstVideoFrame * frame,
   }
 #endif
 
+  if (deadline < 0) {
+    decoder_deadline = 1;
+  } else if (deadline == G_MAXINT64) {
+    decoder_deadline = 0;
+  } else {
+    decoder_deadline = MAX (1, deadline / GST_MSECOND);
+  }
+
   status = vpx_codec_decode (&dec->decoder,
       GST_BUFFER_DATA (frame->sink_buffer),
-      GST_BUFFER_SIZE (frame->sink_buffer), NULL, 0);
+      GST_BUFFER_SIZE (frame->sink_buffer), NULL, decoder_deadline);
   if (status) {
     GST_ELEMENT_ERROR (decoder, LIBRARY, ENCODE,
         ("Failed to decode frame"), ("%s", gst_vpx_error_name (status)));

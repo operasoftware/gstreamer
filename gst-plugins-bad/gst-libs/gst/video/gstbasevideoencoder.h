@@ -68,6 +68,7 @@ struct _GstBaseVideoEncoder
   GList *frames;
 
   GstVideoState state;
+  GstSegment segment;
 
   gboolean sink_clipping;
 
@@ -89,8 +90,8 @@ struct _GstBaseVideoEncoderClass
   gboolean (*set_format) (GstBaseVideoEncoder *coder, GstVideoState *state);
   gboolean (*start) (GstBaseVideoEncoder *coder);
   gboolean (*stop) (GstBaseVideoEncoder *coder);
-  gboolean (*finish) (GstBaseVideoEncoder *coder, GstVideoFrame *frame);
-  GstFlowReturn (*handle_frame) (GstBaseVideoEncoder *coder, GstVideoFrame *frame);
+  gboolean (*finish) (GstBaseVideoEncoder *coder);
+  gboolean (*handle_frame) (GstBaseVideoEncoder *coder, GstVideoFrame *frame);
   GstFlowReturn (*shape_output) (GstBaseVideoEncoder *coder, GstVideoFrame *frame);
   GstCaps *(*get_caps) (GstBaseVideoEncoder *coder);
 
@@ -106,6 +107,7 @@ guint64 gst_base_video_encoder_get_timestamp_offset (GstBaseVideoEncoder *coder)
 
 GstVideoFrame *gst_base_video_encoder_get_frame (GstBaseVideoEncoder *coder,
     int frame_number);
+GstVideoFrame *gst_base_video_encoder_get_oldest_frame (GstBaseVideoEncoder *coder);
 GstFlowReturn gst_base_video_encoder_finish_frame (GstBaseVideoEncoder *base_video_encoder,
     GstVideoFrame *frame);
 GstFlowReturn gst_base_video_encoder_end_of_stream (GstBaseVideoEncoder *base_video_encoder,

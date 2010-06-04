@@ -3,7 +3,7 @@ AC_PREREQ(2.52)
 dnl initialize autoconf
 dnl when going to/from release please set the nano (fourth number) right !
 dnl releases only do Wall, cvs and prerelease does Werror too
-AC_INIT(GStreamer Bad Plug-ins, 0.10.19,
+AC_INIT(GStreamer Bad Plug-ins, 0.10.19.1,
     http://bugzilla.gnome.org/enter_bug.cgi?product=GStreamer,
     gst-plugins-bad)
 
@@ -221,6 +221,30 @@ if test "x$HAVE_X11" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1, [Define if you have X11 library])
 fi
 
+dnl Orc
+AC_ARG_ENABLE(orc,
+AC_HELP_STRING([--enable-orc],[use Orc if installed]),
+[case "${enableval}" in
+  yes) enable_orc=yes ;;
+  no)  enable_orc=no ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-orc) ;;
+esac
+],
+[enable_orc=yes]) dnl Default value
+
+ORC_REQ=0.4.4.1
+if test "x$enable_orc" = "xyes" ; then
+  PKG_CHECK_MODULES(ORC, orc-0.4 >= $ORC_REQ, HAVE_ORC=yes, HAVE_ORC=no)
+  AC_DEFINE(HAVE_ORC, 1, [Use Orc])
+
+  ORCC=`$PKG_CONFIG --variable=orcc orc-0.4`
+  AC_SUBST(ORCC)
+else
+  AC_DEFINE(DISABLE_ORC, 1, [Disable Orc])
+  HAVE_ORC=no
+fi
+AM_CONDITIONAL(HAVE_ORC, test "x$HAVE_ORC" = "xyes")
+
 dnl set license and copyright notice
 GST_LICENSE="LGPL"
 AC_DEFINE_UNQUOTED(GST_LICENSE, "$GST_LICENSE", [GStreamer license])
@@ -279,6 +303,7 @@ AG_GST_CHECK_PLUGIN(h264parse)
 AG_GST_CHECK_PLUGIN(hdvparse)
 AG_GST_CHECK_PLUGIN(id3tag)
 AG_GST_CHECK_PLUGIN(invtelecine)
+AG_GST_CHECK_PLUGIN(ivfparse)
 AG_GST_CHECK_PLUGIN(jpegformat)
 AG_GST_CHECK_PLUGIN(librfb)
 AG_GST_CHECK_PLUGIN(liveadder)
@@ -464,6 +489,12 @@ AG_GST_CHECK_FEATURE(QUICKTIME, [QuickTime wrapper], qtwrapper, [
       [#include <Quicktime/Quicktime.h>])
 ])
 
+dnl check for shm_open (for shm plugin)
+translit(dnm, m, l) AM_CONDITIONAL(USE_SHM, true)
+AG_GST_CHECK_FEATURE(SHM, [POSIX shared memory source and sink], shm, [
+  AC_CHECK_LIB(rt, shm_open, HAVE_SHM=yes, HAVE_SHM=no)
+])
+
 dnl check for Video CD
 translit(dnm, m, l) AM_CONDITIONAL(USE_VCD, true)
 AG_GST_CHECK_FEATURE(VCD, [Video CD], vcdsrc, [
@@ -581,17 +612,13 @@ AG_GST_CHECK_FEATURE(CELT, [celt], celt, [
 dnl *** Cog ***
 translit(dnm, m, l) AM_CONDITIONAL(USE_COG, true)
 AG_GST_CHECK_FEATURE(COG, [Cog plugin], cog, [
-  PKG_CHECK_MODULES(COG, libpng >= 1.2 orc-0.4 >= 0.4.3, HAVE_COG="yes", [
+  PKG_CHECK_MODULES(COG, libpng >= 1.2 orc-0.4 >= $ORC_REQ, HAVE_COG="yes", [
     HAVE_COG="no"
     AC_MSG_RESULT(no)
   ])
   AC_SUBST(COG_CFLAGS)
   AC_SUBST(COG_LIBS)
-  ORCC=`$PKG_CONFIG --variable=orcc orc-0.4`
-  if test "x$ORCC" = x ; then
-    ORCC=orcc
-  fi
-  AC_SUBST(ORCC)
+  dnl ORCC was set up by Orc check above
 ])
 
 dnl *** dc1394  ***
@@ -1652,6 +1679,7 @@ gst/h264parse/Makefile
 gst/hdvparse/Makefile
 gst/id3tag/Makefile
 gst/invtelecine/Makefile
+gst/ivfparse/Makefile
 gst/jpegformat/Makefile
 gst/legacyresample/Makefile
 gst/librfb/Makefile
@@ -1702,6 +1730,7 @@ sys/dvb/Makefile
 sys/fbdev/Makefile
 sys/osxvideo/Makefile
 sys/qtwrapper/Makefile
+sys/shm/Makefile
 sys/vcd/Makefile
 sys/vdpau/Makefile
 sys/wasapi/Makefile
