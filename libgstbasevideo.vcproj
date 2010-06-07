@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="gstwebmdec"
-	ProjectGUID="{AF4642C7-70A1-41AB-B2CB-11AF05CC74B4}"
-	RootNamespace="gstwebmdec"
+	Name="libgstbasevideo"
+	ProjectGUID="{D99A39D8-C008-4275-8814-C6C6F10D8C2E}"
+	RootNamespace="libgstvideo"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -19,12 +19,13 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			InheritedPropertySheets=".\gst-opera.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -41,14 +42,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;include/glib-2.0&quot;;&quot;include/gstreamer-0.10&quot;;&quot;gst-plugins-base/gst-libs&quot;;&quot;gst-plugins-base/win32/common&quot;;&quot;gst-plugins-bad/ext/vp8&quot;;include"
-				PreprocessorDefinitions="WIN32;_DEBUG;HAVE_CONFIG_H;GST_USE_UNSTABLE_API"
+				AdditionalIncludeDirectories="&quot;include/glib-2.0&quot;;&quot;include/gstreamer-0.10&quot;;&quot;gst-plugins-bad/gst-libs&quot;;&quot;gst-plugins-bad/win32/common&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;HAVE_CONFIG_H;GLIB_STATIC_COMPILATION;GOBJECT_STATIC_COMPILATION;GST_STATIC_COMPILATION;GST_USE_UNSTABLE_API"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 				CompileAs="1"
-				ForcedIncludeFiles="$(ProjectDir)src\msvc_pragmas.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -60,15 +60,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -80,23 +75,22 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="mkdir include\gstreamer-0.10\gst\video&#x0D;&#x0A;copy /y gst-plugins-bad\gst-libs\gst\video\*.h include\gstreamer-0.10\gst\video&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			InheritedPropertySheets=".\gst-opera.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -114,14 +108,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;include/glib-2.0&quot;;&quot;include/gstreamer-0.10&quot;;&quot;gst-plugins-base/gst-libs&quot;;&quot;gst-plugins-base/win32/common&quot;;&quot;gst-plugins-bad/ext/vp8&quot;;include"
-				PreprocessorDefinitions="WIN32;NDEBUG;HAVE_CONFIG_H;GST_USE_UNSTABLE_API"
+				AdditionalIncludeDirectories="&quot;include/glib-2.0&quot;;&quot;include/gstreamer-0.10&quot;;&quot;gst-plugins-bad/gst-libs&quot;;&quot;gst-plugins-bad/win32/common&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;HAVE_CONFIG_H;GLIB_STATIC_COMPILATION;GOBJECT_STATIC_COMPILATION;GST_STATIC_COMPILATION;GST_USE_UNSTABLE_API"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="$(ProjectDir)src\msvc_pragmas.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -133,17 +126,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -155,10 +141,8 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="mkdir include\gstreamer-0.10\gst\video&#x0D;&#x0A;copy /y gst-plugins-bad\gst-libs\gst\video\*.h include\gstreamer-0.10\gst\video&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -171,43 +155,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\gst-plugins-good\gst\matroska\ebml-read.c"
+				RelativePath=".\gst-plugins-bad\gst-libs\gst\video\gstbasevideocodec.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gst-plugins-bad\ext\vp8\gstvp8dec.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions="HAVE_VP8_DECODER"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions="HAVE_VP8_DECODER"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\gst-plugins-bad\ext\vp8\gstvp8utils.c"
+				RelativePath=".\gst-plugins-bad\gst-libs\gst\video\gstbasevideodecoder.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\gstwebmdec.c"
-				>
-			</File>
-			<File
-				RelativePath=".\gst-plugins-good\gst\matroska\matroska-demux.c"
-				>
-			</File>
-			<File
-				RelativePath=".\gst-plugins-good\gst\matroska\matroska-ids.c"
+				RelativePath=".\gst-plugins-bad\gst-libs\gst\video\gstbasevideoutils.c"
 				>
 			</File>
 		</Filter>

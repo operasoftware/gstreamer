@@ -3801,5 +3801,10 @@ g_type_add_interface_static
 
 g_list_first
 g_value_transform
+gst_base_video_decoder_finish_frame
+gst_base_video_decoder_skip_frame
+gst_base_video_decoder_alloc_src_frame
+gst_base_video_decoder_get_type
+gst_base_video_decoder_set_sync_point
 
 #endif

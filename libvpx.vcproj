@@ -34,7 +34,7 @@
 			/>
 			<Tool
 				Name="YASM"
-				IncludePaths="libvpx;libvpx\vpx_codec;libvpx\vp8\common;libvpx\vp8\decoder"
+				IncludePaths="libvpx;libvpx\vp8\common;libvpx\vp8\decoder"
 				Debug="true"
 			/>
 			<Tool
@@ -49,7 +49,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="libvpx;libvpx\vpx_codec;libvpx\vp8\common;libvpx\vp8\decoder"
+				AdditionalIncludeDirectories="libvpx;libvpx\vp8\common;libvpx\vp8\decoder"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H=vpx_config.h"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
@@ -83,7 +83,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir include\vpx&#x0D;&#x0A;copy /y libvpx\vpx_codec\*.h include\vpx&#x0D;&#x0A;copy /y libvpx\vpx_ports\*.h include\vpx&#x0D;&#x0A;copy /y libvpx\vp8\*.h include\vpx&#x0D;&#x0A;"
+				CommandLine="mkdir include\vpx&#x0D;&#x0A;copy /y libvpx\vpx\*.h include\vpx"
 			/>
 		</Configuration>
 		<Configuration
@@ -102,7 +102,7 @@
 			/>
 			<Tool
 				Name="YASM"
-				IncludePaths="libvpx;libvpx\vpx_codec;libvpx\vp8\common;libvpx\vp8\decoder"
+				IncludePaths="libvpx;libvpx\vp8\common;libvpx\vp8\decoder"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -115,7 +115,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="libvpx;libvpx\vpx_codec;libvpx\vp8\common;libvpx\vp8\decoder"
+				AdditionalIncludeDirectories="libvpx;libvpx\vp8\common;libvpx\vp8\decoder"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H=vpx_config.h"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -149,7 +149,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir include\vpx&#x0D;&#x0A;copy /y libvpx\vpx_codec\*.h include\vpx&#x0D;&#x0A;copy /y libvpx\vpx_ports\*.h include\vpx&#x0D;&#x0A;copy /y libvpx\vp8\*.h include\vpx&#x0D;&#x0A;"
+				CommandLine="mkdir include\vpx&#x0D;&#x0A;copy /y libvpx\vpx\*.h include\vpx"
 			/>
 		</Configuration>
 	</Configurations>
@@ -390,7 +390,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\src\vpx_codec.c"
+				RelativePath=".\libvpx\vpx\src\vpx_codec.c"
 				>
 			</File>
 			<File
@@ -402,15 +402,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\src\vpx_decoder.c"
+				RelativePath=".\libvpx\vpx\src\vpx_decoder.c"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\src\vpx_decoder_compat.c"
+				RelativePath=".\libvpx\vpx\src\vpx_decoder_compat.c"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\src\vpx_encoder.c"
+				RelativePath=".\libvpx\vpx\src\vpx_encoder.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -430,7 +430,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\src\vpx_image.c"
+				RelativePath=".\libvpx\vpx\src\vpx_image.c"
 				>
 			</File>
 			<File
@@ -712,39 +712,39 @@
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_codec.h"
+				RelativePath=".\libvpx\vpx\vpx_codec.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_codec_impl_bottom.h"
+				RelativePath=".\libvpx\vpx\vpx_codec_impl_bottom.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_codec_impl_top.h"
+				RelativePath=".\libvpx\vpx\vpx_codec_impl_top.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\internal\vpx_codec_internal.h"
+				RelativePath=".\libvpx\vpx\internal\vpx_codec_internal.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_decoder.h"
+				RelativePath=".\libvpx\vpx\vpx_decoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_decoder_compat.h"
+				RelativePath=".\libvpx\vpx\vpx_decoder_compat.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_encoder.h"
+				RelativePath=".\libvpx\vpx\vpx_encoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_codec\vpx_image.h"
+				RelativePath=".\libvpx\vpx\vpx_image.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libvpx\vpx_ports\vpx_integer.h"
+				RelativePath=".\libvpx\vpx\vpx_integer.h"
 				>
 			</File>
 			<File
