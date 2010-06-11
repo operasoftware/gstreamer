@@ -1,6 +1,6 @@
 DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc
 
-SUBDIRS = ext
+SUBDIRS = gst-libs ext
 
 DIST_SUBDIRS = ext
 
