@@ -6,6 +6,4 @@ gstreamer.def
 gstreamer-dbg.def
 Debug/
 Release/
-dist/
-include/
 dxsdk_oct2004/
