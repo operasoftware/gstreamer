@@ -130,6 +130,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx", "libvpx.vcproj", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgstbasevideo", "libgstbasevideo.vcproj", "{D99A39D8-C008-4275-8814-C6C6F10D8C2E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstwaveform", "gstwaveform.vcproj", "{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5DDC2ADD-7433-406E-9464-5F9752F219DE} = {5DDC2ADD-7433-406E-9464-5F9752F219DE}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -240,6 +245,10 @@ Global
 		{D99A39D8-C008-4275-8814-C6C6F10D8C2E}.Debug|Win32.Build.0 = Debug|Win32
 		{D99A39D8-C008-4275-8814-C6C6F10D8C2E}.Release|Win32.ActiveCfg = Release|Win32
 		{D99A39D8-C008-4275-8814-C6C6F10D8C2E}.Release|Win32.Build.0 = Release|Win32
+		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Debug|Win32.Build.0 = Debug|Win32
+		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Release|Win32.ActiveCfg = Release|Win32
+		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
