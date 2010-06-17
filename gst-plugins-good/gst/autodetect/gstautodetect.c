@@ -25,9 +25,11 @@
 
 #include "gstautodetect.h"
 #include "gstautoaudiosink.h"
+#ifndef OPERA_MINIMAL_GST
 #include "gstautoaudiosrc.h"
 #include "gstautovideosink.h"
 #include "gstautovideosrc.h"
+#endif /* !OPERA_MINIMAL_GST */
 
 GST_DEBUG_CATEGORY (autodetect_debug);
 
@@ -37,6 +39,7 @@ plugin_init (GstPlugin * plugin)
   GST_DEBUG_CATEGORY_INIT (autodetect_debug, "autodetect", 0,
       "Autodetection audio/video output wrapper elements");
 
+#ifndef OPERA_MINIMAL_GST
   return gst_element_register (plugin, "autovideosink",
       GST_RANK_NONE, GST_TYPE_AUTO_VIDEO_SINK) &&
       gst_element_register (plugin, "autovideosrc",
@@ -45,6 +48,10 @@ plugin_init (GstPlugin * plugin)
       GST_RANK_NONE, GST_TYPE_AUTO_AUDIO_SINK) &&
       gst_element_register (plugin, "autoaudiosrc",
       GST_RANK_NONE, GST_TYPE_AUTO_AUDIO_SRC);
+#else
+  return gst_element_register (plugin, "autoaudiosink",
+      GST_RANK_NONE, GST_TYPE_AUTO_AUDIO_SINK);
+#endif /* !OPERA_MINIMAL_GST */
 }
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
