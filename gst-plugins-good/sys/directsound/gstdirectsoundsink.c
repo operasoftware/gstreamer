@@ -403,7 +403,7 @@ gst_directsound_sink_open (GstAudioSink * asink)
 
   /* create and initialize a DirecSound object */
   if (FAILED (hRes = DirectSoundCreate (NULL, &dsoundsink->pDS, NULL))) {
-    GST_ELEMENT_ERROR (dsoundsink, RESOURCE, OPEN_READ,
+    GST_ELEMENT_WARNING (dsoundsink, RESOURCE, OPEN_READ,
         ("gst_directsound_sink_open: DirectSoundCreate: 0x%08X", hRes),
         (NULL));
     return FALSE;
