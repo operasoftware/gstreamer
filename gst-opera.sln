@@ -135,6 +135,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstwaveform", "gstwaveform.
 		{5DDC2ADD-7433-406E-9464-5F9752F219DE} = {5DDC2ADD-7433-406E-9464-5F9752F219DE}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstautodetect", "gstautodetect.vcproj", "{B6669382-7F21-42E4-9023-462F9018F865}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5DDC2ADD-7433-406E-9464-5F9752F219DE} = {5DDC2ADD-7433-406E-9464-5F9752F219DE}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -249,6 +254,10 @@ Global
 		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Debug|Win32.Build.0 = Debug|Win32
 		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Release|Win32.ActiveCfg = Release|Win32
 		{94864FB0-06D5-4B8F-8482-BCD2128AFCAA}.Release|Win32.Build.0 = Release|Win32
+		{B6669382-7F21-42E4-9023-462F9018F865}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B6669382-7F21-42E4-9023-462F9018F865}.Debug|Win32.Build.0 = Debug|Win32
+		{B6669382-7F21-42E4-9023-462F9018F865}.Release|Win32.ActiveCfg = Release|Win32
+		{B6669382-7F21-42E4-9023-462F9018F865}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
