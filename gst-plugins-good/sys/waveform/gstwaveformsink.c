@@ -350,9 +350,21 @@ gst_waveform_sink_getcaps (GstBaseSink * bsink)
 static gboolean
 gst_waveform_sink_open (GstAudioSink * asink)
 {
+  MMRESULT mmresult;
+  WAVEOUTCAPS wocaps;
   GstWaveFormSink *wfsink = GST_WAVEFORM_SINK (asink);
 
-  /* nothing to do here as the device needs to be opened with the format we will use */
+  /* check if there are any devices present */
+  if (waveOutGetNumDevs() == 0) {
+    return FALSE;
+  }
+
+  /* since we want to use the WAVE_MAPPER device, query its caps
+     for the sole purpose of finding out if it exists */
+  mmresult = waveOutGetDevCaps (WAVE_MAPPER, &wocaps, sizeof (wocaps));
+  if (mmresult != MMSYSERR_NOERROR) {
+    return FALSE;
+  }
 
   return TRUE;
 }
