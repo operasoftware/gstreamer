@@ -400,10 +400,10 @@ gst_vp8_dec_image_to_buffer (GstVP8Dec * dec, const vpx_image_t * img,
       decoder->state.width);
   h = gst_video_format_get_component_height (decoder->state.format, 0,
       decoder->state.height);
-  h = MIN (h, img->h);
+  h = MIN (h, img->d_h);
   w = gst_video_format_get_component_width (decoder->state.format, 0,
       decoder->state.width);
-  w = MIN (w, img->w);
+  w = MIN (w, img->d_w);
 
   for (i = 0; i < h; i++)
     memcpy (d + i * stride,
@@ -417,10 +417,10 @@ gst_vp8_dec_image_to_buffer (GstVP8Dec * dec, const vpx_image_t * img,
       decoder->state.width);
   h = gst_video_format_get_component_height (decoder->state.format, 1,
       decoder->state.height);
-  h = MIN (h, img->h >> img->y_chroma_shift);
+  h = MIN (h, img->d_h >> img->y_chroma_shift);
   w = gst_video_format_get_component_width (decoder->state.format, 1,
       decoder->state.width);
-  w = MIN (w, img->w >> img->x_chroma_shift);
+  w = MIN (w, img->d_w >> img->x_chroma_shift);
   for (i = 0; i < h; i++)
     memcpy (d + i * stride,
         img->planes[VPX_PLANE_U] + i * img->stride[VPX_PLANE_U], w);
