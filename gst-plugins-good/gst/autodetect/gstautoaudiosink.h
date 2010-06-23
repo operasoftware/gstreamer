@@ -44,6 +44,9 @@ typedef struct _GstAutoAudioSink {
   GstPad *pad;
   GstElement *kid;
   GstCaps *filter_caps;
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+  double volume;
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
 } GstAutoAudioSink;
 
 typedef struct _GstAutoAudioSinkClass {

@@ -49,6 +49,9 @@ enum
 {
   PROP_0,
   PROP_CAPS,
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+  PROP_VOLUME,
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
 };
 
 static GstStateChangeReturn
@@ -114,6 +117,14 @@ gst_auto_audio_sink_class_init (GstAutoAudioSinkClass * klass)
       g_param_spec_boxed ("filter-caps", "Filter caps",
           "Filter sink candidates using these caps.", GST_TYPE_CAPS,
           G_PARAM_READWRITE));
+
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+  g_object_class_install_property (gobject_class,
+      PROP_VOLUME,
+      g_param_spec_double ("volume", "Volume",
+          "Volume of this stream", 0.0, 1.0, 1.0,
+          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
 }
 
 static void
@@ -173,6 +184,11 @@ gst_auto_audio_sink_init (GstAutoAudioSink * sink,
 
   /* set the default raw audio caps */
   sink->filter_caps = gst_static_caps_get (&raw_caps);
+
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+  /* set default volume */
+  sink->volume = 1.0;
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
 
   /* mark as sink */
   GST_OBJECT_FLAG_SET (sink, GST_ELEMENT_IS_SINK);
@@ -358,6 +374,12 @@ gst_auto_audio_sink_detect (GstAutoAudioSink * sink)
   if (!gst_ghost_pad_set_target (GST_GHOST_PAD (sink->pad), targetpad))
     goto target_failed;
 
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+  /* Sync volume property on kid */
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (esink), "volume"))
+    g_object_set (G_OBJECT (esink), "volume", sink->volume, NULL);
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
+
   gst_object_unref (targetpad);
   GST_DEBUG_OBJECT (sink, "done changing auto audio sink");
 
@@ -422,6 +444,14 @@ gst_auto_audio_sink_set_property (GObject * object, guint prop_id,
         gst_caps_unref (sink->filter_caps);
       sink->filter_caps = gst_caps_copy (gst_value_get_caps (value));
       break;
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+	case PROP_VOLUME:
+      sink->volume = g_value_get_double (value);
+      if (sink->kid &&
+          g_object_class_find_property (G_OBJECT_GET_CLASS (sink->kid), "volume"))
+          g_object_set (G_OBJECT (sink->kid), "volume", sink->volume, NULL);
+      break;
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -439,6 +469,12 @@ gst_auto_audio_sink_get_property (GObject * object, guint prop_id,
       gst_value_set_caps (value, sink->filter_caps);
       break;
     }
+#ifdef GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH
+	case PROP_VOLUME:{
+      g_value_set_double (value, sink->volume);
+      break;
+    }
+#endif /* GST_AUTOAUDIOSINK_VOLUME_PASSTHROUGH */
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
