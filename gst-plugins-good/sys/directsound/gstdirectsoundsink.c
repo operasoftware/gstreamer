@@ -337,7 +337,10 @@ gst_directsound_sink_set_property (GObject * object,
   switch (prop_id) {
     case PROP_VOLUME:
       sink->volume = (int) (g_value_get_double (value) * 100);
+
+      GST_DSOUND_LOCK (sink);
       gst_directsound_sink_set_volume (sink);
+      GST_DSOUND_UNLOCK (sink);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
