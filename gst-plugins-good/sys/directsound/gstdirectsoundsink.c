@@ -489,6 +489,8 @@ gst_directsound_sink_prepare (GstAudioSink * asink, GstRingBufferSpec * spec)
   descSecondary.dwBufferBytes = dsoundsink->buffer_size;
   descSecondary.lpwfxFormat = (WAVEFORMATEX *) & wfx;
 
+  GST_DSOUND_LOCK (dsoundsink);
+
   hRes = IDirectSound_CreateSoundBuffer (dsoundsink->pDS, &descSecondary,
       &dsoundsink->pDSBSecondary, NULL);
   if (FAILED (hRes)) {
@@ -500,6 +502,8 @@ gst_directsound_sink_prepare (GstAudioSink * asink, GstRingBufferSpec * spec)
 
   gst_directsound_sink_set_volume (dsoundsink);
 
+  GST_DSOUND_UNLOCK (dsoundsink);
+
   return TRUE;
 }
 
@@ -510,11 +514,15 @@ gst_directsound_sink_unprepare (GstAudioSink * asink)
 
   dsoundsink = GST_DIRECTSOUND_SINK (asink);
 
+  GST_DSOUND_LOCK (dsoundsink);
+
   /* release secondary DirectSound buffer */
   if (dsoundsink->pDSBSecondary) {
     IDirectSoundBuffer_Release (dsoundsink->pDSBSecondary);
     dsoundsink->pDSBSecondary = NULL;
   }
+
+  GST_DSOUND_UNLOCK (dsoundsink);
 
   return TRUE;
 }
@@ -744,6 +752,8 @@ gst_directsound_probe_supported_formats (GstDirectSoundSink * dsoundsink,
   descSecondary.dwBufferBytes = 6144;
   descSecondary.lpwfxFormat = &wfx;
 
+  GST_DSOUND_LOCK (dsoundsink);
+
   hRes = IDirectSound_CreateSoundBuffer (dsoundsink->pDS, &descSecondary,
       &dsoundsink->pDSBSecondary, NULL);
   if (FAILED (hRes)) {
@@ -758,7 +768,10 @@ gst_directsound_probe_supported_formats (GstDirectSoundSink * dsoundsink,
       GST_DEBUG_OBJECT (dsoundsink,
           "(IDirectSoundBuffer_Release returned: 0x%08X)\n", hRes);
     }
+    dsoundsink->pDSBSecondary = NULL;
   }
+
+  GST_DSOUND_UNLOCK (dsoundsink);
 
   return caps;
 }
