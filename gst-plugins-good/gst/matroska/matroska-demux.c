@@ -7343,7 +7343,9 @@ gst_matroska_demux_plugin_init (GstPlugin * plugin)
           GST_RANK_PRIMARY + 1, GST_TYPE_MATROSKA_DEMUX))
     return FALSE;
 
-  if (!gst_type_find_register (plugin, "video/webm", GST_RANK_PRIMARY + 1,
+  /* this typefinder should have higher rank than any typefinder in
+   * gst-plugins-base, to avoid useless reads from e.g. apetag */
+  if (!gst_type_find_register (plugin, "video/webm", GST_RANK_PRIMARY + 256,
           webm_type_find, NULL, WEBM_CAPS, NULL, NULL))
     return FALSE;
 
