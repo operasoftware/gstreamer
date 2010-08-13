@@ -366,7 +366,7 @@ gst_vp8_dec_reset (GstBaseVideoDecoder * base_video_decoder)
 static GstFlowReturn
 gst_vp8_dec_parse_data (GstBaseVideoDecoder * decoder, gboolean at_eos)
 {
-  return GST_FLOW_OK;
+  return GST_FLOW_NOT_SUPPORTED;
 }
 
 #ifndef OPERA_MINIMAL_GST
