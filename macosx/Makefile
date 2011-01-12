@@ -1,16 +1,18 @@
 export PATH := $(PREFIX)/bin:$(PATH)
 export PKG_CONFIG_PATH := $(PREFIX)/lib/pkgconfig/
+export CC=/usr/bin/gcc-4.0
+export CXX=/usr/bin/g++-4.0
 
 .PHONY: libogg
 libogg:
 	cd "../libogg"; make clean; \
-	./configure --prefix="$(PREFIX)" \
+	./configure --prefix="$(PREFIX)" --disable-dependency-tracking \
 	&& make install
 
 .PHONY: libvorbis
 libvorbis: libogg
 	cd "../libvorbis"; make clean; \
-	./configure --prefix="$(PREFIX)" \
+	./configure --prefix="$(PREFIX)" --disable-dependency-tracking \
 	&& make install
 
 .PHONY: libtheora
@@ -20,6 +22,7 @@ libtheora: libogg
 		--disable-spec \
 		--disable-encode \
 		--disable-examples \
+		--disable-dependency-tracking \
 		"$(LIBTHEORA_CONFIGURE)" \
 	&& make install
 
@@ -34,6 +37,7 @@ libvpx:
 		--disable-multithread \
 		--disable-postproc \
 		--disable-examples \
+		--disable-dependency-tracking \
 		--disable-install-docs \
 		--disable-install-bins \
 		--disable-install-srcs \
@@ -46,6 +50,7 @@ glib:
 	./configure --prefix="$(PREFIX)" \
 		--enable-shared \
 		--disable-regex \
+		--disable-dependency-tracking \
 		--disable-gtk-doc \
 		"$(GLIB_CONFIGURE)" \
 	&& make install
@@ -70,6 +75,7 @@ gstreamer: glib
 		--disable-examples \
 		--disable-tests \
 		--disable-failing-tests \
+		--disable-dependency-tracking \
 		--disable-check \
 	&& make install
 
@@ -105,6 +111,7 @@ gst-plugins-base: libogg libvorbis libtheora glib
 		--disable-pango \
 		--disable-vorbistest \
 		--disable-freetypetest \
+		--disable-dependency-tracking \
 	&& make install
 
 .PHONY: gst-plugins-good
@@ -189,6 +196,7 @@ gst-plugins-good: gst-plugins-base
 		--disable-wavpack \
 		--disable-zlib \
 		--disable-bz2 \
+		--disable-dependency-tracking \
 	&& make install
 
 .PHONY: gst-plugins-bad
@@ -196,6 +204,7 @@ gst-plugins-bad: gst-plugins-base libvpx
 	cd "../gst-plugins-bad"; make clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
+		--disable-dependency-tracking \
 		--disable-nls \
 		--disable-rpath \
 		--disable-examples \
@@ -318,9 +327,9 @@ gst-plugins-bad: gst-plugins-base libvpx
 .PHONY: debugintel
 debugintel:
 	PREFIX="$(PWD)/Debug" \
-	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	LDFLAGS="-arch i386" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -arch x86_64 -arch i386 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -arch x86_64 -arch i386 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch i386 -arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
@@ -331,9 +340,9 @@ debugintel:
 .PHONY: releaseintel
 releaseintel:
 	PREFIX="$(PWD)/Release" \
-	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	LDFLAGS="-arch i386" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -arch x86_64 -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -arch x86_64 -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch i386 -arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
@@ -374,9 +383,9 @@ releaseppc:
 #	strip -u -r dist/release_ppc/*.dylib dist/release_ppc/plugins/*.so
 
 .PHONY: release
-release: releaseintel releaseppc
+release: releaseintel # releaseppc
 	cd dist; perl build_universal_binaries.pl
 	
 .PHONY: debug
-debug: debugintel debugppc
+debug: debugintel # debugppc
 	cd dist; perl build_universal_binaries.pl	
