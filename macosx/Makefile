@@ -6,13 +6,13 @@ export CXX=/usr/bin/g++-4.0
 .PHONY: libogg
 libogg:
 	cd "../libogg"; make clean; \
-	./configure --prefix="$(PREFIX)" --disable-dependency-tracking \
+	./configure --prefix="$(PREFIX)" \
 	&& make install
 
 .PHONY: libvorbis
 libvorbis: libogg
 	cd "../libvorbis"; make clean; \
-	./configure --prefix="$(PREFIX)" --disable-dependency-tracking \
+	./configure --prefix="$(PREFIX)" \
 	&& make install
 
 .PHONY: libtheora
@@ -22,7 +22,6 @@ libtheora: libogg
 		--disable-spec \
 		--disable-encode \
 		--disable-examples \
-		--disable-dependency-tracking \
 		"$(LIBTHEORA_CONFIGURE)" \
 	&& make install
 
@@ -37,7 +36,6 @@ libvpx:
 		--disable-multithread \
 		--disable-postproc \
 		--disable-examples \
-		--disable-dependency-tracking \
 		--disable-install-docs \
 		--disable-install-bins \
 		--disable-install-srcs \
@@ -50,7 +48,6 @@ glib:
 	./configure --prefix="$(PREFIX)" \
 		--enable-shared \
 		--disable-regex \
-		--disable-dependency-tracking \
 		--disable-gtk-doc \
 		"$(GLIB_CONFIGURE)" \
 	&& make install
@@ -75,7 +72,6 @@ gstreamer: glib
 		--disable-examples \
 		--disable-tests \
 		--disable-failing-tests \
-		--disable-dependency-tracking \
 		--disable-check \
 	&& make install
 
@@ -111,7 +107,6 @@ gst-plugins-base: libogg libvorbis libtheora glib
 		--disable-pango \
 		--disable-vorbistest \
 		--disable-freetypetest \
-		--disable-dependency-tracking \
 	&& make install
 
 .PHONY: gst-plugins-good
@@ -196,7 +191,6 @@ gst-plugins-good: gst-plugins-base
 		--disable-wavpack \
 		--disable-zlib \
 		--disable-bz2 \
-		--disable-dependency-tracking \
 	&& make install
 
 .PHONY: gst-plugins-bad
@@ -204,7 +198,6 @@ gst-plugins-bad: gst-plugins-base libvpx
 	cd "../gst-plugins-bad"; make clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
-		--disable-dependency-tracking \
 		--disable-nls \
 		--disable-rpath \
 		--disable-examples \
@@ -327,9 +320,9 @@ gst-plugins-bad: gst-plugins-base libvpx
 .PHONY: debugintel
 debugintel:
 	PREFIX="$(PWD)/Debug" \
-	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -arch x86_64 -arch i386 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -arch x86_64 -arch i386 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	LDFLAGS="-arch i386 -arch x86_64" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
@@ -340,9 +333,9 @@ debugintel:
 .PHONY: releaseintel
 releaseintel:
 	PREFIX="$(PWD)/Release" \
-	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -arch x86_64 -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -arch x86_64 -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	LDFLAGS="-arch i386 -arch x86_64" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86-darwin8-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
@@ -351,41 +344,37 @@ releaseintel:
 	mv dist/release_i386/gstreamer-0.10 dist/release_i386/plugins
 #	strip -u -r dist/release_i386/*.dylib dist/release_i386/plugins/*.so
 
-.PHONY: debugppc
-debugppc:
-	PREFIX="$(PWD)/Debugppc" \
-	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	LDFLAGS="-arch ppc" \
+.PHONY: debugintel64
+debugintel64:
+	PREFIX="$(PWD)/Debug" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
+	LDFLAGS="-arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
-	GLIB_CONFIGURE="--host=powerpc-apple-darwin9" \
-	LIBVPX_TARGET="ppc32-darwin8-gcc" \
-	LIBTHEORA_CONFIGURE="--disable-asm" \
+	LIBVPX_TARGET="x86_64-darwin9-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
-	python makedist.py Debugppc/lib dist/debug_ppc "@executable_path/../Resources/gstreamer"
-	rm -fR dist/debug_ppc/plugins
-	mv dist/debug_ppc/gstreamer-0.10 dist/debug_ppc/plugins
+	python makedist.py Debug/lib dist/debug_x86_64 "@executable_path/../Resources/gstreamer"
+	rm -fR dist/debug_x86_64/plugins
+	mv dist/debug_x86_64/gstreamer-0.10 dist/debug_x86_64/plugins
 
-.PHONY: releaseppc
-releaseppc:
-	PREFIX="$(PWD)/Releaseppc" \
-	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch ppc -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	LDFLAGS="-arch ppc" \
+.PHONY: releaseintel64
+releaseintel64:
+	PREFIX="$(PWD)/Release" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
+	LDFLAGS="-arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
-	GLIB_CONFIGURE="--host=powerpc-apple-darwin9" \
-	LIBVPX_TARGET="ppc32-darwin8-gcc" \
-	LIBTHEORA_CONFIGURE="--disable-asm" \
+	LIBVPX_TARGET="x86_64-darwin9-gcc" \
 	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
-	python makedist.py Releaseppc/lib dist/release_ppc "@executable_path/../Resources/gstreamer"
-	rm -fR dist/release_ppc/plugins
-	mv dist/release_ppc/gstreamer-0.10 dist/release_ppc/plugins
-#	strip -u -r dist/release_ppc/*.dylib dist/release_ppc/plugins/*.so
+	python makedist.py Release/lib dist/release_x86_64 "@executable_path/../Resources/gstreamer"
+	rm -fR dist/release_x86_64/plugins
+	mv dist/release_x86_64/gstreamer-0.10 dist/release_x86_64/plugins
+#	strip -u -r dist/release_x86_646/*.dylib dist/release_x86_64/plugins/*.so
 
 .PHONY: release
-release: releaseintel # releaseppc
+release: releaseintel releaseintel64
 	cd dist; perl build_universal_binaries.pl
 	
 .PHONY: debug
-debug: debugintel # debugppc
+debug: debugintel debugintel64
 	cd dist; perl build_universal_binaries.pl	

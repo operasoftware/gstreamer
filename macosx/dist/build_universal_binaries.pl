@@ -53,11 +53,11 @@ sub lipo_libs
 	# Lipo the files together
 	foreach my $file (@dylib_files)
 	{
-		system("lipo -create ".File::Spec->catdir($lib_folder."_i386", $file)." ".File::Spec->catdir($lib_folder."_ppc", $file)." -output ".File::Spec->catdir($lib_folder, $file));
+		system("lipo -create ".File::Spec->catdir($lib_folder."_i386", $file)." ".File::Spec->catdir($lib_folder."_x86_64", $file)." -output ".File::Spec->catdir($lib_folder, $file));
 	}
 	
 	foreach my $file (@so_files)
 	{
-		system("lipo -create ".File::Spec->catdir($lib_folder."_i386", $plugin_folder, $file)." ".File::Spec->catdir($lib_folder."_ppc", $plugin_folder, $file)." -output ".File::Spec->catdir($lib_folder, $plugin_folder, $file));
+		system("lipo -create ".File::Spec->catdir($lib_folder."_i386", $plugin_folder, $file)." ".File::Spec->catdir($lib_folder."_x86_64", $plugin_folder, $file)." -output ".File::Spec->catdir($lib_folder, $plugin_folder, $file));
 	}
 }
