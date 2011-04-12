@@ -3787,6 +3787,20 @@ g_slice_alloc
 g_static_rec_mutex_free
 g_static_rec_mutex_init
 
+; gstcoreindexers
+
+g_hash_table_new
+g_int_hash
+g_int_equal
+g_hash_table_destroy
+g_hash_table_foreach
+g_tree_destroy
+g_hash_table_insert
+g_hash_table_lookup
+g_tree_insert
+g_tree_new_with_data
+g_tree_search
+
 ; gstdirectsoundsink
 
 g_param_spec_double

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="gstcoreelements"
+	Name="gstcoreplugins"
 	ProjectGUID="{CC5E64ED-B830-4248-A287-E59B0712068C}"
-	RootNamespace="gstcoreelements"
+	RootNamespace="gstcoreplugins"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -175,7 +175,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\gstreamer\plugins\elements\gstelements.c"
+				RelativePath=".\src\gstcoreplugins.c"
 				>
 			</File>
 			<File
@@ -183,107 +183,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\gstreamer\plugins\elements\gstfakesrc.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\gstreamer\plugins\elements\gstfdsink.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\gstreamer\plugins\elements\gstfdsrc.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\gstreamer\plugins\elements\gstfilesink.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\gstreamer\plugins\elements\gstfilesrc.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\gstreamer\plugins\elements\gstidentity.c"
+				RelativePath=".\gstreamer\plugins\indexers\gstmemindex.c"
 				>
 			</File>
 			<File
@@ -293,26 +193,6 @@
 			<File
 				RelativePath=".\gstreamer\plugins\elements\gstqueue.c"
 				>
-			</File>
-			<File
-				RelativePath=".\gstreamer\plugins\elements\gsttee.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\gstreamer\plugins\elements\gsttypefindelement.c"

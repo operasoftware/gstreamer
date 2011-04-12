@@ -16,7 +16,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstreamer", "gstreamer.vcpr
 		{FA632DF0-2E9D-474E-83DF-D756036A547E} = {FA632DF0-2E9D-474E-83DF-D756036A547E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstcoreelements", "gstcoreelements.vcproj", "{CC5E64ED-B830-4248-A287-E59B0712068C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstcoreplugins", "gstcoreplugins.vcproj", "{CC5E64ED-B830-4248-A287-E59B0712068C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5DDC2ADD-7433-406E-9464-5F9752F219DE} = {5DDC2ADD-7433-406E-9464-5F9752F219DE}
 	EndProjectSection

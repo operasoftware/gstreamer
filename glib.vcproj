@@ -295,6 +295,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\glib\glib\gtree.c"
+				>
+			</File>
+			<File
 				RelativePath=".\glib\glib\gutf8.c"
 				>
 			</File>
