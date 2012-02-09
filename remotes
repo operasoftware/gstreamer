@@ -13,5 +13,5 @@ for path in gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad; do
 done
 
 cd libvpx
-git remote add upstream "git://review.webmproject.org/libvpx.git"
+git remote add upstream "http://git.chromium.org/webm/libvpx.git"
 cd ..
