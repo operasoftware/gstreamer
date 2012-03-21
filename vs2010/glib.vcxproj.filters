@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\gnulib">
+      <UniqueIdentifier>{eec10914-fb3f-4944-b80e-bc2fbe8aa3aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libcharset">
+      <UniqueIdentifier>{4c806688-85ae-45ea-b29e-e0cc08719afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\glib\glib\garray.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gasyncqueue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gatomic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gconvert.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gdataset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gdir.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gerror.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gfileutils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\ghash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\ghook.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\glist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gmain.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gmem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gmessages.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gpattern.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gpoll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gprintf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gqsort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gqueue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\grand.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gslice.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gslist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gstdio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gstrfuncs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gstring.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gtestutils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gthread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gthreadpool.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gtimer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gutf8.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gutils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gwin32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gnulib\asnprintf.c">
+      <Filter>Source Files\gnulib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gnulib\printf-args.c">
+      <Filter>Source Files\gnulib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gnulib\printf-parse.c">
+      <Filter>Source Files\gnulib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gnulib\printf.c">
+      <Filter>Source Files\gnulib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gnulib\vasnprintf.c">
+      <Filter>Source Files\gnulib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\libcharset\localcharset.c">
+      <Filter>Source Files\libcharset</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\glib\glib\glib.symbols">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

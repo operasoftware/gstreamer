@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FA632DF0-2E9D-474E-83DF-D756036A547E}</ProjectGuid>
+    <RootNamespace>glib</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>copy /y ..\glib\config.h.win32 ..\glib\config.h
+copy /y ..\glib\glibconfig.h.win32 ..\glib\glibconfig.h
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;OPERA_MINIMAL_GST;G_DISABLE_DEPRECATED;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H;DLL_EXPORT;GLIB_COMPILATION;G_LOG_DOMAIN="Glib";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\glib
+copy /y ..\glib\glib\glib.h include\glib-2.0
+copy /y ..\glib\glib\glib-object.h include\glib-2.0
+copy /y ..\glib\glib\galloca.h include\glib-2.0\glib
+copy /y ..\glib\glib\garray.h include\glib-2.0\glib
+copy /y ..\glib\glib\gasyncqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\gatomic.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbacktrace.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbase64.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbookmarkfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcache.h include\glib-2.0\glib
+copy /y ..\glib\glib\gchecksum.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcompletion.h include\glib-2.0\glib
+copy /y ..\glib\glib\gconvert.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdataset.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdate.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdir.h include\glib-2.0\glib
+copy /y ..\glib\glib\gerror.h include\glib-2.0\glib
+copy /y ..\glib\glib\gfileutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghash.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghook.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n-lib.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n.h include\glib-2.0\glib
+copy /y ..\glib\glib\giochannel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gkeyfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\glist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmacros.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmain.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmappedfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmarkup.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmem.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmessages.h include\glib-2.0\glib
+copy /y ..\glib\glib\gnode.h include\glib-2.0\glib
+copy /y ..\glib\glib\goption.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpattern.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpoll.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprimes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprintf.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqsort.h include\glib-2.0\glib
+copy /y ..\glib\glib\gquark.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\grand.h include\glib-2.0\glib
+copy /y ..\glib\glib\gregex.h include\glib-2.0\glib
+copy /y ..\glib\glib\grel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gscanner.h include\glib-2.0\glib
+copy /y ..\glib\glib\gsequence.h include\glib-2.0\glib
+copy /y ..\glib\glib\gshell.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslice.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gspawn.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstdio.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstrfuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstring.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtestutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthread.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthreadpool.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtimer.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtree.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtypes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gunicode.h include\glib-2.0\glib
+copy /y ..\glib\glib\gurifuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gwin32.h include\glib-2.0\glib
+copy /y ..\glib\glibconfig.h include\glib-2.0
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>copy /y ..\glib\config.h.win32 ..\glib\config.h
+copy /y ..\glib\glibconfig.h.win32 ..\glib\glibconfig.h
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;OPERA_MINIMAL_GST;G_DISABLE_DEPRECATED;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H;DLL_EXPORT;GLIB_COMPILATION;G_LOG_DOMAIN="Glib";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\glib
+copy /y ..\glib\glib\glib.h include\glib-2.0
+copy /y ..\glib\glib\glib-object.h include\glib-2.0
+copy /y ..\glib\glib\galloca.h include\glib-2.0\glib
+copy /y ..\glib\glib\garray.h include\glib-2.0\glib
+copy /y ..\glib\glib\gasyncqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\gatomic.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbacktrace.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbase64.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbookmarkfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcache.h include\glib-2.0\glib
+copy /y ..\glib\glib\gchecksum.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcompletion.h include\glib-2.0\glib
+copy /y ..\glib\glib\gconvert.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdataset.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdate.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdir.h include\glib-2.0\glib
+copy /y ..\glib\glib\gerror.h include\glib-2.0\glib
+copy /y ..\glib\glib\gfileutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghash.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghook.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n-lib.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n.h include\glib-2.0\glib
+copy /y ..\glib\glib\giochannel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gkeyfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\glist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmacros.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmain.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmappedfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmarkup.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmem.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmessages.h include\glib-2.0\glib
+copy /y ..\glib\glib\gnode.h include\glib-2.0\glib
+copy /y ..\glib\glib\goption.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpattern.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpoll.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprimes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprintf.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqsort.h include\glib-2.0\glib
+copy /y ..\glib\glib\gquark.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\grand.h include\glib-2.0\glib
+copy /y ..\glib\glib\gregex.h include\glib-2.0\glib
+copy /y ..\glib\glib\grel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gscanner.h include\glib-2.0\glib
+copy /y ..\glib\glib\gsequence.h include\glib-2.0\glib
+copy /y ..\glib\glib\gshell.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslice.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gspawn.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstdio.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstrfuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstring.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtestutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthread.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthreadpool.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtimer.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtree.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtypes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gunicode.h include\glib-2.0\glib
+copy /y ..\glib\glib\gurifuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gwin32.h include\glib-2.0\glib
+copy /y ..\glib\glibconfig.h include\glib-2.0
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>copy /y ..\glib\config.h.win32 ..\glib\config.h
+copy /y ..\glib\glibconfig.h.win32 ..\glib\glibconfig.h
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;OPERA_MINIMAL_GST;G_DISABLE_DEPRECATED;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H;DLL_EXPORT;GLIB_COMPILATION;G_LOG_DOMAIN="Glib";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\glib
+copy /y ..\glib\glib\glib.h include\glib-2.0
+copy /y ..\glib\glib\glib-object.h include\glib-2.0
+copy /y ..\glib\glib\galloca.h include\glib-2.0\glib
+copy /y ..\glib\glib\garray.h include\glib-2.0\glib
+copy /y ..\glib\glib\gasyncqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\gatomic.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbacktrace.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbase64.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbookmarkfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcache.h include\glib-2.0\glib
+copy /y ..\glib\glib\gchecksum.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcompletion.h include\glib-2.0\glib
+copy /y ..\glib\glib\gconvert.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdataset.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdate.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdir.h include\glib-2.0\glib
+copy /y ..\glib\glib\gerror.h include\glib-2.0\glib
+copy /y ..\glib\glib\gfileutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghash.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghook.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n-lib.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n.h include\glib-2.0\glib
+copy /y ..\glib\glib\giochannel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gkeyfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\glist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmacros.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmain.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmappedfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmarkup.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmem.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmessages.h include\glib-2.0\glib
+copy /y ..\glib\glib\gnode.h include\glib-2.0\glib
+copy /y ..\glib\glib\goption.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpattern.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpoll.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprimes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprintf.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqsort.h include\glib-2.0\glib
+copy /y ..\glib\glib\gquark.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\grand.h include\glib-2.0\glib
+copy /y ..\glib\glib\gregex.h include\glib-2.0\glib
+copy /y ..\glib\glib\grel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gscanner.h include\glib-2.0\glib
+copy /y ..\glib\glib\gsequence.h include\glib-2.0\glib
+copy /y ..\glib\glib\gshell.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslice.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gspawn.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstdio.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstrfuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstring.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtestutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthread.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthreadpool.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtimer.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtree.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtypes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gunicode.h include\glib-2.0\glib
+copy /y ..\glib\glib\gurifuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gwin32.h include\glib-2.0\glib
+copy /y ..\glib\glibconfig.h include\glib-2.0
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>copy /y ..\glib\config.h.win32 ..\glib\config.h
+copy /y ..\glib\glibconfig.h.win32 ..\glib\glibconfig.h
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;OPERA_MINIMAL_GST;G_DISABLE_DEPRECATED;_CRT_SECURE_NO_WARNINGS;HAVE_CONFIG_H;DLL_EXPORT;GLIB_COMPILATION;G_LOG_DOMAIN="Glib";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\glib
+copy /y ..\glib\glib\glib.h include\glib-2.0
+copy /y ..\glib\glib\glib-object.h include\glib-2.0
+copy /y ..\glib\glib\galloca.h include\glib-2.0\glib
+copy /y ..\glib\glib\garray.h include\glib-2.0\glib
+copy /y ..\glib\glib\gasyncqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\gatomic.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbacktrace.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbase64.h include\glib-2.0\glib
+copy /y ..\glib\glib\gbookmarkfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcache.h include\glib-2.0\glib
+copy /y ..\glib\glib\gchecksum.h include\glib-2.0\glib
+copy /y ..\glib\glib\gcompletion.h include\glib-2.0\glib
+copy /y ..\glib\glib\gconvert.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdataset.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdate.h include\glib-2.0\glib
+copy /y ..\glib\glib\gdir.h include\glib-2.0\glib
+copy /y ..\glib\glib\gerror.h include\glib-2.0\glib
+copy /y ..\glib\glib\gfileutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghash.h include\glib-2.0\glib
+copy /y ..\glib\glib\ghook.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n-lib.h include\glib-2.0\glib
+copy /y ..\glib\glib\gi18n.h include\glib-2.0\glib
+copy /y ..\glib\glib\giochannel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gkeyfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\glist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmacros.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmain.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmappedfile.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmarkup.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmem.h include\glib-2.0\glib
+copy /y ..\glib\glib\gmessages.h include\glib-2.0\glib
+copy /y ..\glib\glib\gnode.h include\glib-2.0\glib
+copy /y ..\glib\glib\goption.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpattern.h include\glib-2.0\glib
+copy /y ..\glib\glib\gpoll.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprimes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gprintf.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqsort.h include\glib-2.0\glib
+copy /y ..\glib\glib\gquark.h include\glib-2.0\glib
+copy /y ..\glib\glib\gqueue.h include\glib-2.0\glib
+copy /y ..\glib\glib\grand.h include\glib-2.0\glib
+copy /y ..\glib\glib\gregex.h include\glib-2.0\glib
+copy /y ..\glib\glib\grel.h include\glib-2.0\glib
+copy /y ..\glib\glib\gscanner.h include\glib-2.0\glib
+copy /y ..\glib\glib\gsequence.h include\glib-2.0\glib
+copy /y ..\glib\glib\gshell.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslice.h include\glib-2.0\glib
+copy /y ..\glib\glib\gslist.h include\glib-2.0\glib
+copy /y ..\glib\glib\gspawn.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstdio.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstrfuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gstring.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtestutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthread.h include\glib-2.0\glib
+copy /y ..\glib\glib\gthreadpool.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtimer.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtree.h include\glib-2.0\glib
+copy /y ..\glib\glib\gtypes.h include\glib-2.0\glib
+copy /y ..\glib\glib\gunicode.h include\glib-2.0\glib
+copy /y ..\glib\glib\gurifuncs.h include\glib-2.0\glib
+copy /y ..\glib\glib\gutils.h include\glib-2.0\glib
+copy /y ..\glib\glib\gwin32.h include\glib-2.0\glib
+copy /y ..\glib\glibconfig.h include\glib-2.0
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\glib\glib\garray.c" />
+    <ClCompile Include="..\glib\glib\gasyncqueue.c" />
+    <ClCompile Include="..\glib\glib\gatomic.c" />
+    <ClCompile Include="..\glib\glib\gconvert.c" />
+    <ClCompile Include="..\glib\glib\gdataset.c" />
+    <ClCompile Include="..\glib\glib\gdir.c" />
+    <ClCompile Include="..\glib\glib\gerror.c" />
+    <ClCompile Include="..\glib\glib\gfileutils.c" />
+    <ClCompile Include="..\glib\glib\ghash.c" />
+    <ClCompile Include="..\glib\glib\ghook.c" />
+    <ClCompile Include="..\glib\glib\glist.c" />
+    <ClCompile Include="..\glib\glib\gmain.c" />
+    <ClCompile Include="..\glib\glib\gmem.c" />
+    <ClCompile Include="..\glib\glib\gmessages.c" />
+    <ClCompile Include="..\glib\glib\gpattern.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gpoll.c" />
+    <ClCompile Include="..\glib\glib\gprintf.c" />
+    <ClCompile Include="..\glib\glib\gqsort.c" />
+    <ClCompile Include="..\glib\glib\gqueue.c" />
+    <ClCompile Include="..\glib\glib\grand.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gslice.c" />
+    <ClCompile Include="..\glib\glib\gslist.c" />
+    <ClCompile Include="..\glib\glib\gstdio.c" />
+    <ClCompile Include="..\glib\glib\gstrfuncs.c" />
+    <ClCompile Include="..\glib\glib\gstring.c" />
+    <ClCompile Include="..\glib\glib\gtestutils.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\glib\glib\gthread.c" />
+    <ClCompile Include="..\glib\glib\gthreadpool.c" />
+    <ClCompile Include="..\glib\glib\gtimer.c" />
+    <ClCompile Include="..\glib\glib\gutf8.c" />
+    <ClCompile Include="..\glib\glib\gutils.c" />
+    <ClCompile Include="..\glib\glib\gwin32.c" />
+    <ClCompile Include="..\glib\glib\gnulib\asnprintf.c" />
+    <ClCompile Include="..\glib\glib\gnulib\printf-args.c" />
+    <ClCompile Include="..\glib\glib\gnulib\printf-parse.c" />
+    <ClCompile Include="..\glib\glib\gnulib\printf.c" />
+    <ClCompile Include="..\glib\glib\gnulib\vasnprintf.c" />
+    <ClCompile Include="..\glib\glib\libcharset\localcharset.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">glib/glib/libcharset;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">glib/glib/libcharset;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LIBDIR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">LIBDIR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">glib/glib/libcharset;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">glib/glib/libcharset;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">LIBDIR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">LIBDIR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\glib\glib\glib.symbols">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running makegalias.pl</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Running makegalias.pl</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cd "%(RootDir)%(Directory)"
+perl makegalias.pl &lt; "%(FullPath)" &gt; galias.h
+perl makegalias.pl -def &lt; "%(FullPath)" &gt; galiasdef.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd "%(RootDir)%(Directory)"
+perl makegalias.pl &lt; "%(FullPath)" &gt; galias.h
+perl makegalias.pl -def &lt; "%(FullPath)" &gt; galiasdef.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)\galias.h;%(RootDir)%(Directory)\galiasdef.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)\galias.h;%(RootDir)%(Directory)\galiasdef.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running makegalias.pl</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Running makegalias.pl</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cd "%(RootDir)%(Directory)"
+perl makegalias.pl &lt; "%(FullPath)" &gt; galias.h
+perl makegalias.pl -def &lt; "%(FullPath)" &gt; galiasdef.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cd "%(RootDir)%(Directory)"
+perl makegalias.pl &lt; "%(FullPath)" &gt; galias.h
+perl makegalias.pl -def &lt; "%(FullPath)" &gt; galiasdef.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)\galias.h;%(RootDir)%(Directory)\galiasdef.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)\galias.h;%(RootDir)%(Directory)\galiasdef.c;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

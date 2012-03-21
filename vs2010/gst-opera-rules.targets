@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PropertyPageSchema
+      Include="$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml" />
+    <AvailableItemName
+      Include="glib_genmarshal">
+      <Targets>_glib_genmarshal</Targets>
+    </AvailableItemName>
+  </ItemGroup>
+  <UsingTask
+    TaskName="glib_genmarshal"
+    TaskFactory="XamlTaskFactory"
+    AssemblyName="Microsoft.Build.Tasks.v4.0">
+    <Task>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml</Task>
+  </UsingTask>
+  <Target
+    Name="_glib_genmarshal"
+    BeforeTargets="$(glib_genmarshalBeforeTargets)"
+    AfterTargets="$(glib_genmarshalAfterTargets)"
+    Condition="'@(glib_genmarshal)' != ''"
+    DependsOnTargets="$(glib_genmarshalDependsOn);Computeglib_genmarshalOutput"
+    Outputs="%(glib_genmarshal.Outputs)"
+    Inputs="%(glib_genmarshal.Identity);%(glib_genmarshal.AdditionalDependencies);$(MSBuildProjectFile)">
+    <ItemGroup
+      Condition="'@(SelectedFiles)' != ''">
+      <glib_genmarshal
+        Remove="@(glib_genmarshal)"
+        Condition="'%(Identity)' != '@(SelectedFiles)'" />
+    </ItemGroup>
+    <ItemGroup>
+      <glib_genmarshal_tlog
+        Include="%(glib_genmarshal.Outputs)"
+        Condition="'%(glib_genmarshal.Outputs)' != '' and '%(glib_genmarshal.ExcludedFromBuild)' != 'true'">
+        <Source>@(glib_genmarshal, '|')</Source>
+      </glib_genmarshal_tlog>
+    </ItemGroup>
+    <Message
+      Importance="High"
+      Text="%(glib_genmarshal.ExecutionDescription)" />
+    <WriteLinesToFile
+      Condition="'@(glib_genmarshal_tlog)' != '' and '%(glib_genmarshal_tlog.ExcludedFromBuild)' != 'true'"
+      File="$(IntDir)$(ProjectName).write.1.tlog"
+      Lines="^%(glib_genmarshal_tlog.Source);@(glib_genmarshal_tlog-&gt;'%(Fullpath)')" />
+    <glib_genmarshal
+      Condition="'@(glib_genmarshal)' != '' and '%(glib_genmarshal.ExcludedFromBuild)' != 'true'"
+      CommandLineTemplate="%(glib_genmarshal.CommandLineTemplate)"
+      MarshalPrefix="%(glib_genmarshal.MarshalPrefix)"
+      AdditionalOptions="%(glib_genmarshal.AdditionalOptions)"
+      Inputs="%(glib_genmarshal.Identity)" />
+  </Target>
+  <PropertyGroup>
+    <ComputeLinkInputsTargets>
+            $(ComputeLinkInputsTargets);
+            Computeglib_genmarshalOutput;
+          </ComputeLinkInputsTargets>
+    <ComputeLibInputsTargets>
+            $(ComputeLibInputsTargets);
+            Computeglib_genmarshalOutput;
+          </ComputeLibInputsTargets>
+  </PropertyGroup>
+  <Target
+    Name="Computeglib_genmarshalOutput"
+    Condition="'@(glib_genmarshal)' != ''">
+    <ItemGroup>
+      <glib_genmarshalDirsToMake
+        Condition="'@(glib_genmarshal)' != '' and '%(glib_genmarshal.ExcludedFromBuild)' != 'true'"
+        Include="%(glib_genmarshal.Outputs)" />
+      <Link
+        Include="%(glib_genmarshalDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <Lib
+        Include="%(glib_genmarshalDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <ImpLib
+        Include="%(glib_genmarshalDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+    </ItemGroup>
+    <MakeDir
+      Directories="@(glib_genmarshalDirsToMake-&gt;'%(RootDir)%(Directory)')" />
+  </Target>
+</Project>

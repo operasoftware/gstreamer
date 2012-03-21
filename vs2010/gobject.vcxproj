@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9DFD6953-4402-43E7-A14B-822E4FC76085}</ProjectGuid>
+    <RootNamespace>gobject</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;GLIB_STATIC_COMPILATION;GOBJECT_COMPILATION;G_LOG_DOMAIN="Glib-GObject";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\gobject
+copy /y ..\glib\gobject\*.h include\glib-2.0\gobject
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;GLIB_STATIC_COMPILATION;GOBJECT_COMPILATION;G_LOG_DOMAIN="Glib-GObject";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\gobject
+copy /y ..\glib\gobject\*.h include\glib-2.0\gobject
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;GLIB_STATIC_COMPILATION;GOBJECT_COMPILATION;G_LOG_DOMAIN="Glib-GObject";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\gobject
+copy /y ..\glib\gobject\*.h include\glib-2.0\gobject
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../glib;../glib/glib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;GLIB_STATIC_COMPILATION;GOBJECT_COMPILATION;G_LOG_DOMAIN="Glib-GObject";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\glib-2.0\gobject
+copy /y ..\glib\gobject\*.h include\glib-2.0\gobject
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\glib\gobject\gboxed.c" />
+    <ClCompile Include="..\glib\gobject\gclosure.c" />
+    <ClCompile Include="..\glib\gobject\genums.c" />
+    <ClCompile Include="..\glib\gobject\gobject.c" />
+    <ClCompile Include="..\glib\gobject\gparam.c" />
+    <ClCompile Include="..\glib\gobject\gparamspecs.c" />
+    <ClCompile Include="..\glib\gobject\gsignal.c" />
+    <ClCompile Include="..\glib\gobject\gtype.c" />
+    <ClCompile Include="..\glib\gobject\gtypeplugin.c" />
+    <ClCompile Include="..\glib\gobject\gvalue.c" />
+    <ClCompile Include="..\glib\gobject\gvaluearray.c" />
+    <ClCompile Include="..\glib\gobject\gvaluetransform.c" />
+    <ClCompile Include="..\glib\gobject\gvaluetypes.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\glib\gobject\gmarshal.list">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running glib-genmarshal</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Running glib-genmarshal</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cd "%(RootDir)%(Directory)"
+echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh
+echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh
+echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh
+move xgen-gmh gmarshal.h
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd "%(RootDir)%(Directory)"
+echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh
+echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh
+echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh
+move xgen-gmh gmarshal.h
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)\gmarshal.h;%(RootDir)%(Directory)\gmarshal.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)\gmarshal.h;%(RootDir)%(Directory)\gmarshal.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running glib-genmarshal</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Running glib-genmarshal</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cd "%(RootDir)%(Directory)"
+echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh
+echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh
+echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh
+move xgen-gmh gmarshal.h
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cd "%(RootDir)%(Directory)"
+echo #ifndef __G_MARSHAL_H__ &gt; xgen-gmh
+echo #define __G_MARSHAL_H__ &gt;&gt; xgen-gmh
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --header &gt;&gt; xgen-gmh
+echo #endif /* __G_MARSHAL_H__ */ &gt;&gt; xgen-gmh
+move xgen-gmh gmarshal.h
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --nostdinc --prefix=g_cclosure_marshal gmarshal.list --body &gt; gmarshal.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)\gmarshal.h;%(RootDir)%(Directory)\gmarshal.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)\gmarshal.h;%(RootDir)%(Directory)\gmarshal.c;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\glib\gobject\gobject.symbols">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running makegobjectalias.pl</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Running makegobjectalias.pl</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cd ..\glib\gobject
+perl makegobjectalias.pl &lt; "%(FullPath)" &gt; gobjectalias.h
+perl makegobjectalias.pl -def &lt; "%(FullPath)" &gt; gobjectaliasdef.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd ..\glib\gobject
+perl makegobjectalias.pl &lt; "%(FullPath)" &gt; gobjectalias.h
+perl makegobjectalias.pl -def &lt; "%(FullPath)" &gt; gobjectaliasdef.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)\gobjectalias.h;%(RootDir)%(Directory)\gobjectaliasdef.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)\gobjectalias.h;%(RootDir)%(Directory)\gobjectaliasdef.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running makegobjectalias.pl</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Running makegobjectalias.pl</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cd ..\glib\gobject
+perl makegobjectalias.pl &lt; "%(FullPath)" &gt; gobjectalias.h
+perl makegobjectalias.pl -def &lt; "%(FullPath)" &gt; gobjectaliasdef.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cd ..\glib\gobject
+perl makegobjectalias.pl &lt; "%(FullPath)" &gt; gobjectalias.h
+perl makegobjectalias.pl -def &lt; "%(FullPath)" &gt; gobjectaliasdef.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)\gobjectalias.h;%(RootDir)%(Directory)\gobjectaliasdef.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)\gobjectalias.h;%(RootDir)%(Directory)\gobjectaliasdef.c;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup
+    Condition="'$(glib_genmarshalBeforeTargets)' == '' and '$(glib_genmarshalAfterTargets)' == '' and '$(ConfigurationType)' != 'Makefile'">
+    <glib_genmarshalBeforeTargets>Midl</glib_genmarshalBeforeTargets>
+    <glib_genmarshalAfterTargets>CustomBuild</glib_genmarshalAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup>
+    <glib_genmarshalDependsOn
+      Condition="'$(ConfigurationType)' != 'Makefile'">_SelectedFiles;$(glib_genmarshalDependsOn)</glib_genmarshalDependsOn>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <glib_genmarshal>
+      <CommandLineTemplate>echo #include "glib-object.h" &gt; "%(RootDir)%(Directory)%(Filename).c"
+echo #include "%(Filename).h" &gt; "%(RootDir)%(Directory)%(Filename).c"
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --body [MarshalPrefix] "%(FullPath)" &gt;&gt; "%(RootDir)%(Directory)%(Filename).c"
+echo #include "gst/gstconfig.h" &gt; "%(RootDir)%(Directory)%(Filename).h"
+"$(SolutionDir)\..\tools\glib-genmarshal.exe" --header [MarshalPrefix] "%(FullPath)" &gt;&gt; "%(RootDir)%(Directory)%(Filename).h"</CommandLineTemplate>
+      <Outputs>%(RootDir)%(Directory)%(Filename).h;%(RootDir)%(Directory)%(Filename).c</Outputs>
+      <ExecutionDescription>Running glib-genmarshal</ExecutionDescription>
+    </glib_genmarshal>
+  </ItemDefinitionGroup>
+</Project>

@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BFAF1EE7-AB5A-4D5A-8D01-FE9B237BE930}</ProjectGuid>
+    <RootNamespace>libgstreamer</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="gst-opera-rules.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gst-opera.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>copy /y ..\gstreamer\win32\common\gstconfig.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstversion.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstenumtypes.* ..\gstreamer\gst
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>include/glib-2.0;../gstreamer;../gstreamer/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;GST_EXPORTS;GLIB_STATIC_COMPILATION;GOBJECT_STATIC_COMPILATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gst.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\glib-compat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstenumtypes.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstversion.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbuffer.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbufferlist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcaps.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstchildproxy.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstdebugutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelement.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsterror.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstevent.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstghostpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindex.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindexfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinfo.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinterface.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstiterator.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmarshal.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmessage.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstminiobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparamspecs.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpipeline.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstplugin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpoll.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpreset.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstquery.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstregistry.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsegment.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gststructure.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsystemclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaglist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttagsetter.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttask.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaskpool.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttrace.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefind.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefindfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsturi.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstvalue.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstxml.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparse.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcompat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstconfig.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstformat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpadtemplate.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbus.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelementfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmacros.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpluginfeature.h include\gstreamer-0.10\gst
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>copy /y ..\gstreamer\win32\common\gstconfig.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstversion.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstenumtypes.* ..\gstreamer\gst
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>include/glib-2.0;../gstreamer;../gstreamer/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;GST_EXPORTS;GLIB_STATIC_COMPILATION;GOBJECT_STATIC_COMPILATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gst.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\glib-compat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstenumtypes.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstversion.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbuffer.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbufferlist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcaps.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstchildproxy.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstdebugutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelement.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsterror.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstevent.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstghostpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindex.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindexfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinfo.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinterface.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstiterator.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmarshal.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmessage.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstminiobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparamspecs.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpipeline.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstplugin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpoll.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpreset.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstquery.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstregistry.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsegment.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gststructure.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsystemclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaglist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttagsetter.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttask.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaskpool.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttrace.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefind.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefindfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsturi.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstvalue.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstxml.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparse.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcompat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstconfig.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstformat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpadtemplate.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbus.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelementfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmacros.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpluginfeature.h include\gstreamer-0.10\gst
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>copy /y ..\gstreamer\win32\common\gstconfig.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstversion.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstenumtypes.* ..\gstreamer\gst
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>include/glib-2.0;../gstreamer;../gstreamer/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;GST_EXPORTS;GLIB_STATIC_COMPILATION;GOBJECT_STATIC_COMPILATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gst.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\glib-compat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstenumtypes.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstversion.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbuffer.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbufferlist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcaps.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstchildproxy.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstdebugutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelement.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsterror.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstevent.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstghostpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindex.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindexfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinfo.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinterface.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstiterator.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmarshal.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmessage.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstminiobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparamspecs.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpipeline.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstplugin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpoll.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpreset.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstquery.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstregistry.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsegment.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gststructure.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsystemclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaglist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttagsetter.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttask.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaskpool.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttrace.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefind.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefindfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsturi.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstvalue.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstxml.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparse.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcompat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstconfig.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstformat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpadtemplate.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbus.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelementfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmacros.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpluginfeature.h include\gstreamer-0.10\gst
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>copy /y ..\gstreamer\win32\common\gstconfig.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstversion.h ..\gstreamer\gst
+copy /y ..\gstreamer\win32\common\gstenumtypes.* ..\gstreamer\gst
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>include/glib-2.0;../gstreamer;../gstreamer/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;GST_EXPORTS;GLIB_STATIC_COMPILATION;GOBJECT_STATIC_COMPILATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>mkdir include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gst.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\glib-compat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstenumtypes.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstversion.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbuffer.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbufferlist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcaps.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstchildproxy.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstdebugutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelement.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsterror.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstevent.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstghostpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindex.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstindexfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinfo.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstinterface.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstiterator.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmarshal.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmessage.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstminiobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstobject.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpad.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparamspecs.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpipeline.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstplugin.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpoll.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpreset.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstquery.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstregistry.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsegment.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gststructure.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstsystemclock.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaglist.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttagsetter.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttask.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttaskpool.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttrace.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefind.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsttypefindfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gsturi.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstutils.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstvalue.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstxml.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstparse.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstcompat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstconfig.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstformat.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpadtemplate.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstbus.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstelementfactory.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstmacros.h include\gstreamer-0.10\gst
+copy /y ..\gstreamer\gst\gstpluginfeature.h include\gstreamer-0.10\gst
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\gstreamer\win32\common\dirent.c" />
+    <ClCompile Include="..\gstreamer\gst\gst.c" />
+    <ClCompile Include="..\gstreamer\gst\gstbin.c" />
+    <ClCompile Include="..\gstreamer\gst\gstbuffer.c" />
+    <ClCompile Include="..\gstreamer\gst\gstbufferlist.c" />
+    <ClCompile Include="..\gstreamer\gst\gstbus.c" />
+    <ClCompile Include="..\gstreamer\gst\gstcaps.c" />
+    <ClCompile Include="..\gstreamer\gst\gstchildproxy.c" />
+    <ClCompile Include="..\gstreamer\gst\gstclock.c" />
+    <ClCompile Include="..\gstreamer\gst\gstdebugutils.c" />
+    <ClCompile Include="..\gstreamer\gst\gstelement.c" />
+    <ClCompile Include="..\gstreamer\gst\gstelementfactory.c" />
+    <ClCompile Include="..\gstreamer\gst\gstenumtypes.c" />
+    <ClCompile Include="..\gstreamer\gst\gsterror.c" />
+    <ClCompile Include="..\gstreamer\gst\gstevent.c" />
+    <ClCompile Include="..\gstreamer\gst\gstfilter.c" />
+    <ClCompile Include="..\gstreamer\gst\gstformat.c" />
+    <ClCompile Include="..\gstreamer\gst\gstghostpad.c" />
+    <ClCompile Include="..\gstreamer\gst\gstindex.c" />
+    <ClCompile Include="..\gstreamer\gst\gstindexfactory.c" />
+    <ClCompile Include="..\gstreamer\gst\gstinfo.c" />
+    <ClCompile Include="..\gstreamer\gst\gstinterface.c" />
+    <ClCompile Include="..\gstreamer\gst\gstiterator.c" />
+    <ClCompile Include="..\gstreamer\gst\gstmarshal.c" />
+    <ClCompile Include="..\gstreamer\gst\gstmessage.c" />
+    <ClCompile Include="..\gstreamer\gst\gstminiobject.c" />
+    <ClCompile Include="..\gstreamer\gst\gstobject.c" />
+    <ClCompile Include="..\gstreamer\gst\gstpad.c" />
+    <ClCompile Include="..\gstreamer\gst\gstpadtemplate.c" />
+    <ClCompile Include="..\gstreamer\gst\gstparamspecs.c" />
+    <ClCompile Include="..\gstreamer\gst\gstpipeline.c" />
+    <ClCompile Include="..\gstreamer\gst\gstplugin.c" />
+    <ClCompile Include="..\gstreamer\gst\gstpluginfeature.c" />
+    <ClCompile Include="..\gstreamer\gst\gstpoll.c" />
+    <ClCompile Include="..\gstreamer\gst\gstquark.c" />
+    <ClCompile Include="..\gstreamer\gst\gstquery.c" />
+    <ClCompile Include="..\gstreamer\gst\gstregistry.c" />
+    <ClCompile Include="..\gstreamer\gst\gstregistrybinary.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\gstreamer\gst\gstsegment.c" />
+    <ClCompile Include="..\gstreamer\gst\gststructure.c" />
+    <ClCompile Include="..\gstreamer\gst\gstsystemclock.c" />
+    <ClCompile Include="..\gstreamer\gst\gsttaglist.c" />
+    <ClCompile Include="..\gstreamer\gst\gsttagsetter.c" />
+    <ClCompile Include="..\gstreamer\gst\gsttask.c" />
+    <ClCompile Include="..\gstreamer\gst\gsttaskpool.c" />
+    <ClCompile Include="..\gstreamer\gst\gsttrace.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\gstreamer\gst\gsttypefind.c" />
+    <ClCompile Include="..\gstreamer\gst\gsttypefindfactory.c" />
+    <ClCompile Include="..\gstreamer\gst\gsturi.c" />
+    <ClCompile Include="..\gstreamer\gst\gstutils.c" />
+    <ClCompile Include="..\gstreamer\gst\gstvalue.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <glib_genmarshal Include="..\gstreamer\gst\gstmarshal.list">
+      <MarshalPrefix Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gst_marshal</MarshalPrefix>
+      <MarshalPrefix Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gst_marshal</MarshalPrefix>
+      <MarshalPrefix Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gst_marshal</MarshalPrefix>
+      <MarshalPrefix Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gst_marshal</MarshalPrefix>
+    </glib_genmarshal>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="glib.vcxproj">
+      <Project>{fa632df0-2e9d-474e-83df-d756036a547e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="gmodule.vcxproj">
+      <Project>{74639485-16d8-43b9-bb74-208fd98655ea}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="gobject.vcxproj">
+      <Project>{9dfd6953-4402-43e7-a14b-822e4fc76085}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="gthread.vcxproj">
+      <Project>{d03a4dd1-902e-4128-8ceb-034a88f40385}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="gst-opera-rules.targets" />
+  </ImportGroup>
+</Project>
