@@ -18,37 +18,19 @@
     <ClCompile Include="..\gstreamer\plugins\elements\gstcapsfilter.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstelements.c">
+    <ClCompile Include="..\src\gstcoreplugins.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gstreamer\plugins\elements\gstfakesink.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstfakesrc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstfdsink.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstfdsrc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstfilesink.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstfilesrc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gstidentity.c">
+    <ClCompile Include="..\gstreamer\plugins\indexers\gstmemindex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gstreamer\plugins\elements\gstmultiqueue.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gstreamer\plugins\elements\gstqueue.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gstreamer\plugins\elements\gsttee.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gstreamer\plugins\elements\gsttypefindelement.c">

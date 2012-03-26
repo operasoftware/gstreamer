@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstreamer", "gstreamer.vcxproj", "{5DDC2ADD-7433-406E-9464-5F9752F219DE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstcoreelements", "gstcoreelements.vcxproj", "{CC5E64ED-B830-4248-A287-E59B0712068C}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstoggdec", "gstoggdec.vcxproj", "{29A4EC3D-AC0B-4DBE-A891-7B099443B2BF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstaudioresample", "gstaudioresample.vcxproj", "{11F5F3BB-FA05-48B7-A285-9532C48B2831}"
@@ -63,6 +61,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstwaveform", "gstwaveform.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstautodetect", "gstautodetect.vcxproj", "{B6669382-7F21-42E4-9023-462F9018F865}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstcoreplugins", "gstcoreplugins.vcxproj", "{CC5E64ED-B830-4248-A287-E59B0712068C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -79,14 +79,6 @@ Global
 		{5DDC2ADD-7433-406E-9464-5F9752F219DE}.Release|Win32.Build.0 = Release|Win32
 		{5DDC2ADD-7433-406E-9464-5F9752F219DE}.Release|x64.ActiveCfg = Release|x64
 		{5DDC2ADD-7433-406E-9464-5F9752F219DE}.Release|x64.Build.0 = Release|x64
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|Win32.Build.0 = Debug|Win32
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|x64.ActiveCfg = Debug|x64
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|x64.Build.0 = Debug|x64
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|Win32.ActiveCfg = Release|Win32
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|Win32.Build.0 = Release|Win32
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|x64.ActiveCfg = Release|x64
-		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|x64.Build.0 = Release|x64
 		{29A4EC3D-AC0B-4DBE-A891-7B099443B2BF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{29A4EC3D-AC0B-4DBE-A891-7B099443B2BF}.Debug|Win32.Build.0 = Debug|Win32
 		{29A4EC3D-AC0B-4DBE-A891-7B099443B2BF}.Debug|x64.ActiveCfg = Debug|x64
@@ -295,6 +287,14 @@ Global
 		{B6669382-7F21-42E4-9023-462F9018F865}.Release|Win32.Build.0 = Release|Win32
 		{B6669382-7F21-42E4-9023-462F9018F865}.Release|x64.ActiveCfg = Release|x64
 		{B6669382-7F21-42E4-9023-462F9018F865}.Release|x64.Build.0 = Release|x64
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|Win32.Build.0 = Debug|Win32
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|x64.ActiveCfg = Debug|x64
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Debug|x64.Build.0 = Debug|x64
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|Win32.ActiveCfg = Release|Win32
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|Win32.Build.0 = Release|Win32
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|x64.ActiveCfg = Release|x64
+		{CC5E64ED-B830-4248-A287-E59B0712068C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

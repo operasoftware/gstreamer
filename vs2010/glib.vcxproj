@@ -451,6 +451,7 @@ copy /y ..\glib\glibconfig.h include\glib-2.0
     <ClCompile Include="..\glib\glib\gthread.c" />
     <ClCompile Include="..\glib\glib\gthreadpool.c" />
     <ClCompile Include="..\glib\glib\gtimer.c" />
+    <ClCompile Include="..\glib\glib\gtree.c" />
     <ClCompile Include="..\glib\glib\gutf8.c" />
     <ClCompile Include="..\glib\glib\gutils.c" />
     <ClCompile Include="..\glib\glib\gwin32.c" />
