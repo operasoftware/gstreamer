@@ -158,7 +158,7 @@
   <ItemGroup>
     <None Include="gstreamer-dbg.def" />
     <None Include="gstreamer.def" />
-    <CustomBuild Include="..\gstreamer.symbols">
+    <CustomBuild Include="gstreamer.symbols">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating gstreamer-dbg.def</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating gstreamer-dbg.def</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">echo EXPORTS &gt; "$(ProjectDir)/gstreamer-dbg.def" &amp;&amp; cl /EP -D_DEBUG "%(FullPath)" &gt;&gt; "$(ProjectDir)/gstreamer-dbg.def"
