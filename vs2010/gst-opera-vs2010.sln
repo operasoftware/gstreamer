@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstoggdec", "gstoggdec.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstaudioresample", "gstaudioresample.vcxproj", "{11F5F3BB-FA05-48B7-A285-9532C48B2831}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsttypefindfunctions", "gsttypefindfunctions.vcxproj", "{89824193-B485-44C0-8F6F-432CAAA2E859}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstaudioconvert", "gstaudioconvert.vcxproj", "{8191EDE0-B2DB-4E2E-B6F2-8FF1718E2E80}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstdecodebin2", "gstdecodebin2.vcxproj", "{779BD956-FC05-45AD-98E4-167A89515E63}"
@@ -95,14 +93,6 @@ Global
 		{11F5F3BB-FA05-48B7-A285-9532C48B2831}.Release|Win32.Build.0 = Release|Win32
 		{11F5F3BB-FA05-48B7-A285-9532C48B2831}.Release|x64.ActiveCfg = Release|x64
 		{11F5F3BB-FA05-48B7-A285-9532C48B2831}.Release|x64.Build.0 = Release|x64
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Debug|Win32.ActiveCfg = Debug|Win32
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Debug|Win32.Build.0 = Debug|Win32
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Debug|x64.ActiveCfg = Debug|x64
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Debug|x64.Build.0 = Debug|x64
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Release|Win32.ActiveCfg = Release|Win32
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Release|Win32.Build.0 = Release|Win32
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Release|x64.ActiveCfg = Release|x64
-		{89824193-B485-44C0-8F6F-432CAAA2E859}.Release|x64.Build.0 = Release|x64
 		{8191EDE0-B2DB-4E2E-B6F2-8FF1718E2E80}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8191EDE0-B2DB-4E2E-B6F2-8FF1718E2E80}.Debug|Win32.Build.0 = Debug|Win32
 		{8191EDE0-B2DB-4E2E-B6F2-8FF1718E2E80}.Debug|x64.ActiveCfg = Debug|x64
