@@ -135,6 +135,9 @@
     <ClCompile Include="..\glib\glib\libcharset\localcharset.c">
       <Filter>Source Files\libcharset</Filter>
     </ClCompile>
+    <ClCompile Include="..\glib\glib\gtree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\glib\glib\glib.symbols">
