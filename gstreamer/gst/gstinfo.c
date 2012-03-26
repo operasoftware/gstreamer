@@ -531,7 +531,8 @@ gst_debug_message_get (GstDebugMessage * message)
            break;
          default:
            if (*walk == GST_PTR_FORMAT[0]) {
-             void **ptr = &va_arg(arguments, void *);
+             void *arg = va_arg(arguments, void *);
+             void **ptr = &arg;
              gchar* pretty = gst_debug_print_object(*ptr);
              strings = g_slist_prepend(strings, pretty);
              *((char **)ptr) = pretty;
