@@ -33,4 +33,9 @@
       <Filter>Resource Files</Filter>
     </glib_genmarshal>
   </ItemGroup>
+  <ItemGroup>
+    <YASM Include="noencodepointer.asm">
+      <Filter>Source Files</Filter>
+    </YASM>
+  </ItemGroup>
 </Project>

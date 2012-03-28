@@ -31,4 +31,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <YASM Include="noencodepointer.asm">
+      <Filter>Source Files</Filter>
+    </YASM>
+  </ItemGroup>
 </Project>
