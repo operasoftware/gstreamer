@@ -161,7 +161,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <YASM Include="noencodepointer.asm" />
+    <YASM Include="noencodepointer.asm">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </YASM>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
