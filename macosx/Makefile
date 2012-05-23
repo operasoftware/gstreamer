@@ -5,29 +5,29 @@ export CXX=/usr/bin/g++-4.0
 
 .PHONY: libogg
 libogg:
-	cd "../libogg"; make clean; \
+	cd "../libogg"; $(MAKE) clean; \
 	./configure --prefix="$(PREFIX)" \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: libvorbis
 libvorbis: libogg
-	cd "../libvorbis"; make clean; \
+	cd "../libvorbis"; $(MAKE) clean; \
 	./configure --prefix="$(PREFIX)" \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: libtheora
 libtheora: libogg
-	cd "../libtheora"; make clean; \
+	cd "../libtheora"; $(MAKE) clean; \
 	./configure --prefix="$(PREFIX)" \
 		--disable-spec \
 		--disable-encode \
 		--disable-examples \
 		"$(LIBTHEORA_CONFIGURE)" \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: libvpx
 libvpx:
-	cd "../libvpx"; make clean; \
+	cd "../libvpx"; $(MAKE) clean; \
 	./configure --prefix="$(PREFIX)" \
 		--target="$(LIBVPX_TARGET)" \
 		--enable-pic \
@@ -39,23 +39,23 @@ libvpx:
 		--disable-install-docs \
 		--disable-install-bins \
 		--disable-install-srcs \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: glib
 glib:
-	cd "../glib"; make clean; \
-	AUTOGEN_SUBDIR_MODE=1 ./autogen.sh && \
+	cd "../glib"; $(MAKE) clean; \
+	AUTOGEN_SUBDIR_MODE=1 ACLOCAL_FLAGS="-I /opt/local/share/aclocal" ./autogen.sh && \
 	./configure --prefix="$(PREFIX)" \
 		--enable-shared \
 		--disable-regex \
 		--disable-gtk-doc \
 		"$(GLIB_CONFIGURE)" \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: gstreamer
 gstreamer: glib
-	cd "../gstreamer"; make clean; \
-	./autogen.sh --noconfigure && \
+	cd "../gstreamer"; $(MAKE) clean; \
+	 ACLOCAL_FLAGS="-I /opt/local/share/aclocal" ./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
 		--disable-docbook \
 		--disable-nls \
@@ -73,11 +73,11 @@ gstreamer: glib
 		--disable-tests \
 		--disable-failing-tests \
 		--disable-check \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: gst-plugins-base
 gst-plugins-base: libogg libvorbis libtheora glib
-	cd "../gst-plugins-base"; make clean; \
+	cd "../gst-plugins-base"; $(MAKE) clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
 		--with-audioresample-format=float \
@@ -107,11 +107,11 @@ gst-plugins-base: libogg libvorbis libtheora glib
 		--disable-pango \
 		--disable-vorbistest \
 		--disable-freetypetest \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: gst-plugins-good
 gst-plugins-good: gst-plugins-base
-	cd "../gst-plugins-good"; make clean; \
+	cd "../gst-plugins-good"; $(MAKE) clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
 		--disable-nls \
@@ -191,11 +191,11 @@ gst-plugins-good: gst-plugins-base
 		--disable-wavpack \
 		--disable-zlib \
 		--disable-bz2 \
-	&& make install
+	&& $(MAKE) install
 
 .PHONY: gst-plugins-bad
 gst-plugins-bad: gst-plugins-base libvpx
-	cd "../gst-plugins-bad"; make clean; \
+	cd "../gst-plugins-bad"; $(MAKE) clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
 		--disable-nls \
@@ -315,7 +315,8 @@ gst-plugins-bad: gst-plugins-base libvpx
 		--disable-zbar \
 		CPPFLAGS="-I$(PREFIX)/include" \
 		LDFLAGS="-L$(PREFIX)/lib" \
-	&& make install
+		ERROR_CFLAGS="" \
+	&& $(MAKE) ERROR_CFLAGS="" install
 
 .PHONY: debugintel
 debugintel:
@@ -325,7 +326,7 @@ debugintel:
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86-darwin8-gcc" \
-	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
+	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Debug/lib dist/debug_i386 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/debug_i386/plugins
 	mv dist/debug_i386/gstreamer-0.10 dist/debug_i386/plugins
@@ -338,7 +339,7 @@ releaseintel:
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86-darwin8-gcc" \
-	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
+	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Release/lib dist/release_i386 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/release_i386/plugins
 	mv dist/release_i386/gstreamer-0.10 dist/release_i386/plugins
@@ -352,7 +353,7 @@ debugintel64:
 	LDFLAGS="-arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86_64-darwin9-gcc" \
-	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
+	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Debug/lib dist/debug_x86_64 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/debug_x86_64/plugins
 	mv dist/debug_x86_64/gstreamer-0.10 dist/debug_x86_64/plugins
@@ -365,7 +366,7 @@ releaseintel64:
 	LDFLAGS="-arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	LIBVPX_TARGET="x86_64-darwin9-gcc" \
-	make gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
+	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Release/lib dist/release_x86_64 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/release_x86_64/plugins
 	mv dist/release_x86_64/gstreamer-0.10 dist/release_x86_64/plugins
