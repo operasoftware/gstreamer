@@ -1,12 +1,18 @@
-TOP ?= $(shell pwd)
-PREFIX = $(TOP)/tmp
+# we're inside the gst-opera/unix folder, so move one folder up
+GStreamerSourceDir ?= $(abspath ..)
+GStreamerTempDir   ?= $(GStreamerSourceDir)/unix/tmp
+GStreamerOutputDir ?= $(GStreamerSourceDir)/unix/plugins
+# used to include glib's headers locally and not from the system
+GStreamerIncludes   = $(GStreamerIncludeDir) $(GStreamerTopIncludeDir)
 
 .PHONY: all
 all: plugins
 
-.libvpx.configure:
-	cd ../libvpx; \
-	./configure --prefix="$(PREFIX)" \
+$(GStreamerTempDir)/.libvpx.configure:
+	mkdir -p $(GStreamerTempDir)/libvpx
+	cd $(GStreamerTempDir)/libvpx && \
+	$(GStreamerSourceDir)/libvpx/configure \
+		--prefix=$(GStreamerTempDir) \
 		--enable-pic \
 		--enable-runtime-cpu-detect \
 		--disable-vp8-encoder \
@@ -19,59 +25,66 @@ all: plugins
 	touch $@
 
 .PHONY: .libvpx
-.libvpx: .libvpx.configure
-	$(MAKE) -C ../libvpx install
+.libvpx: $(GStreamerTempDir)/.libvpx.configure
+	$(MAKE) -C $(GStreamerTempDir)/libvpx install
 
-GST_CFLAGS=$(shell pkg-config --cflags gstreamer-video-0.10) -fPIC
-GST_LIBS=$(shell pkg-config --libs gstreamer-video-0.10) -lm
-GST_OPERA_CFLAGS=-DOPERA_MINIMAL_GST -DVERSION=\"0.10\" -DPACKAGE=\"gst-opera\" -DGST_PACKAGE_NAME=\"GStreamer\ Opera\ Plug-ins\" -DGST_PACKAGE_ORIGIN=\"http://sourcecode.opera.com/gstreamer/\"
-VPX_CFLAGS=-I"$(PREFIX)/include"
-VPX_LDFLAGS=-L"$(PREFIX)/lib"
+GST_CFLAGS  = $(GStreamerIncludes:%=-I%)
+GST_CFLAGS += $(shell pkg-config --cflags gstreamer-video-0.10)
+GST_CFLAGS += -fPIC
+ifeq ($(findstring GST_DISABLE_GST_DEBUG,$(OPERA_BUILD_DEFINES)),)
+GST_CFLAGS += -g3
+else
+GST_CFLAGS += -O3
+endif
+
+GST_LIBS  = $(shell pkg-config --libs gstreamer-video-0.10)
+GST_LIBS += -lm
+
+GST_OPERA_CFLAGS  = -DOPERA_MINIMAL_GST
+GST_OPERA_CFLAGS += -DVERSION=\"0.10\"
+GST_OPERA_CFLAGS += -DPACKAGE=\"gst-opera\"
+GST_OPERA_CFLAGS += -DGST_PACKAGE_NAME=\"GStreamer\ Opera\ Plug-ins\"
+GST_OPERA_CFLAGS += -DGST_PACKAGE_ORIGIN=\"http://sourcecode.opera.com/gstreamer/\"
+GST_OPERA_CFLAGS += $(OPERA_BUILD_DEFINES:%=-D%)
+
+VPX_CFLAGS=-I$(GStreamerTempDir)/include
+VPX_LDFLAGS=-L$(GStreamerTempDir)/lib
 VPX_LIBS=-lvpx
 
-src/gst/matroska:
-	mkdir -p $@
-	cp ../gst-plugins-good/gst/matroska/*.c ../gst-plugins-good/gst/matroska/*.h $@
-
-src/ext/vp8:
-	mkdir -p $@
-	cp ../gst-plugins-bad/ext/vp8/*.c ../gst-plugins-bad/ext/vp8/*.h $@
-
-src/gst-libs/gst/video:
-	mkdir -p $@
-	cp ../gst-plugins-bad/ext/vp8/gst/video/*.c ../gst-plugins-bad/ext/vp8/gst/video/*.h $@
-
 GST_MATROSKA_SOURCES = \
-	../gst-plugins-good/gst/matroska/ebml-read.c \
-	../gst-plugins-good/gst/matroska/matroska-ids.c \
-	../gst-plugins-good/gst/matroska/matroska-demux.c
+	$(GStreamerSourceDir)/gst-plugins-good/gst/matroska/ebml-read.c \
+	$(GStreamerSourceDir)/gst-plugins-good/gst/matroska/matroska-ids.c \
+	$(GStreamerSourceDir)/gst-plugins-good/gst/matroska/matroska-demux.c
 
-plugins/libgstoperamatroska.so: $(GST_MATROSKA_SOURCES)
-	mkdir -p plugins
+$(GStreamerOutputDir)/libgstoperamatroska.so: $(GST_MATROSKA_SOURCES)
+	mkdir -p $(GStreamerOutputDir)
 	gcc -shared -Wl,--no-undefined -o $@ $^ $(GST_CFLAGS) $(GST_OPERA_CFLAGS) $(GST_LIBS)
 
 GST_VP8_SOURCES = \
-	../gst-plugins-bad/ext/vp8/plugin.c \
-	../gst-plugins-bad/ext/vp8/gstvp8dec.c \
-	../gst-plugins-bad/ext/vp8/gstvp8utils.c
+	$(GStreamerSourceDir)/gst-plugins-bad/ext/vp8/plugin.c \
+	$(GStreamerSourceDir)/gst-plugins-bad/ext/vp8/gstvp8dec.c \
+	$(GStreamerSourceDir)/gst-plugins-bad/ext/vp8/gstvp8utils.c
 
 GST_VP8_CFLAGS = -DHAVE_VP8_DECODER
 
 GST_BASE_VIDEO_SOURCES = \
-	../gst-plugins-bad/gst-libs/gst/video/gstbasevideocodec.c \
-	../gst-plugins-bad/gst-libs/gst/video/gstbasevideodecoder.c \
-	../gst-plugins-bad/gst-libs/gst/video/gstbasevideoutils.c
+	$(GStreamerSourceDir)/gst-plugins-bad/gst-libs/gst/video/gstbasevideocodec.c \
+	$(GStreamerSourceDir)/gst-plugins-bad/gst-libs/gst/video/gstbasevideodecoder.c \
+	$(GStreamerSourceDir)/gst-plugins-bad/gst-libs/gst/video/gstbasevideoutils.c
 
-GST_BASE_VIDEO_CFLAGS = -DGST_USE_UNSTABLE_API -I../gst-plugins-bad/gst-libs
+GST_BASE_VIDEO_CFLAGS = -DGST_USE_UNSTABLE_API -I$(GStreamerSourceDir)/gst-plugins-bad/gst-libs
 
-plugins/libgstoperavp8.so: $(GST_VP8_SOURCES) $(GST_BASE_VIDEO_SOURCES) | .libvpx
-	mkdir -p plugins
+$(GStreamerOutputDir)/libgstoperavp8.so: $(GST_VP8_SOURCES) $(GST_BASE_VIDEO_SOURCES) | .libvpx
+	mkdir -p $(GStreamerOutputDir)
 	gcc -shared -Wl,--no-undefined -o $@ $^ $(GST_VP8_CFLAGS) $(GST_BASE_VIDEO_CFLAGS)  $(GST_CFLAGS) $(GST_OPERA_CFLAGS) $(GST_LIBS) $(VPX_CFLAGS) $(VPX_LDFLAGS) $(VPX_LIBS)
 
+GST_PLUGINS = \
+	$(GStreamerOutputDir)/libgstoperamatroska.so \
+	$(GStreamerOutputDir)/libgstoperavp8.so
+
 .PHONY: plugins
-plugins: plugins/libgstoperamatroska.so plugins/libgstoperavp8.so
+plugins: $(GST_PLUGINS)
 
 .PHONY: clean
 clean:
-	rm -rf "$(PREFIX)" plugins/ .libvpx.configure
-	$(MAKE) -C ../libvpx clean || :
+	rm -rf $(GST_PLUGINS) $(GStreamerTempDir)
