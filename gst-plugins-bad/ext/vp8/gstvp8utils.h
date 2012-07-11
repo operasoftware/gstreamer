@@ -21,7 +21,7 @@
  */
 
 #include <gst/gst.h>
-#include <vpx/vpx_codec.h>
+#include "gstvp8lib.h"
 
 G_BEGIN_DECLS
 

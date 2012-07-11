@@ -41,9 +41,6 @@
 #undef HAVE_CONFIG_H
 #endif
 
-#include <vpx/vpx_decoder.h>
-#include <vpx/vp8dx.h>
-
 #include "gstvp8utils.h"
 
 /* Add Opera to make unique GType */
@@ -459,7 +456,10 @@ gst_vp8_dec_handle_frame (GstBaseVideoDecoder * decoder, GstVideoFrame * frame,
     memset (&stream_info, 0, sizeof (stream_info));
     stream_info.sz = sizeof (stream_info);
 
-    status = vpx_codec_peek_stream_info (&vpx_codec_vp8_dx_algo,
+    /* Call vpx_codec_vp8_dx() instead of referencing vpx_codec_vp8_dx_algo
+       directly. This makes it easier to implement the late libvpx linking done
+       by Opera. */
+    status = vpx_codec_peek_stream_info (vpx_codec_vp8_dx(),
         GST_BUFFER_DATA (frame->sink_buffer),
         GST_BUFFER_SIZE (frame->sink_buffer), &stream_info);
 
@@ -477,7 +477,7 @@ gst_vp8_dec_handle_frame (GstBaseVideoDecoder * decoder, GstVideoFrame * frame,
     gst_vp8_dec_send_tags (dec);
 #endif
 
-    caps = vpx_codec_get_caps (&vpx_codec_vp8_dx_algo);
+    caps = vpx_codec_get_caps (vpx_codec_vp8_dx());
 
     if (dec->post_processing) {
       if (!(caps & VPX_CODEC_CAP_POSTPROC)) {
@@ -489,7 +489,7 @@ gst_vp8_dec_handle_frame (GstBaseVideoDecoder * decoder, GstVideoFrame * frame,
     }
 
     status =
-        vpx_codec_dec_init (&dec->decoder, &vpx_codec_vp8_dx_algo, NULL, flags);
+        vpx_codec_dec_init (&dec->decoder, vpx_codec_vp8_dx(), NULL, flags);
     if (status != VPX_CODEC_OK) {
       GST_ELEMENT_ERROR (dec, LIBRARY, INIT,
           ("Failed to initialize VP8 decoder"), ("%s",

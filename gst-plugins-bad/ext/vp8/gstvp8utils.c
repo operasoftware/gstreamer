@@ -32,8 +32,6 @@
 #undef HAVE_CONFIG_H
 #endif
 
-#include <vpx/vpx_codec.h>
-
 #include "gstvp8utils.h"
 
 const char *

@@ -25,12 +25,17 @@
 
 #include <gst/gst.h>
 
+#include "gstvp8lib.h"
+
 GType gst_vp8_dec_get_type (void);
 GType gst_vp8_enc_get_type (void);
 
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
+  if (!verify_lib_init())
+      return FALSE;
+
 #ifdef HAVE_VP8_DECODER
   gst_element_register (plugin, "opera_vp8dec", GST_RANK_PRIMARY + 1,
       gst_vp8_dec_get_type ());
