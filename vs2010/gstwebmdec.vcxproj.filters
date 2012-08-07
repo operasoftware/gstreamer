@@ -33,6 +33,9 @@
     <ClCompile Include="..\gst-plugins-good\gst\matroska\matroska-ids.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gst-plugins-bad\ext\vp8\gstvp8lib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <YASM Include="noencodepointer.asm">

@@ -78,7 +78,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;../../libvpx;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;GST_USE_UNSTABLE_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,7 +95,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;../../libvpx;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;HAVE_CONFIG_H;GST_USE_UNSTABLE_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -112,7 +112,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;../../libvpx;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;GST_USE_UNSTABLE_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -132,7 +132,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/glib-2.0;include/gstreamer-0.10;../gst-plugins-base/gst-libs;../gst-plugins-base/win32/common;../gst-plugins-bad/ext/vp8;../../libvpx;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;HAVE_CONFIG_H;GST_USE_UNSTABLE_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\gst-plugins-bad\ext\vp8\gstvp8lib.c" />
     <ClCompile Include="..\gst-plugins-good\gst\matroska\ebml-read.c" />
     <ClCompile Include="..\gst-plugins-bad\ext\vp8\gstvp8dec.c">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">HAVE_VP8_DECODER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -163,10 +164,6 @@
   <ItemGroup>
     <ProjectReference Include="gstreamer.vcxproj">
       <Project>{5ddc2add-7433-406e-9464-5f9752f219de}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="libvpx.vcxproj">
-      <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
