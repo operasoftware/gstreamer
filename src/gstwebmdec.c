@@ -23,6 +23,7 @@
 #endif
 
 #include <gst/gst.h>
+#include "gstvp8lib.h"
 
 extern gboolean gst_matroska_demux_plugin_init (GstPlugin * plugin);
 extern GType gst_vp8_dec_get_type (void);
@@ -30,6 +31,9 @@ extern GType gst_vp8_dec_get_type (void);
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
+  if (!verify_lib_init())
+      return FALSE;
+
   if (!gst_matroska_demux_plugin_init (plugin))
       return FALSE;
 
