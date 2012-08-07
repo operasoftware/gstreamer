@@ -2101,9 +2101,9 @@ g_type_register_static
 ; gmodule
 
 ;g_module_build_path
-;g_module_close
+g_module_close
 ;g_module_error
-;g_module_make_resident
+g_module_make_resident
 #ifndef _WIN64
 ;g_module_name PRIVATE
 #endif
@@ -2111,9 +2111,9 @@ g_type_register_static
 #ifndef _WIN64
 ;g_module_open PRIVATE
 #endif
-;g_module_open_utf8
+g_module_open
 ;g_module_supported
-;g_module_symbol
+g_module_symbol
 
 ; gthread
 
