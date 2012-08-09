@@ -520,7 +520,7 @@ g_module_open (const gchar    *file_name,
   return module;
 }
 
-#if !defined(OPERA_MINIMAL_GST) && defined (G_OS_WIN32) && !defined(_WIN64)
+#if defined (G_OS_WIN32) && !defined(_WIN64)
 
 #undef g_module_open
 
@@ -528,12 +528,16 @@ GModule*
 g_module_open (const gchar    *file_name,
 	       GModuleFlags    flags)
 {
+#ifndef OPERA_MINIMAL_GST
   gchar *utf8_file_name = g_locale_to_utf8 (file_name, -1, NULL, NULL, NULL);
   GModule *retval = g_module_open_utf8 (utf8_file_name, flags);
 
   g_free (utf8_file_name);
 
   return retval;
+#else /* OPERA_MINIMAL_GST */
+  return g_module_open_utf8 (file_name, flags);
+#endif /* OPERA_MINIMAL_GST */
 }
 
 #endif
