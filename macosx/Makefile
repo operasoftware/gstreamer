@@ -25,22 +25,6 @@ libtheora: libogg
 		"$(LIBTHEORA_CONFIGURE)" \
 	&& $(MAKE) install
 
-.PHONY: libvpx
-libvpx:
-	cd "../libvpx"; $(MAKE) clean; \
-	./configure --prefix="$(PREFIX)" \
-		--target="$(LIBVPX_TARGET)" \
-		--enable-pic \
-		--enable-runtime-cpu-detect \
-		--disable-vp8-encoder \
-		--disable-multithread \
-		--disable-postproc \
-		--disable-examples \
-		--disable-install-docs \
-		--disable-install-bins \
-		--disable-install-srcs \
-	&& $(MAKE) install
-
 .PHONY: glib
 glib:
 	cd "../glib"; $(MAKE) clean; \
@@ -194,7 +178,7 @@ gst-plugins-good: gst-plugins-base
 	&& $(MAKE) install
 
 .PHONY: gst-plugins-bad
-gst-plugins-bad: gst-plugins-base libvpx
+gst-plugins-bad: gst-plugins-base
 	cd "../gst-plugins-bad"; $(MAKE) clean; \
 	./autogen.sh --noconfigure && \
 	./configure --prefix="$(PREFIX)" \
@@ -325,7 +309,6 @@ debugintel:
 	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
-	LIBVPX_TARGET="x86-darwin8-gcc" \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Debug/lib dist/debug_i386 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/debug_i386/plugins
@@ -338,7 +321,6 @@ releaseintel:
 	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
 	LDFLAGS="-arch i386" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
-	LIBVPX_TARGET="x86-darwin8-gcc" \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Release/lib dist/release_i386 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/release_i386/plugins
@@ -352,7 +334,6 @@ debugintel64:
 	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
 	LDFLAGS="-arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
-	LIBVPX_TARGET="x86_64-darwin9-gcc" \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Debug/lib dist/debug_x86_64 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/debug_x86_64/plugins
@@ -365,7 +346,6 @@ releaseintel64:
 	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
 	LDFLAGS="-arch x86_64" \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
-	LIBVPX_TARGET="x86_64-darwin9-gcc" \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Release/lib dist/release_x86_64 "@executable_path/../Resources/gstreamer"
 	rm -fR dist/release_x86_64/plugins
