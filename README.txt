@@ -1,5 +1,7 @@
 == Linux ==
 
+To build gstvp8dec, headers for libvpx must be installed in a system search path.
+
 $ cd unix
 $ make
 
@@ -9,13 +11,15 @@ Build on 10.5 Prefered
 
 pkg-config and yasm from MacPorts are needed.
 
+To build gstvp8dec, headers for libvpx must be installed in a system search path.
+
 $ cd macosx
 $ make release (or debug)
 
 == Windows ==
 
-Yasm must be installed to compile libvpx. Get Yasm from http://yasm.tortall.net/
-and follow instructions for Visual Studio 20XX on the Download page.
+Headers for libvpx must either be installed in a system search path, or libvpx
+must be checked out at ../libvpx.
 
 To build gstdirectsoundsink, DirectX 9.0 SDK October 2004 Update must
 be unpacked (not installed) in dxsdk_oct2004. Download URL:
