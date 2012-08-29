@@ -50,6 +50,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gstwebmdec", "gstwebmdec.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgstbasevideo", "libgstbasevideo.vcxproj", "{D99A39D8-C008-4275-8814-C6C6F10D8C2E}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9C958451-8F2E-48E2-BD8F-6BDD56914F50} = {9C958451-8F2E-48E2-BD8F-6BDD56914F50}
 		{BFAF1EE7-AB5A-4D5A-8D01-FE9B237BE930} = {BFAF1EE7-AB5A-4D5A-8D01-FE9B237BE930}
 	EndProjectSection
 EndProject
