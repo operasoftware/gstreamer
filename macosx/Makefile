@@ -1,7 +1,9 @@
 export PATH := $(PREFIX)/bin:$(PATH)
 export PKG_CONFIG_PATH := $(PREFIX)/lib/pkgconfig/
-export CC=/usr/bin/gcc-4.0
-export CXX=/usr/bin/g++-4.0
+#export CC=/usr/bin/gcc
+#export CXX=/usr/bin/g++
+MACSDK_32 = /Developer/SDKs/MacOSX10.6.sdk
+MACSDK_64 = /Developer/SDKs/MacOSX10.6.sdk
 
 .PHONY: libogg
 libogg:
@@ -30,6 +32,7 @@ glib:
 	cd "../glib"; $(MAKE) clean; \
 	AUTOGEN_SUBDIR_MODE=1 ACLOCAL_FLAGS="-I /opt/local/share/aclocal" ./autogen.sh && \
 	./configure --prefix="$(PREFIX)" \
+		--host=$(HOST) \
 		--enable-shared \
 		--disable-regex \
 		--disable-gtk-doc \
@@ -305,9 +308,10 @@ gst-plugins-bad: gst-plugins-base
 .PHONY: debugintel
 debugintel:
 	PREFIX="$(PWD)/Debug" \
-	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot $(MACSDK_32)" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot $(MACSDK_32)" \
 	LDFLAGS="-arch i386" \
+	HOST=i686 \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Debug/lib dist/debug_i386 "@executable_path/../Resources/gstreamer"
@@ -317,9 +321,10 @@ debugintel:
 .PHONY: releaseintel
 releaseintel:
 	PREFIX="$(PWD)/Release" \
-	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot $(MACSDK_32)" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch i386 -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot $(MACSDK_32)" \
 	LDFLAGS="-arch i386" \
+	HOST=i686 \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Release/lib dist/release_i386 "@executable_path/../Resources/gstreamer"
@@ -330,9 +335,10 @@ releaseintel:
 .PHONY: debugintel64
 debugintel64:
 	PREFIX="$(PWD)/Debug" \
-	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
-	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
+	CFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot $(MACSDK_64)" \
+	CXXFLAGS="-D_DEBUG -DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot $(MACSDK_64)" \
 	LDFLAGS="-arch x86_64" \
+	HOST=x86_64 \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Debug/lib dist/debug_x86_64 "@executable_path/../Resources/gstreamer"
@@ -342,9 +348,10 @@ debugintel64:
 .PHONY: releaseintel64
 releaseintel64:
 	PREFIX="$(PWD)/Release" \
-	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
-	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot /Developer/SDKs/MacOSX10.5.sdk" \
+	CFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot $(MACSDK_64)" \
+	CXXFLAGS="-DOPERA_MINIMAL_GST -DGST_DISABLE_REGISTRY_CACHE -arch x86_64 -mmacosx-version-min=10.5 -DMAC_OS_X_VERSION_MIN_REQUIRED=1050 -isysroot $(MACSDK_64)" \
 	LDFLAGS="-arch x86_64" \
+	HOST=x86_64 \
 	PKG_CONFIG_PATH=$(PREFIX)/lib/pkgconfig \
 	$(MAKE) gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
 	python makedist.py Release/lib dist/release_x86_64 "@executable_path/../Resources/gstreamer"
