@@ -4,6 +4,7 @@ export PKG_CONFIG_PATH := $(PREFIX)/lib/pkgconfig/
 #export CXX=/usr/bin/g++
 MACSDK_32 = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk
 MACSDK_64 = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk
+#VPX_HEADERS = -I/Users/eirik/opera/desktop-dev/platforms/media_backends/libvpx
 
 .PHONY: libogg
 libogg:
@@ -300,7 +301,7 @@ gst-plugins-bad: gst-plugins-base
 		--disable-vdpau \
 		--disable-schro \
 		--disable-zbar \
-		CPPFLAGS="-I$(PREFIX)/include" \
+		CPPFLAGS="-I$(PREFIX)/include $(VPX_HEADERS)" \
 		LDFLAGS="-L$(PREFIX)/lib" \
 		ERROR_CFLAGS="" \
 	&& $(MAKE) ERROR_CFLAGS="" install

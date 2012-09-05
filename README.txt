@@ -30,6 +30,11 @@ If this fails, here are a couple of things to try:
   that among other things do not support automake 1.12.  Current
   glib has a much shorter, standard version that works much better.
 
+- At the top of macosx/Makefile there is a varibale called VPX_HEADERS.
+  If you do not have libvpx headers installed on the system, set this
+  to "-I/path/to/opera_sources/platforms/media_backends/libvpx" (with
+  the obvious substitution).
+
 - At the top of macosx/Makefile there are two variables called
   MACSDK_32 and MACSDK_64.  Check that they point to working installs
   of the sdk.
