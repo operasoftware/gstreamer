@@ -3,6 +3,7 @@ plugin_LTLIBRARIES = \
 
 libgstvp8_la_SOURCES = \
 	gstvp8dec.c \
+	gstvp8lib.c \
 	gstvp8utils.c \
 	plugin.c
 

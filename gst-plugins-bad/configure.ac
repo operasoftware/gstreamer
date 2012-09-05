@@ -1507,26 +1507,15 @@ dnl *** vp8 ***
 translit(dnm, m, l) AM_CONDITIONAL(USE_VP8, vp8)
 AG_GST_CHECK_FEATURE(VP8, [VP8 decoder], vp8, [
   VPX_LIBS=""
-  AG_GST_CHECK_LIBHEADER(VPX, vpx,
-                        vpx_codec_version, ,
-                        vpx/vpx_codec.h, [
-    HAVE_VP8_ENCODER=no
-    HAVE_VP8_DECODER=no
-
-    OLD_LIBS="$LIBS"
-    LIBS="$LIBS -lm -lpthread"
-    AC_CHECK_LIB(vpx, vpx_codec_vp8_cx_algo, [
-      HAVE_VP8=yes
-      AC_DEFINE(HAVE_VP8_ENCODER, 1, [Defined if the VP8 encoder is available])
-      VPX_LIBS="-lvpx"
-    ])
-    AC_CHECK_LIB(vpx, vpx_codec_vp8_dx_algo, [
-      HAVE_VP8=yes
-      AC_DEFINE(HAVE_VP8_DECODER, 1, [Defined if the VP8 decoder is available])
-      VPX_LIBS="-lvpx"
-    ])
-    LIBS="$OLD_LIBS"
-  ])
+  dnl Opera wants to compile the vp8 decoder plug-in
+  dnl regardless of whether there is any vpx available.
+  HAVE_VP8_DECODER=yes
+  HAVE_VP8=yes
+  AC_DEFINE(HAVE_VP8_DECODER, 1, [Defined if the VP8 decoder is available])
+  dnl But we don't yet need encoding support
+  dnl AC_DEFINE(HAVE_VP8_ENCODER, 1, [Defined if the VP8 encoder is available])
+  dnl And we don't need the vpx library (as we are providing that from opera)
+  dnl VPX_LIBS="-lvpx"
   AC_SUBST(VPX_LIBS)
 ])
 
@@ -1645,7 +1634,7 @@ AC_SUBST(GST_ALL_LDFLAGS)
 
 dnl this really should only contain flags, not libs - they get added before
 dnl whatevertarget_LIBS and -L flags here affect the rest of the linking
-GST_PLUGIN_LDFLAGS="-module -avoid-version -export-symbols-regex '^[_]*gst_plugin_desc\$\$' $GST_ALL_LDFLAGS"
+GST_PLUGIN_LDFLAGS="-module -avoid-version -export-symbols-regex '^[_]*(gst_plugin_desc\$\$|libvpx_init_vpx)' $GST_ALL_LDFLAGS"
 AC_SUBST(GST_PLUGIN_LDFLAGS)
 
 dnl *** output files ***
