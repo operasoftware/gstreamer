@@ -32,6 +32,7 @@ libtheora: libogg
 glib:
 	cd "../glib"; $(MAKE) clean; \
 	AUTOGEN_SUBDIR_MODE=1 ACLOCAL_FLAGS="-I /opt/local/share/aclocal" ./autogen.sh && \
+	echo '#include "../macosx/config.h.macosx"' >> config.h.in && \
 	./configure --prefix="$(PREFIX)" \
 		--host=$(HOST) \
 		--enable-shared \
@@ -44,6 +45,7 @@ glib:
 gstreamer: glib
 	cd "../gstreamer"; $(MAKE) clean; \
 	 ACLOCAL_FLAGS="-I /opt/local/share/aclocal" ./autogen.sh --noconfigure && \
+	echo '#include "../macosx/config.h.macosx"' >> config.h.in && \
 	./configure --prefix="$(PREFIX)" \
 		--disable-docbook \
 		--disable-nls \

@@ -14,11 +14,13 @@ $ make
 
 == Building on Mac ==
 
-Build on 10.5 Prefered
+The code has been built successfully on MacOSX 10.7
+(and it still ran successfully on 10.5).
 
 pkg-config and yasm from MacPorts are needed.
 
-To build gstvp8dec, headers for libvpx must be installed in a system search path.
+To build gstvp8dec, headers for libvpx must be installed in a system search path,
+or pointed to by VPX_HEADERS (in the Makefile).
 
 $ cd macosx
 $ make release (or debug)
