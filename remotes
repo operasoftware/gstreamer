@@ -11,7 +11,3 @@ for path in gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad; do
     git remote add upstream "git://anongit.freedesktop.org/gstreamer/$path"
     cd ..
 done
-
-cd libvpx
-git remote add upstream "http://git.chromium.org/webm/libvpx.git"
-cd ..
