@@ -1,0 +1,30 @@
+# for all subdirectories
+Makefile.in
+Makefile
+.libs
+.deps
+*.o
+*.lo
+*.la
+*.pc
+.*.swp
+.sw?
+
+# autofoo stuff here
+compile
+configure
+depcomp
+aclocal.m4
+autom4te.cache
+stamp-*
+libtool
+ltmain.sh
+missing
+install-sh
+glib-gettextize
+glib-zip
+glibconfig.h
+gtk-doc.make
+
+INSTALL
+README
