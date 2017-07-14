@@ -1,0 +1,205 @@
+
+Release notes for GStreamer Bad Plug-ins 0.10.19 "The World Kicked Back"
+        
+
+
+The GStreamer team is proud to announce a new release
+in the 0.10.x stable series of the
+GStreamer Bad Plug-ins.
+
+
+The 0.10.x series is a stable series targeted at end users.
+It is not API or ABI compatible with the stable 0.8.x series.
+It is, however, parallel installable with the 0.8.x series.
+
+
+
+"That an accusation?"
+
+
+No perfectly groomed moustache or any amount of fine clothing is going to
+cover up the truth - these plug-ins are Bad with a capital B.
+They look fine on the outside, and might even appear to get the job done, but
+at the end of the day they're a black sheep. Without a golden-haired angel
+to watch over them, they'll probably land in an unmarked grave at the final
+showdown.
+
+
+Don't bug us about their quality - exercise your Free Software rights,
+patch up the offender and send us the patch on the fastest steed you can
+steal from the Confederates. Because you see, in this world, there's two
+kinds of people, my friend: those with loaded guns and those who dig.
+You dig.
+
+
+This module contains a set of plug-ins that aren't up to par compared to the
+rest.  They might be close to being good quality, but they're missing something
+- be it a good code review, some documentation, a set of tests, a real live
+maintainer, or some actual wide use.  If the blanks are filled in they might be
+upgraded to become part of either gst-plugins-good or gst-plugins-ugly,
+depending on the other factors.
+If the plug-ins break, you can't complain - instead, you can fix the
+problem and send us a patch, or bribe someone into fixing them for you.
+New contributors can start here for things to work on.
+
+
+Other modules containing plug-ins are:
+
+
+gst-plugins-base
+contains a basic set of well-supported plug-ins
+gst-plugins-good
+contains a set of well-supported plug-ins under our preferred license
+gst-plugins-ugly
+contains a set of well-supported plug-ins, but might pose problems for
+    distributors
+
+
+
+  
+
+Features of this release
+    
+      * audioparsers: add bitrate calculation
+      * camerabin: add API to query supported image capture resolution
+      * camerabin: add block-after-capture property for viewfinder blocking
+      * camerabin: add video-capture-width/height/framerate properties
+      * camerabin: add video-source-filter and viewfinder-filter properties
+      * capssetter: element was moved to gst-plugins-good
+      * cogcolorspace: implement color-matrix handling and chroma-site
+      * dc1394: add iso-speed property
+      * dshowvideosrc: add support for YUY2 input format
+      * festival: don't open an infinite number of connections to the server and close connections
+      * h264parse: fix writing NALU prefix for byte-stream output format
+      * h264parse: fix wrong timestamps in some cases after seeking
+      * imagefreeze: plugin was moved to gst-plugins-good
+      * invtelecine: add invtelecine element
+      * jackaudiosrc: implement multichannel support
+      * jpegformat: add xmp reading and writing support
+      * ladspa, lv2: don't fail in plugin_init when having 0 elements (which would cause the plugin to get blacklisted)
+      * mmssrc: Check URI for validity and work around URI parsing bugs in libmms
+      * mmssrc: Use the escaped location for the RTSP redirect message
+      * mpegtsdemux: add support for Blu-Ray style DTS and the two DTS HD stream types
+      * mpegtsparse: parse TDT table in mpegts
+      * mpegvideoparse: export profile and level in caps; estimate bitrate; update caps when sequence header changes
+      * oss4: plugin was moved to gst-plugins-good
+      * qtmux: add support for the VP8 video codec and XMP tags
+      * segmentclip: add audio/video buffer segment clip elements
+      * vcdsrc: support the DVD URI scheme so a device can be specified via the URI
+      * vp8: add libvpx-based VP8 encoder/decoder (NB: encoder properties/API not fully stable yet; also, this plugin may not be compatible with GPLv2-only applications)
+
+Bugs fixed in this release
+     
+      * 340986 : [vcdsrc] plugin not auto-plugged, and weird URI handling
+      * 572551 : mpeg4videoparse fails to extract codec_data from this network camera video stream
+      * 603745 : [dc1394src] add " iso-speed " property
+      * 611302 : [imagefreeze] Add still frame stream generator
+      * 612208 : [soundtouch] [pitch] Removing annoying g_print
+      * 612331 : inputselector: linkage flags are incorrect
+      * 612454 : fix compile errors in latest gst-plugins-bad
+      * 612615 : [camerabin] video bin elements in wrong state when recording
+      * 612687 : [mpegvideoparse] Update caps when sequence header changes
+      * 612757 : Unable to build gst-plugins-bad with Sun Studio compiler
+      * 613156 : cog can't be built against libpng 1.4.x
+      * 613160 : [cogcolorspace] RGB- > I420 conversion adds green vertical bar at the right border
+      * 613332 : [cog] generate_tables generates invalid tables for YUV- > RGB
+      * 613708 : [dshowvideosrc][PATCH] Add support for YUY2 format
+      * 613758 : More build warnings on OS X
+      * 613795 : libmodplug's public header requires WORDS_BIGENDIAN
+      * 613920 : audioparsers: Add bitrate calculation to baseparse
+      * 614016 : [baseparse] NEWSEGMENT event sent with wrong start and position time
+      * 614037 : flacparse: Fix buffer refcount issue
+      * 614259 : mpegtsdemux: can't detect DTS audio
+      * 614349 : [mpegtsparse] assertion gst_buffer_is_metadata_writable (buffer) failed
+      * 614475 : [dvbsrc] Wrong property types for frequency and symbol rate
+      * 614479 : [mpegtspacketizer] Use CRC to check if tables are duplicate
+      * 614591 : [h264parse] Not cleaning internal state properly for reuse
+      * 614958 : [camerabin] Replace actions with properties for setting parameters
+      * 614991 : baseparse: Don't emit bitrate tags too early
+      * 616078 : mpegvideoparse: Export profile and level in caps
+      * 616541 : jackaudiosrc/sink needs to set layout on caps
+      * 617145 : Compile mplex element with with --enable-runtime-pseudo-reloc-v2 on Windows
+      * 617146 : Lots of printf string format warnings on Windows
+      * 617331 : More warnings in -bad
+      * 617650 : [mmssrc] should check location
+      * 618044 : [cogcolorspace] I420/YV12 - > packed 4:2:2 gives assertions
+      * 618388 : [frei0r] Boolean values can't be set from gst-launch [PATCH]
+      * 618409 : jackaudiosrc: improve process callback
+      * 618527 : festival plugin does not close connections to server
+      * 618710 : [resindvd] Needs to check for libdvdread too
+      * 618867 : Remove gst-plugins-bad/ext/polyp ?
+      * 619064 : h264parse: broken timestamps after seeking
+      * 619169 : [vp8enc] Limit DEFAULT_MAX_LATENCY to 25 to match libvpx
+      * 619172 : [vp8] exclude dec/enc based on CONFIG_VP8_DECODER/ENCODER
+      * 619290 : [vp8] add mode property to switch between CBR/VBR
+      * 619317 : [vp8] Encoder thread support
+      * 619318 : [vp8] Decoder QoS (avoid memcpy)
+      * 619344 : [vp8enc] Use GST_VIDEO_CAPS_YUV instead of handwritten YUV caps
+      * 619444 : [mpegtsparse] Memory leak in mpegts_packetizer_parse_pmt
+      * 619502 : [mpegvideoparse] segfault because of access to a NULL buffer gotten from mpeg_packetizer_get_block
+      * 619617 : [h264parse] leaks memory
+      * 619916 : [vp8enc] Doesn't skip non-frame packets correctly
+      * 614317 : [oss4] should always accept PCM in native endianness even if the hardware doesn't
+
+Download
+
+You can find source releases of gst-plugins-bad in the download directory:
+http://gstreamer.freedesktop.org/src/gst-plugins-bad/
+
+GStreamer Homepage
+
+More details can be found on the project's website:
+http://gstreamer.freedesktop.org/
+
+Support and Bugs
+
+We use GNOME's bugzilla for bug reports and feature requests:
+http://bugzilla.gnome.org/enter_bug.cgi?product=GStreamer
+
+Developers
+
+GStreamer is stored in Git, hosted at git.freedesktop.org, and can be cloned from there.
+Interested developers of the core library, plug-ins, and applications should
+subscribe to the gstreamer-devel list. If there is sufficient interest we
+will create more lists as necessary.
+
+        
+Applications
+  
+Contributors to this release
+    
+      * Adam Endrodi
+      * Alessandro Decina
+      * Andoni Morales
+      * Arun Raghavan
+      * Bastien Nocera
+      * Benjamin Otte
+      * Brian Cameron
+      * Carl-Anton Ingmarsson
+      * David Schleef
+      * Edward Hervey
+      * Ivan Zderadicka
+      * Jan Schmidt
+      * Joshua M. Doe
+      * Lasse Laukkanen
+      * Mark Nauwelaerts
+      * Olivier Crête
+      * Philip Jägenstedt
+      * Raimo Järvi
+      * René Stadler
+      * Rob Clark
+      * Sebastian Dröge
+      * Sebastian Pölsterl
+      * Shenghua Liu
+      * Stefan Kost
+      * Teemu Katajisto
+      * Thiago Santos
+      * Tiago Katcipis
+      * Tim-Philipp Müller
+      * Tommi Myöhänen
+      * Tristan Matthews
+      * Víctor Manuel Jáquez Leal
+      * Wim Taymans
+      * Zaheer Abbas Merali
+      * Руслан Ижбулатов
+ 

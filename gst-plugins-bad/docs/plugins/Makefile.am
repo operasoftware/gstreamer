@@ -1,0 +1,225 @@
+GST_DOC_SCANOBJ = $(top_srcdir)/common/gstdoc-scangobj
+
+## Process this file with automake to produce Makefile.in
+
+# The name of the module, e.g. 'glib'.
+#DOC_MODULE=gst-plugins-libs-@GST_MAJORMINOR@
+MODULE=gst-plugins-bad
+DOC_MODULE=$(MODULE)-plugins
+
+# for upload-doc.mak
+DOC=$(MODULE)-plugins
+FORMATS=html
+html: html-build.stamp
+include $(top_srcdir)/common/upload-doc.mak
+
+# generated basefiles
+#basefiles = \
+##		$(DOC_MODULE).types \
+#		$(DOC_MODULE)-sections.txt \
+#		$(DOC_MODULE)-docs.sgml
+
+# ugly hack to make -unused.sgml work
+#unused-build.stamp:
+#	BUILDDIR=`pwd` && \
+#	cd $(srcdir)/tmpl && \
+#	ln -sf gstreamer-libs-unused.sgml \
+#		$$BUILDDIR/tmpl/gstreamer-libs-@GST_MAJORMINOR@-unused.sgml
+#	touch unused-build.stamp
+
+# these rules are added to create parallel docs using GST_MAJORMINOR
+#$(basefiles): gstreamer-libs-@GST_MAJORMINOR@%: gstreamer-libs%
+#	cp $< $@
+
+#CLEANFILES = $(basefiles)
+
+# The top-level SGML file. Change it if you want.
+DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
+
+# The directory containing the source code. Relative to $(top_srcdir).
+# gtk-doc will search all .c & .h files beneath here for inline comments
+# documenting functions and macros.
+DOC_SOURCE_DIR = $(top_srcdir)
+
+# Extra options to supply to gtkdoc-scan.
+SCAN_OPTIONS=
+
+# FIXME :
+# there's something wrong with gstreamer-sections.txt not being in the dist
+# maybe it doesn't resolve; we're adding it below for now
+#EXTRA_DIST = gstreamer.types.in gstreamer.hierarchy $(DOC_MODULE)-sections.txt gstreamer-sections.txt $(DOC_MAIN_SGML_FILE)
+
+# Extra options to supply to gtkdoc-mkdb.
+MKDB_OPTIONS=--sgml-mode --source-suffixes=c,h,cc,m
+
+# Extra options to supply to gtkdoc-fixref.
+FIXXREF_OPTIONS=--extra-dir=$(GLIB_PREFIX)/share/gtk-doc/html \
+	--extra-dir=$(GST_PREFIX)/share/gtk-doc/html \
+	--extra-dir=$(GSTPB_PREFIX)/share/gtk-doc/html
+
+# Used for dependencies.
+HFILE_GLOB=$(DOC_SOURCE_DIR)/*/*/*.h $(DOC_SOURCE_DIR)/*/*/*.hh
+CFILE_GLOB=$(DOC_SOURCE_DIR)/*/*/*.c $(DOC_SOURCE_DIR)/*/*/*.cc
+
+# this is a wingo addition
+# thomasvs: another nice wingo addition would be an explanation on why
+# this is useful ;)
+
+SCANOBJ_DEPS = \
+	$(top_builddir)/gst-libs/gst/interfaces/libgstphotography-@GST_MAJORMINOR@.la
+
+# Header files to ignore when scanning.
+IGNORE_HFILES = 
+IGNORE_CFILES =
+
+# we add all .h files of elements that have signals/args we want
+# sadly this also pulls in the private methods - maybe we should
+# move those around in the source ?
+#
+# also, we should add some stuff here conditionally based on whether
+# or not the plugin will actually build
+# but I'm not sure about that - it might be this Just Works given that
+# the registry won't have the element
+# -> it just works (TM) (ensonic)
+
+# FIXME: not ported yet
+#	$(top_srcdir)/ext/gnomevfs/gstgnomevfssink.c 
+
+# example code that needs to be converted to xml and placed in xml/
+EXAMPLE_CFILES = \
+        $(top_srcdir)/ext/directfb/dfb-example.c
+
+EXTRA_HFILES = \
+	$(top_srcdir)/ext/assrender/gstassrender.h \
+	$(top_srcdir)/ext/amrwbenc/gstamrwbenc.h \
+	$(top_srcdir)/ext/celt/gstceltdec.h \
+	$(top_srcdir)/ext/celt/gstceltenc.h \
+	$(top_srcdir)/ext/dc1394/gstdc1394.h \
+	$(top_srcdir)/ext/directfb/dfbvideosink.h \
+	$(top_srcdir)/ext/dts/gstdtsdec.h \
+	$(top_srcdir)/ext/faac/gstfaac.h \
+	$(top_srcdir)/ext/faad/gstfaad.h \
+	$(top_srcdir)/ext/jack/gstjackaudiosrc.h \
+	$(top_srcdir)/ext/jack/gstjackaudiosink.h \
+	$(top_srcdir)/ext/kate/gstkateenc.h \
+	$(top_srcdir)/ext/kate/gstkatedec.h \
+	$(top_srcdir)/ext/kate/gstkateparse.h \
+	$(top_srcdir)/ext/kate/gstkatetag.h \
+	$(top_srcdir)/ext/kate/gstkatetiger.h \
+	$(top_srcdir)/ext/ladspa/gstladspa.h \
+	$(top_srcdir)/ext/musicbrainz/gsttrm.h \
+	$(top_srcdir)/ext/metadata/gstbasemetadata.h \
+	$(top_srcdir)/ext/metadata/gstmetadatademux.h \
+	$(top_srcdir)/ext/metadata/gstmetadatamux.h \
+	$(top_srcdir)/ext/mimic/gstmimenc.h \
+	$(top_srcdir)/ext/mimic/gstmimdec.h \
+	$(top_srcdir)/ext/modplug/gstmodplug.h \
+	$(top_srcdir)/ext/mpeg2enc/gstmpeg2enc.hh \
+	$(top_srcdir)/ext/mplex/gstmplex.hh \
+	$(top_srcdir)/ext/mythtv/gstmythtvsrc.h \
+	$(top_srcdir)/ext/sdl/sdlaudiosink.h \
+	$(top_srcdir)/ext/sdl/sdlvideosink.h \
+	$(top_srcdir)/ext/theora/theoradec.h \
+	$(top_srcdir)/ext/timidity/gsttimidity.h \
+	$(top_srcdir)/ext/timidity/gstwildmidi.h \
+	$(top_srcdir)/ext/zbar/gstzbar.h \
+	$(top_srcdir)/gst/aiff/aiffparse.h \
+	$(top_srcdir)/gst/aiff/aiffmux.h \
+	$(top_srcdir)/gst/audioparsers/gstaacparse.h \
+	$(top_srcdir)/gst/audioparsers/gstac3parse.h \
+	$(top_srcdir)/gst/audioparsers/gstamrparse.h \
+	$(top_srcdir)/gst/audioparsers/gstflacparse.h \
+	$(top_srcdir)/gst/autoconvert/gstautoconvert.h \
+	$(top_srcdir)/gst/camerabin/gstcamerabin.h \
+	$(top_srcdir)/gst/dataurisrc/gstdataurisrc.h \
+	$(top_srcdir)/gst/dccp/gstdccpclientsink.h \
+	$(top_srcdir)/gst/dccp/gstdccpclientsrc.h \
+	$(top_srcdir)/gst/dccp/gstdccpserversink.h \
+	$(top_srcdir)/gst/dccp/gstdccpserversrc.h \
+	$(top_srcdir)/gst/debugutils/fpsdisplaysink.h \
+	$(top_srcdir)/gst/dtmf/gstdtmfsrc.h \
+	$(top_srcdir)/gst/dtmf/gstdtmfdetect.h \
+	$(top_srcdir)/gst/dtmf/gstrtpdtmfsrc.h \
+	$(top_srcdir)/gst/dtmf/gstrtpdtmfdepay.h \
+	$(top_srcdir)/gst/dvdspu/gstdvdspu.h \
+	$(top_srcdir)/gst/festival/gstfestival.h \
+	$(top_srcdir)/gst/freeze/gstfreeze.h \
+	$(top_srcdir)/gst/legacyresample/gstlegacyresample.h \
+	$(top_srcdir)/gst/liveadder/liveadder.h \
+	$(top_srcdir)/gst/jpegformat/gstjpegparse.h \
+	$(top_srcdir)/gst/mxf/mxfdemux.h \
+	$(top_srcdir)/gst/mxf/mxfmux.h \
+	$(top_srcdir)/gst/nuvdemux/gstnuvdemux.h \
+	$(top_srcdir)/gst/pcapparse/gstpcapparse.h \
+	$(top_srcdir)/gst/rawparse/gstaudioparse.h \
+	$(top_srcdir)/gst/rawparse/gstvideoparse.h \
+	$(top_srcdir)/gst/rtpmux/gstrtpmux.h \
+	$(top_srcdir)/gst/rtpmux/gstrtpdtmfmux.h \
+	$(top_srcdir)/gst/scaletempo/gstscaletempo.h \
+	$(top_srcdir)/gst/sdp/gstsdpdemux.h \
+	$(top_srcdir)/gst/selector/gstinputselector.h \
+	$(top_srcdir)/gst/selector/gstoutputselector.h \
+	$(top_srcdir)/gst/speed/gstspeed.h \
+	$(top_srcdir)/gst/stereo/gststereo.h \
+	$(top_srcdir)/gst/videosignal/gstvideoanalyse.h \
+	$(top_srcdir)/gst/videosignal/gstvideodetect.h \
+	$(top_srcdir)/gst/videosignal/gstvideomark.h \
+	$(top_srcdir)/gst/valve/gstvalve.h \
+	$(top_srcdir)/sys/directdraw/gstdirectdrawsink.h \
+	$(top_srcdir)/sys/dvb/gstdvbsrc.h \
+	$(top_srcdir)/gst-libs/gst/interfaces/photography.h
+
+# Images to copy into HTML directory.
+HTML_IMAGES = camerabin.png
+
+# Extra SGML files that are included by $(DOC_MAIN_SGML_FILE).
+content_files =
+
+# Other files to distribute.
+extra_files =
+
+# CFLAGS and LDFLAGS for compiling scan program. Only needed if your app/lib
+# contains GtkObjects/GObjects and you want to document signals and properties.
+GTKDOC_CFLAGS = -DGST_USE_UNSTABLE_API $(GST_PLUGINS_BAD_CFLAGS) $(GST_BASE_CFLAGS) -I$(top_builddir)
+GTKDOC_LIBS = $(SCANOBJ_DEPS) $(GST_BASE_LIBS)
+
+GTKDOC_CC=$(LIBTOOL) --tag=CC --mode=compile $(CC)
+GTKDOC_LD=$(LIBTOOL) --tag=CC --mode=link $(CC)
+
+# If you need to override some of the declarations, place them in this file
+# and uncomment this line.
+#DOC_OVERRIDES = $(DOC_MODULE)-overrides.txt
+DOC_OVERRIDES =
+
+include $(top_srcdir)/common/gtk-doc-plugins.mak
+
+# some additional clean rules from gtk-doc.mak
+distclean-local:
+	rm -f $(REPORT_FILES) \
+                $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt
+	rm -rf tmpl/*.sgml.bak
+	rm -f $(DOC_MODULE).hierarchy
+	rm -f *.stamp || true
+	if test x"$(srcdir)" != x. ; then \
+	    rm -f $(DOC_MODULE)-docs.sgml ; \
+	    rm -f $(DOC_MODULE).types ; \
+	    rm -f $(DOC_MODULE).interfaces ; \
+            rm -f $(DOC_MODULE)-overrides.txt ; \
+	    rm -f $(DOC_MODULE).prerequisites ; \
+	    rm -f $(DOC_MODULE)-sections.txt ; \
+	    rm -rf tmpl/*.sgml ; \
+	fi
+	rm -rf *.o
+
+
+SUBDIRS =
+
+FIGURES_SOURCEFILES = camerabin.dot
+FIGURES_IMAGES      = camerabin.png
+
+EXTRA_DIST += $(FIGURES_SOURCEFILES)
+
+.dot.png:
+	dot -Tpng $< -o$@
+
+update-figures: $(FIGURES_IMAGES)

@@ -1,0 +1,403 @@
+<plugin>
+  <name>lv2</name>
+  <description>All LV2 plugins</description>
+  <filename>../../ext/lv2/.libs/libgstlv2.so</filename>
+  <basename>libgstlv2.so</basename>
+  <version>0.10.17.1</version>
+  <license>LGPL</license>
+  <source>gst-plugins-bad</source>
+  <package>GStreamer Bad Plug-ins git</package>
+  <origin>Unknown package origin</origin>
+  <elements>
+    <element>
+      <name>invadarecords-com-plugins-lv2-compressor-mono</name>
+      <longname>Invada Compressor (mono)</longname>
+      <class>Filter/Effect/Audio/LV2</class>
+      <description>Invada Compressor (mono)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-compressor-stereo</name>
+      <longname>Invada Compressor (stereo)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Compressor (stereo)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-delay-mono</name>
+      <longname>Invada Delay Munge (mono in)</longname>
+      <class>Sink/Analyzer/Audio/LV2</class>
+      <description>Invada Delay Munge (mono in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-delay-sum</name>
+      <longname>Invada Delay Munge (sum L+R in)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Delay Munge (sum L+R in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-erreverb-mono</name>
+      <longname>Invada Early Reflection Reverb (mono in)</longname>
+      <class>Sink/Analyzer/Audio/LV2</class>
+      <description>Invada Early Reflection Reverb (mono in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-erreverb-sum</name>
+      <longname>Invada Early Reflection Reverb (sum L+R in)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Early Reflection Reverb (sum L+R in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-filter-hpf-mono</name>
+      <longname>Invada High Pass Filter (mono)</longname>
+      <class>Filter/Effect/Audio/LV2</class>
+      <description>Invada High Pass Filter (mono)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-filter-hpf-stereo</name>
+      <longname>Invada High Pass Filter (stereo)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada High Pass Filter (stereo)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-filter-lpf-mono</name>
+      <longname>Invada Low Pass Filter (mono)</longname>
+      <class>Filter/Effect/Audio/LV2</class>
+      <description>Invada Low Pass Filter (mono)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-filter-lpf-stereo</name>
+      <longname>Invada Low Pass Filter (stereo)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Low Pass Filter (stereo)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-input</name>
+      <longname>Invada Input Module</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Input Module</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-meter</name>
+      <longname>Invada Meter</longname>
+      <class>Filter/Effect/Audio/LV2</class>
+      <description>Invada Meter</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>outR</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>outL</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>inR</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>inL</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-phaser-mono</name>
+      <longname>Invada Stereo Phaser (mono in)</longname>
+      <class>Sink/Analyzer/Audio/LV2</class>
+      <description>Invada Stereo Phaser (mono in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-phaser-stereo</name>
+      <longname>Invada Stereo Phaser (stereo in)</longname>
+      <class>Sink/Analyzer/Audio/LV2</class>
+      <description>Invada Stereo Phaser (stereo in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>inR</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>inL</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-phaser-sum</name>
+      <longname>Invada Stereo Phaser (sum L+R in)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Stereo Phaser (sum L+R in)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-testtone</name>
+      <longname>Invada Test Tones</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Test Tones</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-tube-mono</name>
+      <longname>Invada Tube Distortion (mono)</longname>
+      <class>Filter/Effect/Audio/LV2</class>
+      <description>Invada Tube Distortion (mono)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)1</details>
+        </caps>
+      </pads>
+    </element>
+    <element>
+      <name>invadarecords-com-plugins-lv2-tube-stereo</name>
+      <longname>Invada Tube Distortion (stereo)</longname>
+      <class>Source/Audio/LV2</class>
+      <description>Invada Tube Distortion (stereo)</description>
+      <author>Invada</author>
+      <pads>
+        <caps>
+          <name>out</name>
+          <direction>source</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+        <caps>
+          <name>in</name>
+          <direction>sink</direction>
+          <presence>always</presence>
+          <details>audio/x-raw-float, endianness=(int)1234, width=(int)32, channels=(int)2</details>
+        </caps>
+      </pads>
+    </element>
+  </elements>
+</plugin>

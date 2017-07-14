@@ -1,0 +1,154 @@
+# Danish translation of gst-plugins-bad.
+# Copyright (C) 2009 gst.
+# This file is distributed under the same license as the gst-plugins-bad package.
+# Mogens Jaeger <mogens@jaeger.tf>, 2007.
+# Joe Hansen <joedalton2@yahoo.dk>, 2008, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gst-plugins-bad-0.10.13.2\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/\n"
+"POT-Creation-Date: 2010-05-31 02:06+0100\n"
+"PO-Revision-Date: 2009-08-12 11:28+0200\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Could not read title information for DVD."
+msgstr "Kunne ikke læse titelinformation for dvd."
+
+#, c-format
+msgid "Failed to open DVD device '%s'."
+msgstr "Kunne ikke åbne dvd-enhed »%s«."
+
+msgid "Failed to set PGC based seeking."
+msgstr "Kunne ikke indstille PGC-baseret søgning."
+
+msgid "No file name specified for writing."
+msgstr "Intet filnavn er angivet til skrivning."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Kunne ikke åbne filen »%s« til skrivning."
+
+msgid "Internal data stream error."
+msgstr "Intern datastrømfejl."
+
+#, c-format
+msgid "Could not write to file \"%s\"."
+msgstr "Kunne ikke skrive til fil »%s«."
+
+msgid "Internal data flow error."
+msgstr "Intern datastrømfejl."
+
+#, c-format
+msgid "Device \"%s\" does not exist."
+msgstr "Enheden »%s« eksisterer ikke."
+
+#, c-format
+msgid "Could not open frontend device \"%s\"."
+msgstr "Kunne ikke åbne forende-enheden »%s«."
+
+#, c-format
+msgid "Could not get settings from frontend device \"%s\"."
+msgstr "Kunne ikke hente indstillinger fra forende-enheden »%s«."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Kunne ikke åbne filen »%s« for læsning."
+
+#~ msgid "%s %d"
+#~ msgstr "%s %d"
+
+#~ msgid "Internal clock error."
+#~ msgstr "Intern urfejl."
+
+#~ msgid "PCM 1"
+#~ msgstr "PCM 1"
+
+#~ msgid "PCM 2"
+#~ msgstr "PCM 2"
+
+#~ msgid "PCM 3"
+#~ msgstr "PCM 3"
+
+#~ msgid "PCM 4"
+#~ msgstr "PCM 4"
+
+#~ msgid "Green connector function"
+#~ msgstr "Grøn forbindelsesfunktion"
+
+#~ msgid "Green front panel connector function"
+#~ msgstr "Grøn frontpanelforbindelsesfunktion"
+
+#~ msgid "Pink connector function"
+#~ msgstr "Lyserød forbindelsesfunktion"
+
+#~ msgid "Pink front panel connector function"
+#~ msgstr "Lyserød frontpanelforbindelsesfunktion"
+
+#~ msgid "Blue connector function"
+#~ msgstr "Blå forbindelsesfunktion"
+
+#~ msgid "Blue front panel connector function"
+#~ msgstr "Blå frontpanelforbindelsesfunktion"
+
+#~ msgid "Orange connector function"
+#~ msgstr "Orange forbindelsesfunktion"
+
+#~ msgid "Orange front panel connector function"
+#~ msgstr "Orange frontpanelforbindelsesfunktion"
+
+#~ msgid "Black connector function"
+#~ msgstr "Sort forbindelsesfunktion"
+
+#~ msgid "Black front panel connector function"
+#~ msgstr "Sort frontpanelforbindelsesfunktion"
+
+#~ msgid "Gray connector function"
+#~ msgstr "Grå forbindelsesfunktion"
+
+#~ msgid "Gray front panel connector function"
+#~ msgstr "Grå frontpanelforbindelsesfunktion"
+
+#~ msgid "White connector function"
+#~ msgstr "Hvid forbindelsesfunktion"
+
+#~ msgid "White front panel connector function"
+#~ msgstr "Hvid frontpanelforbindelsesfunktion"
+
+#~ msgid "Red connector function"
+#~ msgstr "Rød forbindelsesfunktion"
+
+#~ msgid "Red front panel connector function"
+#~ msgstr "Rød frontpanelforbindelsesfunktion"
+
+#~ msgid "Yellow connector function"
+#~ msgstr "Gul forbindelsesfunktion"
+
+#~ msgid "Yellow front panel connector function"
+#~ msgstr "Gul frontpanelforbindelsesfunktion"
+
+#~ msgid "Virtual mixer channel configuration"
+#~ msgstr "Virtuel mikserkanalkonfiguration"
+
+#~ msgid "Failed to configure TwoLAME encoder. Check your encoding parameters."
+#~ msgstr ""
+#~ "Mislykkedes i at konfigurere TwoLAME-koder. Undersøg dine "
+#~ "kodningsparametre."
+
+#~ msgid ""
+#~ "The requested bitrate %d kbit/s for property '%s' is not allowed. The "
+#~ "bitrate was changed to %d kbit/s."
+#~ msgstr ""
+#~ "Den anmodede bitrate %d kbit/s for egenskab »%s« er ikke tilladt. "
+#~ "Bitraten blev ændret til %d kbit/s."
+
+#~ msgid "This file is corrupt and cannot be played."
+#~ msgstr "Denne fil er korrupt og kan ikke afspilles."
+
+#~ msgid "This file is encrypted and cannot be played."
+#~ msgstr "Denne fil er krypteret og kan ikke afspilles."
