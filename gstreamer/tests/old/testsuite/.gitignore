@@ -1,0 +1,14 @@
+Makefile
+Makefile.in
+*.o
+*.lo
+*.la
+.deps
+.libs
+test-registry.xml 
+elementstest-registry.xml
+threadstest-registry.xml
+*.bb
+*.bbg
+*.da
+test_gst_init

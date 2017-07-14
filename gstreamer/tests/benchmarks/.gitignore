@@ -1,0 +1,10 @@
+Makefile
+Makefile.in
+gstbufferstress
+caps
+complexity
+controller
+gstclockstress
+gstpollstress
+mass-elements
+*.gcno

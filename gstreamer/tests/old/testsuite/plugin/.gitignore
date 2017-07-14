@@ -1,0 +1,16 @@
+Makefile
+Makefile.in
+*.o
+*.lo
+*.la
+.deps
+.libs
+dynamic
+linked
+loading
+registry
+static
+static2
+*.bb
+*.bbg
+*.da

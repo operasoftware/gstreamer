@@ -1,0 +1,12 @@
+.dirstamp
+capsfilter
+fakesrc
+fakesink
+fdsrc
+filesink
+filesrc
+identity
+multiqueue
+queue
+tee
+*.check.xml

@@ -1,0 +1,15 @@
+.dirstamp
+adapter
+basesrc
+bitreader
+bytereader
+bytewriter
+gdp
+collectpads
+controller
+gstnetclientclock
+gstnettimeprovider
+libsabi
+transform1
+typefindhelper
+*.check.xml

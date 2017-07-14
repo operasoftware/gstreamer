@@ -1,0 +1,100 @@
+/* GStreamer
+ * Copyright (C) 1999,2000 Erik Walthinsen <omega@cse.ogi.edu>
+ *                    2000 Wim Taymans <wtay@chello.be>
+ *
+ * gstelements.c:
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#include <gst/gst.h>
+
+#include "gstcapsfilter.h"
+#include "gstfakesink.h"
+#ifndef OPERA_MINIMAL_GST
+#include "gstfakesrc.h"
+#include "gstfdsrc.h"
+#include "gstfdsink.h"
+#include "gstfilesink.h"
+#include "gstfilesrc.h"
+#endif
+#include "gstidentity.h"
+#include "gstqueue.h"
+#ifndef OPERA_MINIMAL_GST
+#include "gstqueue2.h"
+#include "gsttee.h"
+#endif
+#include "gsttypefindelement.h"
+#include "gstmultiqueue.h"
+
+struct _elements_entry
+{
+  const gchar *name;
+  guint rank;
+    GType (*type) (void);
+};
+
+
+static struct _elements_entry _elements[] = {
+  {"capsfilter", GST_RANK_NONE, gst_capsfilter_get_type},
+#ifndef OPERA_MINIMAL_GST
+  {"fakesrc", GST_RANK_NONE, gst_fake_src_get_type},
+#endif
+  {"fakesink", GST_RANK_NONE, gst_fake_sink_get_type},
+#ifndef OPERA_MINIMAL_GST
+#if defined(HAVE_SYS_SOCKET_H) || defined(_MSC_VER)
+  {"fdsrc", GST_RANK_NONE, gst_fd_src_get_type},
+  {"fdsink", GST_RANK_NONE, gst_fd_sink_get_type},
+#endif
+  {"filesrc", GST_RANK_PRIMARY, gst_file_src_get_type},
+#endif
+  {"identity", GST_RANK_NONE, gst_identity_get_type},
+  {"queue", GST_RANK_NONE, gst_queue_get_type},
+#ifndef OPERA_MINIMAL_GST
+  {"queue2", GST_RANK_NONE, gst_queue2_get_type},
+  {"filesink", GST_RANK_PRIMARY, gst_file_sink_get_type},
+  {"tee", GST_RANK_NONE, gst_tee_get_type},
+#endif
+  {"typefind", GST_RANK_NONE, gst_type_find_element_get_type},
+  {"multiqueue", GST_RANK_NONE, gst_multi_queue_get_type},
+  {NULL, 0},
+};
+
+static gboolean
+plugin_init (GstPlugin * plugin)
+{
+  struct _elements_entry *my_elements = _elements;
+
+  while ((*my_elements).name) {
+    if (!gst_element_register (plugin, (*my_elements).name, (*my_elements).rank,
+            ((*my_elements).type) ()))
+      return FALSE;
+    my_elements++;
+  }
+
+  return TRUE;
+}
+
+GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
+    GST_VERSION_MINOR,
+    "coreelements",
+    "standard GStreamer elements",
+    plugin_init, VERSION, GST_LICENSE, GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN);

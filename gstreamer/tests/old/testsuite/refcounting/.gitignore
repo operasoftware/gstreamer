@@ -1,0 +1,14 @@
+Makefile
+Makefile.in
+*.o
+*.lo
+*.la
+.deps
+.libs
+
+bin
+element
+element_pad
+pad
+mainloop
+sched
